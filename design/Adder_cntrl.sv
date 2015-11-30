@@ -61,7 +61,7 @@ Adder_cntrl_state StateMC, next_StateMC ;
 reg        Op1_Sign, Op1_Sign_reg, Op2_Sign, Op2_Sign_reg ;
 reg [7:0]  Final_Exponent, Final_Exponent_reg ;
 reg [23:0] Op1_Mantissa, Op1_Mantissa_reg, Op2_Mantissa, Op2_Mantissa_reg ;
-reg [5:0]  diff, diff_reg ;
+reg [7:0]  diff, diff_reg ;
 reg [2:0]  exc_val, exc_reg ;
 reg [26:0] Final_Mantissa, Final_Mantissa_reg ;
 reg Final_Sign, Final_Sign_reg ;
@@ -145,39 +145,47 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						if(Data_valid==1) begin // new data available for addition
 							//---- Compare the Exponent.  Op1(higher exponent)
 							if(Datain1[30:23] >= Datain2[30:23]) begin
-								diff           =   Datain1 - Datain2  ;
+								diff           =   Datain1[30:23] - Datain2[30:23]  ;
 								Op1_Sign       =   Datain1[31] ;
 								Final_Exponent =   Datain1[30:23] ;
-								Op1_Mantissa   =   {1'b1, Datain1[22:0]} ;
+								if(Datain1[30:23] == 8'h00)
+									Op1_Mantissa = {1'b0, Datain1[22:0]} ;
+								else
+									Op1_Mantissa   =   {1'b1, Datain1[22:0]} ;
 								Op2_Sign       =   Datain2[31] ;
 								G_val          =   Datain2[diff-1];
 								if(diff > 1)	R_val          =   Datain2[diff-2] ;
-								//for(int i=0; i<= diff-3; i++)  S_val = S_val | Datain2[i] ;
 								if(diff > 2)    S_val          =   Datain2[diff-3] ;
-								Op2_Mantissa   =   {1'b1, Datain2[22:0]} >> diff ;
+								if(Datain2[30:23]== 8'h00)
+									Op2_Mantissa = {1'b0, Datain2[22:0]} >> diff ;
+								else
+									Op2_Mantissa   =   {1'b1, Datain2[22:0]} >> diff ;
 							end
 							else begin
-								diff           =   Datain2 - Datain1 ;
+								diff           =   Datain2[30:23] - Datain1[30:23] ;
 								Final_Exponent =   Datain2[30:23] ;
 								Op1_Sign       =   Datain2[31] ;
-								Op1_Mantissa   =   {1'b1, Datain2[22:0]} ;
+								if(Datain2[30:23] == 8'h00)	Op1_Mantissa   = {1'b0, Datain2[22:0]} ;
+								else						Op1_Mantissa   =   {1'b1, Datain2[22:0]} ;
 								Op2_Sign       =   Datain1[31] ;
 								G_val          =   Datain1[diff-1];
 								if(diff != 1)	R_val          =   Datain1[diff-2] ;
-								//for(int i=0; i<= diff-3; i++)  S_val = S_val | Datain1[i] ;
 								if(diff > 2)    S_val          =   Datain1[diff-3] ;
-								Op2_Mantissa   =   {1'b1, Datain1[22:0]} >> diff ;
+								if(Datain1[30:23] == 8'h00)	Op2_Mantissa   = {1'b0, Datain1[22:0]} >> diff;
+								else                    	Op2_Mantissa   =   {1'b1, Datain1[22:0]} >> diff ;
 							end
 							next_StateMC = AdderState ; // Go to AdderState to drive the adderunit
 						end
 						else next_StateMC = Idle ;
 					 end
 	AdderState   :	begin
-						Adder_valid  =  1 ;
-						Adder_datain1 = Op1_Mantissa_reg ;
-						if(EOP == 1)	{Adder_datain2,G_val,R_val,S_val} = (~{Op2_Mantissa_reg,G_reg,R_reg,S_reg}) + 1'b1 ;
-						else            Adder_datain2 =  Op2_Mantissa_reg ;
-						if(Adder_ack == 1) begin
+						if(Adder_ack == 1 && Adder_valid==0) begin
+						    Adder_valid  =  1 ;
+						    Adder_datain1 = Op1_Mantissa_reg ;
+						    if(EOP == 1)	{Adder_datain2,G_val,R_val,S_val} = (~{Op2_Mantissa_reg,G_reg,R_reg,S_reg}) + 1'b1 ;
+						    else            Adder_datain2 =  Op2_Mantissa_reg ;
+						end
+						if(Adder_ack == 1 && Adder_valid==1) begin
 							//---- Receive the data sent by the adder circuit ----
 							exc_val = Adder_Exc ;
 							Final_Mantissa = {Adder_dataout[23:0],G_val, R_val, S_val} ;

@@ -1,6 +1,6 @@
-//Verilog Module for 24-bit Adder
+//Verilog Module for ExceptionChecker
 
-typedef enum {Compute=0, ResetOutput} AddState ;
+typedef enum {Compute=0, ResetOutput} ExcChkState ;
 
 module exceptionChecker ( Data, Data_valid, Exc, ACK, CLK, RSTN);
 
@@ -10,7 +10,7 @@ module exceptionChecker ( Data, Data_valid, Exc, ACK, CLK, RSTN);
   output reg [2:0] Exc;
   output reg ACK;
 
-  AddState  StateMC, next_StateMC;
+  ExcChkState  StateMC, next_StateMC;
 
 always@(posedge CLK or negedge RSTN) begin
 	if(RSTN!=1) begin

@@ -1,0 +1,3 @@
+
+
+irun -sv -incdir "../../design/" ../../design/adder_24b.sv ../../design/exceptionChecker.v ../../design/Adder_cntrl.sv testbench.sv -access +rwc -input ncsim.tcl

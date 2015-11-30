@@ -132,7 +132,8 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		Dataout_valid   =   0                  ;
 		Adder_datain1   =   0                  ;
 		Adder_datain2   =   0                  ;
-		Adder_valid     =   0                  ;
+		if(StateMC==AdderState && Adder_valid==1) Adder_valid     =   1    ;
+		else                                      Adder_valid     =   0    ;
 		Exc             =   0                  ;
 	//-------------------------
    	case(StateMC)
@@ -179,7 +180,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						else next_StateMC = Idle ;
 					 end
 	AdderState   :	begin
-						if(Adder_ack == 1 && Adder_valid==0) begin
+						if(Adder_ack == 0 && Adder_valid==0) begin
 						    Adder_valid  =  1 ;
 						    Adder_datain1 = Op1_Mantissa_reg ;
 						    if(EOP == 1)	{Adder_datain2,G_val,R_val,S_val} = (~{Op2_Mantissa_reg,G_reg,R_reg,S_reg}) + 1'b1 ;
@@ -191,7 +192,6 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 							Final_Mantissa = {Adder_dataout[23:0],G_val, R_val, S_val} ;
 							carry          = Adder_carryout ;
 							//---- Disable the adder call and reset the drive lines ----
-							Adder_valid    = 0 ;
 							if ( exc_val != 0 ) next_StateMC = SetOutput ;
 							else                next_StateMC = EvaluateRes ;
 						end

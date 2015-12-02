@@ -3,6 +3,10 @@
 //---- Each individual tests are broken into task based templates ----
 //---- These tests can be just included and executed by task calls ---
 //--------------------------------------------------------------------
+//`timescale 1ns / 100ps
+//`include "../../design/adder_24b.sv"
+//`include "../../design/Adder_cntrl.sv"
+
 module testbench ;
 
 bit [31:0] Datain1_reg, Datain2_reg ;
@@ -21,8 +25,8 @@ wire [23:0] Adder_dataout_wire ;
 wire [2:0] Adder_Exc_wire ;
 wire Adder_carryout_wire ;
 wire Adder_ack_wire ;
-   bit [31:0] num1 ;
-   bit [31:0] num2 ;
+
+bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3;
 
  Adder_cntrl u_adder_cntrl(
   //--- Default interface ---
@@ -54,22 +58,47 @@ wire Adder_ack_wire ;
 
 
 adder_24b u_adder_24b( .Z(Adder_dataout_wire), .COUT(Adder_carryout_wire), .ACK(Adder_ack_wire), .A(Adder_datain1_wire), .B(Adder_datain2_wire), .REQ(Adder_valid_wire), .CLK(CLK), .RSTN(RSTn));
-
+exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adder_datain1_wire), .Data_valid(Data_valid_reg), .CLK(CLK), .RSTN(RSTn));
 
    always #5 CLK  =  ~CLK ;
 
 
    initial  begin
-        CLK  =  1'b1 ;
+
+   // Input numbers for test cases
+	//n1_tc1[31:0] = 32'b01000000001100000000000000000000;
+        //n2_tc1[31:0] = 32'b01000000101100000000000000000000; 
+
+	/*n1_tc2 = 32'100000000111111111111111111111110;
+	n2_tc2 = 32'b00000000111111111111111111111001;
+	res_tc2 = 
+
+	n1_tc3 = 32'100000000111111111111111111111110;
+	n2_tc3 = 32'100000000111111111111111111111001;
+	res_tc3 = 
+	*/
+	//Adder_valid_wire = 1;
+        
+	CLK  =  1'b1 ;
 		reset();
 		@(negedge CLK) ;
-		repeat(10) begin
-		   addTwoRandomNumbers();
+		begin
+		   //addTwoRandomNumbers();
+		   addTestCase1();//Same sign
+		   addTestCase2();//Opposite signs, Negative number smaller magnitude
+		   addTestCase3();//Opposite signs, Negative number larger magnitude
+		   //$display("Passed Data: Num1 = %b, Num2 = %b", n1_tc1, n2_tc1);
+		   //addTestCase1(n1_tc2,n2_tc2);
+	 	   //addTestCase1(n1_tc3,n2_tc3);
 		end
 		#100 $finish();
 		//---- Call the tasks in sequence -----
+
+	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+
    end
 
+   /*
    task addTwoRandomNumbers();
    num1 =  $random();
    num2 =  $random();
@@ -84,6 +113,113 @@ adder_24b u_adder_24b( .Z(Adder_dataout_wire), .COUT(Adder_carryout_wire), .ACK(
 	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
 	$display("Computed Data : %b @", Dataout_wire, $time);
    endtask
+   */
+
+   task addTestCase1();begin
+
+   //num1 = n1;
+   //num2 = n2;
+
+   num1 = 32'b01000000001100000000000000000000;//2.75
+   num2 = 32'b01000000101100000000000000000000;//5.5
+   res_tc1[31:0] = 32'b01000001000001000000000000000000;//8.25
+
+   //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
+
+   //---- Provide the data at the posedge of CLK -----
+   wait(Dataout_valid_wire==1'b0);
+   @(negedge CLK);
+       Datain1_reg <= num1 ;
+       Datain2_reg <= num2 ;
+       Data_valid_reg <= 1'b1 ;
+   wait(Dataout_valid_wire==1'b1)
+   	   Data_valid_reg <= 1'b0 ;
+	$display("\n");
+	$display("Test Case 1: Same Sign NUmbers");
+	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
+	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
+	$display("Computed Data : %b @", Dataout_wire, $time);
+	$display("Ideal Sum : %b @", res_tc1, $time);
+	
+	if(Dataout_wire == res_tc1)
+		$display("Match... Yayyy");
+        else
+		$display("NO Match :(");
+	end
+	$display("\n");
+   endtask
+
+   task addTestCase2();begin
+
+   //num1 = n1;
+   //num2 = n2;
+
+   num1 = 32'b11000000001100000000000000000000;//-2.75
+   num2 = 32'b01000000101100000000000000000000;//5.5
+   res_tc2[31:0] = 32'b01000000001100000000000000000000;//2.75
+
+   //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
+
+   //---- Provide the data at the posedge of CLK -----
+   wait(Dataout_valid_wire==1'b0);
+   @(negedge CLK);
+       Datain1_reg <= num1 ;
+       Datain2_reg <= num2 ;
+       Data_valid_reg <= 1'b1 ;
+   wait(Dataout_valid_wire==1'b1)
+   	   Data_valid_reg <= 1'b0 ;
+	$display("\n");
+	$display("Test Case 2: Different Signs, Smaller number NEGATIVE-> Final result POSITIVE");
+	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
+	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
+	$display("Computed Data : %b @", Dataout_wire, $time);
+	$display("Ideal Sum : %b @", res_tc2, $time);
+	
+	if(Dataout_wire == res_tc2)
+		$display("Match... Yayyy");
+        else
+		$display("NO Match :(");
+	end
+	$display("\n");
+   endtask
+   
+   task addTestCase3();begin
+
+   //num1 = n1;
+   //num2 = n2;
+
+   num1 = 32'b01000000001100000000000000000000;//2.75
+   num2 = 32'b11000000101100000000000000000000;//-5.5
+   res_tc3[31:0] = 32'b11000000001100000000000000000000;//-2.75
+
+   //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
+
+   //---- Provide the data at the posedge of CLK -----
+   wait(Dataout_valid_wire==1'b0);
+   @(negedge CLK);
+       Datain1_reg <= num1 ;
+       Datain2_reg <= num2 ;
+       Data_valid_reg <= 1'b1 ;
+   wait(Dataout_valid_wire==1'b1)
+   	   Data_valid_reg <= 1'b0 ;
+	$display("\n");
+	$display("Test Case 2: Different Signs, Smaller number POSITIVE-> Final result NEGATIVE");
+	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
+	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
+	$display("Computed Data : %b @", Dataout_wire, $time);
+	$display("Ideal Sum : %b @", res_tc3, $time);
+	
+	if(Dataout_wire == res_tc3)
+		$display("Match... Yayyy");
+        else
+		$display("NO Match :(");
+	end
+	$display("\n");
+   endtask
+
 
    task reset();
       @(negedge CLK) RSTn <= 1'b0 ;

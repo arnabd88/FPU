@@ -299,7 +299,7 @@ bit[26:0] temp = data ;
 			return temp[26:0] ;
 		end
 	end
-	else  temp[26:0] = {temp[26:1],1'b0};
+	else  temp[26:0] = {temp[25:0],1'b0};
   end
   return temp ;
 endfunction

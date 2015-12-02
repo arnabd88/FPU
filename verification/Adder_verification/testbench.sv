@@ -26,7 +26,7 @@ wire [2:0] Adder_Exc_wire ;
 wire Adder_carryout_wire ;
 wire Adder_ack_wire ;
 
-bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3;
+bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3,res_tc4;
 
  Adder_cntrl u_adder_cntrl(
   //--- Default interface ---
@@ -87,9 +87,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adde
 		   addTestCase1();//Same sign
 		   addTestCase2();//Opposite signs, Negative number smaller magnitude
 		   addTestCase3();//Opposite signs, Negative number larger magnitude
-		   //$display("Passed Data: Num1 = %b, Num2 = %b", n1_tc1, n2_tc1);
-		   //addTestCase1(n1_tc2,n2_tc2);
-	 	   //addTestCase1(n1_tc3,n2_tc3);
+		   addTestCase4();//Opposite signs, Negative number very large magnitude, Active GRS bits
 		end
 		#100 $finish();
 		//---- Call the tasks in sequence -----
@@ -213,6 +211,41 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adde
 	$display("Ideal Sum : %b @", res_tc3, $time);
 	
 	if(Dataout_wire == res_tc3)
+		$display("Match... Yayyy");
+        else
+		$display("NO Match :(");
+	end
+	$display("\n");
+   endtask
+
+   task addTestCase4();begin
+
+   //num1 = n1;
+   //num2 = n2;
+
+   num1 = 32'b01000000001000000001001111010011;//2.50121
+   num2 = 32'b11000111010101101101100000000000;//-55000
+   res_tc4[31:0] = 32'b11000111010101101101010110000000;//-54997.5
+
+   //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
+
+   //---- Provide the data at the posedge of CLK -----
+   wait(Dataout_valid_wire==1'b0);
+   @(negedge CLK);
+       Datain1_reg <= num1 ;
+       Datain2_reg <= num2 ;
+       Data_valid_reg <= 1'b1 ;
+   wait(Dataout_valid_wire==1'b1)
+   	   Data_valid_reg <= 1'b0 ;
+	$display("\n");
+	$display("Test Case 2: Different Signs, Smaller number VERY SMALL & POSITIVE-> Final result NEGATIVE");
+	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
+	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
+	$display("Computed Data : %b @", Dataout_wire, $time);
+	$display("Ideal Sum : %b @", res_tc4, $time);
+	
+	if(Dataout_wire == res_tc4)
 		$display("Match... Yayyy");
         else
 		$display("NO Match :(");

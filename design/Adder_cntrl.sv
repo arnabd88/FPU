@@ -252,7 +252,8 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 	RoundOff    :  begin
 						carry = 0 ;
 						case({Final_Mantissa_reg[2:0]})
-							3'b11X   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+							3'b110   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+							3'b111   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
 							3'b101   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
 							3'b100   :  begin
 											if(Final_Mantissa_reg[3]==1) {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;

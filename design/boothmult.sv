@@ -75,6 +75,7 @@ begin
 
   case(BStateMC)
 		Idle: begin
+				BACK=0;
 				Bnext_StateMC = Idle;
 				if(BREQ==1)
 				begin

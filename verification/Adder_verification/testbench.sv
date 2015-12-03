@@ -26,7 +26,7 @@ wire [2:0] Adder_Exc_wire ;
 wire Adder_carryout_wire ;
 wire Adder_ack_wire ;
 
-bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3,res_tc4;
+bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3,res_tc4,res_tc5;
 
  Adder_cntrl u_adder_cntrl(
   //--- Default interface ---
@@ -58,7 +58,7 @@ bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3,res_tc4;
 
 
 adder_24b u_adder_24b( .Z(Adder_dataout_wire), .COUT(Adder_carryout_wire), .ACK(Adder_ack_wire), .A(Adder_datain1_wire), .B(Adder_datain2_wire), .REQ(Adder_valid_wire), .CLK(CLK), .RSTN(RSTn));
-exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adder_datain1_wire), .Data_valid(Data_valid_reg), .CLK(CLK), .RSTN(RSTn));
+exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcCheck_Datain_wire), .Data_valid(ExcCheck_valid_wire), .CLK(CLK), .RSTN(RSTn));
 
    always #5 CLK  =  ~CLK ;
 
@@ -84,10 +84,12 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adde
 		@(negedge CLK) ;
 		begin
 		   //addTwoRandomNumbers();
+		   //addTestCase0();// Check for exceptions in Input numbers
 		   addTestCase1();//Same sign
 		   addTestCase2();//Opposite signs, Negative number smaller magnitude
 		   addTestCase3();//Opposite signs, Negative number larger magnitude
-		   addTestCase4();//Opposite signs, Negative number very large magnitude, Active GRS bits
+		   addTestCase4();//Opposite signs, Negative number very large magnitude, Active GRS bits	
+	           addTestCase5();
 		end
 		#100 $finish();
 		//---- Call the tasks in sequence -----
@@ -135,9 +137,21 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adde
 	$display("\n");
 	$display("Test Case 1: Same Sign NUmbers");
 	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+	
+	/*
+	exceptionChecker( Exc_value_wire, Exc_Ack_wire, Adder_datain1_wire, Data_valid_reg, CLK, RSTn);
+        $display("Exception Code for Num1: %b", Exc_value_wire);
+	
+	exceptionChecker( Exc_value_wire, Exc_Ack_wire, Adder_datain2_wire, Data_valid_reg, CLK, RSTn);
+        $display("Exception Code for Num2: %b", Exc_value_wire);
+	*/
+	
 	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
 	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
 	$display("Computed Data : %b @", Dataout_wire, $time);
+
+        $display("Exception Code for Computed Data: %b", Exc_value_wire);
+	
 	$display("Ideal Sum : %b @", res_tc1, $time);
 	
 	if(Dataout_wire == res_tc1)
@@ -203,7 +217,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adde
    wait(Dataout_valid_wire==1'b1)
    	   Data_valid_reg <= 1'b0 ;
 	$display("\n");
-	$display("Test Case 2: Different Signs, Smaller number POSITIVE-> Final result NEGATIVE");
+	$display("Test Case 3: Different Signs, Smaller number POSITIVE-> Final result NEGATIVE");
 	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
 	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
 	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
@@ -238,7 +252,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adde
    wait(Dataout_valid_wire==1'b1)
    	   Data_valid_reg <= 1'b0 ;
 	$display("\n");
-	$display("Test Case 2: Different Signs, Smaller number VERY SMALL & POSITIVE-> Final result NEGATIVE");
+	$display("Test Case 4: Different Signs, Smaller number VERY SMALL & POSITIVE-> Final result NEGATIVE");
 	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
 	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
 	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
@@ -246,6 +260,41 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(Adde
 	$display("Ideal Sum : %b @", res_tc4, $time);
 	
 	if(Dataout_wire == res_tc4)
+		$display("Match... Yayyy");
+        else
+		$display("NO Match :(");
+	end
+	$display("\n");
+   endtask
+
+   task addTestCase5();begin
+
+   //num1 = n1;
+   //num2 = n2;
+
+   num2 = {1'b1, 8'b10000100, 23'b10010000000000000000000};//-50
+   num1 = {1'b0, 8'b10000100, 23'b00101000000000000000000};//37
+   res_tc5[31:0] = {1'b1, 8'b10000010, 23'b10100000000000000000000};//-13
+
+   //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
+
+   //---- Provide the data at the posedge of CLK -----
+   wait(Dataout_valid_wire==1'b0);
+   @(negedge CLK);
+       Datain1_reg <= num1 ;
+       Datain2_reg <= num2 ;
+       Data_valid_reg <= 1'b1 ;
+   wait(Dataout_valid_wire==1'b1)
+   	   Data_valid_reg <= 1'b0 ;
+	$display("\n");
+	$display("Test Case 5: 37, -50 -> Different Signs, Smaller number POSITIVE-> Final result NEGATIVE");
+	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
+	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
+	$display("Computed Data : %b @", Dataout_wire, $time);
+	$display("Ideal Sum : %b @", res_tc5, $time);
+	
+	if(Dataout_wire == res_tc5)
 		$display("Match... Yayyy");
         else
 		$display("NO Match :(");

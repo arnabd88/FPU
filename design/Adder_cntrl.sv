@@ -149,6 +149,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		//else                                      Adder_valid     =   0    ;
 		Exc             =   0                  ;
 	//-------------------------
+	Debug = StateMC ;
    	case(StateMC)
 		Idle     :   begin
 						exc_val  =  0 ;
@@ -242,24 +243,34 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 											Final_Sign     = Op1_Sign_reg ;
 											Final_Mantissa = normalize(Final_Mantissa_reg);
 										 end
-							3'b111   :   begin //--- Ignore carry if generated for different sign ----
+							// 3'b111   :   begin //--- Ignore carry if generated for different sign ----
+							// 				if(carry_reg==1) begin
+							// 					Final_Sign     = Op1_Sign_reg ;
+							// 					Final_Mantissa = normalize(Final_Mantissa_reg) ;
+							// 				end
+							// 				else begin
+							// 					Final_Sign     = Add_sign_reg ;
+							// 					Final_Mantissa = normalize(~Final_Mantissa_reg + 1) ;
+							// 				end
+							// 			 end
+							// 3'b110   :   begin //--- Ignore carry if generated for different sign ----
+							// 				if(carry_reg==1) begin
+							// 					Final_Sign     = Op1_Sign_reg ;
+							// 					Final_Mantissa = normalize(Final_Mantissa_reg) ;
+							// 				end
+							// 				else begin
+							// 					Final_Sign     = Add_sign_reg ;
+							// 					Final_Mantissa = normalize(~Final_Mantissa_reg + 1) ;
+							// 				end
+							// 			 end
+							default :    begin
 											if(carry_reg==1) begin
-												Final_Sign     = Op1_Sign_reg ;
-												Final_Mantissa = normalize(Final_Mantissa_reg) ;
+												Final_Sign  =  Op1_Sign_reg ;
+												Final_Mantissa = normalize(Final_Mantissa_reg);
 											end
 											else begin
-												Final_Sign     = Add_sign_reg ;
-												Final_Mantissa = normalize(~Final_Mantissa_reg + 1) ;
-											end
-										 end
-							3'b110   :   begin //--- Ignore carry if generated for different sign ----
-											if(carry_reg==1) begin
-												Final_Sign     = Op1_Sign_reg ;
-												Final_Mantissa = normalize(Final_Mantissa_reg) ;
-											end
-											else begin
-												Final_Sign     = Add_sign_reg ;
-												Final_Mantissa = normalize(~Final_Mantissa_reg + 1) ;
+												Final_Sign = Add_sign_reg ;
+												Final_Mantissa = normalize(~Final_Mantissa_reg + 1);
 											end
 										 end
 					   endcase
@@ -268,12 +279,19 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
                     end
 	RoundOff    :  begin
 						carry = 0 ;
-						case({Final_Mantissa_reg[2:0]})
-							3'b110   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
-							3'b111   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
-							3'b101   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
-							3'b100   :  begin
-											if(Final_Mantissa_reg[3]==1) {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+					//	case({Final_Mantissa_reg[2:0]})
+					//		3'b110   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+					//		3'b111   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+					//		3'b101   :  {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+					//		3'b100   :  begin
+					//						if(Final_Mantissa_reg[3]==1) {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+					//					end
+					//	endcase
+						case({Final_Mantissa_reg[2:1]})
+							2'b11    :  {carry, Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+							2'b10    :  begin
+											if(Final_Mantissa_reg[0]==1) {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
+									    	else if(Final_Mantissa_reg[3]==1) {carry,Final_Mantissa[26:3]} = Final_Mantissa_reg[26:3] + 1'b1 ;
 										end
 						endcase
 						if(carry == 1) next_StateMC = EvaluateRes ;
@@ -303,23 +321,117 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
    end
 
 
+//------- functionally correct with lot of slack -------------
+// function automatic bit[26:0] normalize( bit[26:0] data);
+// bit[26:0] temp = data ;
+//   for( int i=0; i<27; i++) begin
+//   	if(temp[26]==1) begin
+// 	    if(i > Final_Exponent_reg) begin 
+// 			exc_val = 3'b001 ;
+// 			return temp[26:0] ;
+// 		end
+// 		else begin
+// 			Final_Exponent = Final_Exponent_reg - i ;
+// 			return temp[26:0] ;
+// 		end
+// 	end
+// 	else  temp[26:0] = {temp[25:0],1'b0};
+//   end
+//   return temp ;
+// endfunction
 
-function automatic bit[26:0] normalize( bit[26:0] data);
-bit[26:0] temp = data ;
-  for( int i=0; i<27; i++) begin
-  	if(temp[26]==1) begin
-	    if(i > Final_Exponent_reg) begin 
-			exc_val = 3'b001 ;
-			return temp[26:0] ;
-		end
-		else begin
-			Final_Exponent = Final_Exponent_reg - i ;
-			return temp[26:0] ;
-		end
-	end
-	else  temp[26:0] = {temp[25:0],1'b0};
-  end
-  return temp ;
-endfunction
+
+//----- Under Experiment with no parallel shifting ------
+// function  automatic bit[26:0] normalize( bit[26:0] data);
+// 	bit[4:0] index ;
+// 	bit first_hit ;
+// 	bit[0:26] temp = data;
+// 	bit [26:0] data_final ;
+// 	for(int j=0 ; j<=26; j++) begin
+// 		if(first_hit==0 && temp[j]==1'b1) begin
+// 			first_hit = 1'b1 ;
+// 			index = j ;
+// 			if(index > Final_Exponent_reg) begin
+// 				exc_val = 3'b001 ;
+// 			end
+// 			else Final_Exponent = Final_Exponent_reg - j ;
+// 		end
+// 	end
+// 	index = 26 - index ;
+// 	for(int i=0; i<= index; i++) begin
+// 		data_final[26-i] = data[index-i];
+// 	end
+// 	index = 26 - index ;
+// 	for(int i=0; i<index ;i++)  data_final[i]=1'b0;
+// //   data = data << index ;
+// //	return data ;
+//     return data_final ;
+// 	
+// endfunction
+
+
+//----- Under Experiment with  parallel shifting ------
+// function  automatic bit[26:0] normalize( bit[26:0] data);
+// 	bit[4:0] index ;
+// 	bit first_hit ;
+// 	bit[0:26] temp = data;
+// 	//bit [26:0] data_final ;
+// 	bit[13:0] arr1=data[26:13] ;
+// 	bit[12:0] arr2=data[12:0] ;
+// 	for(int j=0 ; j<=26; j++) begin
+// 		if(first_hit==0 && temp[j]==1'b1) begin
+// 			first_hit = 1'b1 ;
+// 			index = j ;
+// 			if(index > Final_Exponent_reg) begin
+// 				exc_val = 3'b001 ;
+// 			end
+// 			else Final_Exponent = Final_Exponent_reg - j ;
+// 		end
+// 	end
+// 
+// 
+//     for(int i=0; i< index; i++) begin
+// 		if(index >= 13) begin
+// 			arr2 = 0 ;
+// 			if(i<=12) arr1 = {arr1[12:0], data[12-i]} ;
+// 			else     arr1 = {arr1[12:0],1'b0} ;
+// 		end
+// 		else begin
+// 			arr1 = {arr1[12:0], data[12-i]};
+// 			arr2 = {arr2[11:0], 1'b0} ;
+// 		end
+// 	end
+// 
+// 
+// 
+// 
+//     data = {arr1, arr2};
+// 	return data ;
+// 	
+// endfunction
+
+
+
+//---- Closest working model as of now -----
+
+ function  automatic bit[26:0] normalize( bit[26:0] data);
+ 	bit[4:0] index ;
+ 	bit first_hit ;
+ 	bit[0:26] temp = data;
+ 	for(int j=0 ; j<=26; j++) begin
+ 		if(first_hit==0 && temp[j]==1'b1) begin
+ 			first_hit = 1'b1 ;
+ 			index = j ;
+ 			if(index > Final_Exponent_reg) begin
+ 				exc_val = 3'b001 ;
+ 			end
+ 			else Final_Exponent = Final_Exponent_reg - j ;
+ 		end
+ 	end
+     data = data << index ;
+ 	return data ;
+ 	
+ endfunction
+
 
 endmodule

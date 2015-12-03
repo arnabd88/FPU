@@ -7,10 +7,13 @@
 //`include "../../design/adder_24b.sv"
 //`include "../../design/Adder_cntrl.sv"
 
+typedef enum {Reset=0, Test1, Test2, Test3, Test4, Test5, Test6, Test7} TestcaseType ;
+
+
 module testbench ;
 
-bit [31:0] Datain1_reg, Datain2_reg ;
-bit Data_valid_reg ;
+bit [31:0] Datain1_reg, Datain2_reg, ExcCheck_Datain_reg ;
+bit Data_valid_reg, ExcCheck_valid_reg ;
 bit[2:0] Mode_reg ;
 bit[4:0] Debug_reg ;
 
@@ -18,7 +21,7 @@ reg CLK, RSTn ;
 
 wire [31:0] Dataout_wire ;
 wire Dataout_valid_wire ;
-wire [2:0] Exc_wire ;
+wire [2:0] Exc_wire, Exc_value_wire;
 wire [24:0] Adder_datain1_wire , Adder_datain2_wire ;
 wire Adder_valid_wire ;
 wire [24:0] Adder_dataout_wire ;
@@ -26,7 +29,11 @@ wire [2:0] Adder_Exc_wire ;
 wire Adder_carryout_wire ;
 wire Adder_ack_wire ;
 
-bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3,res_tc4,res_tc5;
+bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3,res_tc4,res_tc5, res_tc6;
+
+TestcaseType  testNum ;
+event pass ;
+
 
  Adder_cntrl u_adder_cntrl(
   //--- Default interface ---
@@ -58,7 +65,7 @@ bit [31:0] num1, num2, n1_tc1,n2_tc1,res_tc1,res_tc2,res_tc3,res_tc4,res_tc5;
 
 
 adder_24b u_adder_24b( .Z(Adder_dataout_wire), .COUT(Adder_carryout_wire), .ACK(Adder_ack_wire), .A(Adder_datain1_wire), .B(Adder_datain2_wire), .REQ(Adder_valid_wire), .CLK(CLK), .RSTN(RSTn));
-exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcCheck_Datain_wire), .Data_valid(ExcCheck_valid_wire), .CLK(CLK), .RSTN(RSTn));
+exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcCheck_Datain_reg), .Data_valid(ExcCheck_valid_reg), .CLK(CLK), .RSTN(RSTn));
 
    always #5 CLK  =  ~CLK ;
 
@@ -90,6 +97,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 		   addTestCase3();//Opposite signs, Negative number larger magnitude
 		   addTestCase4();//Opposite signs, Negative number very large magnitude, Active GRS bits	
 	           addTestCase5();
+		   addTestCase6();
 		end
 		#100 $finish();
 		//---- Call the tasks in sequence -----
@@ -119,6 +127,8 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
    //num1 = n1;
    //num2 = n2;
+      testNum = TestcaseType'(1);
+
 
    num1 = 32'b01000000001100000000000000000000;//2.75
    num2 = 32'b01000000101100000000000000000000;//5.5
@@ -154,8 +164,10 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 	
 	$display("Ideal Sum : %b @", res_tc1, $time);
 	
-	if(Dataout_wire == res_tc1)
+	if(Dataout_wire == res_tc1) begin
 		$display("Match... Yayyy");
+		-> pass ;	
+	end
         else
 		$display("NO Match :(");
 	end
@@ -166,6 +178,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
    //num1 = n1;
    //num2 = n2;
+     testNum = TestcaseType'(2);
 
    num1 = 32'b11000000001100000000000000000000;//-2.75
    num2 = 32'b01000000101100000000000000000000;//5.5
@@ -187,10 +200,14 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
 	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
 	$display("Computed Data : %b @", Dataout_wire, $time);
+
+	$display("Exception Code for Computed Data: %b", Exc_value_wire);
 	$display("Ideal Sum : %b @", res_tc2, $time);
 	
-	if(Dataout_wire == res_tc2)
+	if(Dataout_wire == res_tc2)begin
 		$display("Match... Yayyy");
+		-> pass ;
+	end
         else
 		$display("NO Match :(");
 	end
@@ -201,6 +218,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
    //num1 = n1;
    //num2 = n2;
+     testNum = TestcaseType'(3);
 
    num1 = 32'b01000000001100000000000000000000;//2.75
    num2 = 32'b11000000101100000000000000000000;//-5.5
@@ -222,10 +240,14 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
 	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
 	$display("Computed Data : %b @", Dataout_wire, $time);
+
+	$display("Exception Code for Computed Data: %b", Exc_value_wire);
 	$display("Ideal Sum : %b @", res_tc3, $time);
 	
-	if(Dataout_wire == res_tc3)
+	if(Dataout_wire == res_tc3)begin
 		$display("Match... Yayyy");
+		-> pass ;
+	end
         else
 		$display("NO Match :(");
 	end
@@ -236,6 +258,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
    //num1 = n1;
    //num2 = n2;
+     testNum = TestcaseType'(4);
 
    num1 = 32'b01000000001000000001001111010011;//2.50121
    num2 = 32'b11000111010101101101100000000000;//-55000
@@ -257,10 +280,13 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
 	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
 	$display("Computed Data : %b @", Dataout_wire, $time);
+	$display("Exception Code for Computed Data: %b", Exc_value_wire);
 	$display("Ideal Sum : %b @", res_tc4, $time);
 	
-	if(Dataout_wire == res_tc4)
+	if(Dataout_wire == res_tc4)begin
 		$display("Match... Yayyy");
+		-> pass ;
+	end
         else
 		$display("NO Match :(");
 	end
@@ -271,6 +297,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
    //num1 = n1;
    //num2 = n2;
+     testNum = TestcaseType'(5);
 
    num2 = {1'b1, 8'b10000100, 23'b10010000000000000000000};//-50
    num1 = {1'b0, 8'b10000100, 23'b00101000000000000000000};//37
@@ -292,15 +319,62 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 	$display("Datain1_reg = %b, Datain2_reg = %b", Datain1_reg, Datain2_reg);
 	//$display("Adder_datain1_wire = %b, Adder_datain2_wire = %b", Adder_datain1_wire, Adder_datain2_wire);
 	$display("Computed Data : %b @", Dataout_wire, $time);
+	$display("Exception Code for Computed Data: %b", Exc_value_wire);
 	$display("Ideal Sum : %b @", res_tc5, $time);
 	
-	if(Dataout_wire == res_tc5)
+	if(Dataout_wire == res_tc5)begin
 		$display("Match... Yayyy");
+		-> pass ;
+		end
         else
 		$display("NO Match :(");
 	end
 	$display("\n");
    endtask
+
+   task addTestCase6();
+
+   //num1 = n1;
+   //num2 = n2;
+     testNum = TestcaseType'(6);
+
+   num2 = {1'b1, 8'b11111111, 23'b00000000000000000000000};//
+   num1 = {1'b0, 8'b11111111, 23'b00000000000000000000001};//
+   res_tc6[31:0] = {1'b1, 8'b11111111, 23'b10100000000000000000000};//
+
+   //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
+
+   //---- Provide the data at the posedge of CLK -----
+   wait(Exc_Ack_wire==1'b0);
+   @(negedge CLK);
+       ExcCheck_Datain_reg <= num1 ;
+       ExcCheck_valid_reg <= 1'b1 ;
+   wait(Exc_Ack_wire==1'b1)
+   	   ExcCheck_valid_reg <= 1'b0 ;
+   $display("Test Case 6: Input numbers throwing Exception");
+   $display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
+
+   $display("Exception Code for Num1: %b", Exc_value_wire);
+
+   if(Exc_value_wire==3'b100)
+	$display("Infinity condition");
+   if(Exc_value_wire==3'b011)
+	$display("NaN condition");
+
+   wait(Exc_Ack_wire==1'b0);
+   @(negedge CLK);
+       ExcCheck_Datain_reg <= num2 ;
+       ExcCheck_valid_reg <= 1'b1 ;
+   wait(Exc_Ack_wire==1'b1)
+   	   ExcCheck_valid_reg <= 1'b0 ;
+   $display("Exception Code for Num2: %b", Exc_value_wire);
+
+   if(Exc_value_wire==3'b100)
+	$display("Infinity condition");
+   if(Exc_value_wire==3'b011)
+	$display("NaN condition");
+
+endtask
 
 
    task reset();

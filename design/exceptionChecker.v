@@ -1,43 +1,57 @@
 //Verilog Module for ExceptionChecker
 
-typedef enum {Exc_Compute=0, Exc_ResetOutput} ExcChkState ;
+typedef enum {Compute=0, ResetOutput} ExcChkState ;
 
-module exceptionChecker ( Data, Data_valid, Exc, ACK, CLK, RSTN);
+module exceptionChecker ( Exc, ACK, Data, Data_valid, CLK, RSTN);
 
 
   input [31:0] Data;
   input Data_valid, CLK, RSTN;
   output reg [2:0] Exc;
+  reg [2:0] Exc_val ;
   output reg ACK;
+  reg ACK_val ;
 
   ExcChkState  StateMC, next_StateMC;
 
 always@(posedge CLK or negedge RSTN) begin
 	if(RSTN!=1) begin
-		ACK  <= 0;
-		StateMC <= Exc_Compute ;
+		StateMC <= Compute ;
+                Exc <= 0 ;
+                ACK <= 0 ;
 	end
 	else begin
-		StateMC <= next_StateMC ;		
+		StateMC <= next_StateMC ;
+                Exc <= Exc_val ;
+                ACK <= ACK_val ;		
 	end
 end
 
 always @(*) 
-begin  
+begin
+   next_StateMC = StateMC ;  
+   Exc_val = Exc ;
+   ACK_val = 0;
   case(StateMC)
-     Exc_Compute :   begin
-			if(Data_valid==1 && ACK==0) begin
-				if(Data[30:23]==8'hFF && Data[22:0]==0)
-				  Exc[2:0] = 3'b011;// Infinity condition
-				else if(Data[30:23]==8'hFF && Data[22]!=0)
-				  Exc[2:0] = 3'b100;// NaN condition	
-				next_StateMC = Exc_ResetOutput ;
-				ACK = 1'b1 ;
+     Compute :   begin
+                        ACK_val = 1'b0 ;
+			if(Data_valid==1) begin
+				if(Data[30:23]==8'hFF && Data[22:0]==0)begin
+				  Exc_val[2:0] = 3'b011;// Infinity condition
+				end
+				else if(Data[30:23]==8'hFF && Data[22:0]!=0) begin
+				  	Exc_val[2:0] = 3'b100;// NaN condition 
+					end
+				     else begin 
+					  Exc_val[2:0] = 3'b000;
+					  end
 			end
+				next_StateMC = ResetOutput ;
+				ACK_val = 1'b1 ;
 		 end
- Exc_ResetOutput:   begin
-			ACK = 1'b0 ;
-			next_StateMC = Exc_Compute ;			
+ ResetOutput:   begin
+			ACK_val = 1'b0 ;
+			next_StateMC = Compute ;			
 		 end
   endcase
 

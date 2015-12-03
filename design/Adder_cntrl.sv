@@ -41,11 +41,11 @@ module Adder_cntrl (
 	input      [2:0]  Mode          ;
 	output reg [4:0]  Debug         ;
   //--- Adder callee module interface ---
-    output reg [23:0] Adder_datain1 ;
-	output reg [23:0] Adder_datain2 ;
+    output reg [24:0] Adder_datain1 ;
+	output reg [24:0] Adder_datain2 ;
 	output reg        Adder_valid     ;
 	input      [1:0]  Adder_Exc       ;
-	input      [23:0] Adder_dataout   ;
+	input      [24:0] Adder_dataout   ;
 	input             Adder_carryout  ;
 	input             Adder_ack       ;
   //---- ExceptionChecker callee module interface ---
@@ -64,11 +64,12 @@ reg [23:0] Op1_Mantissa, Op1_Mantissa_reg, Op2_Mantissa, Op2_Mantissa_reg ;
 reg [7:0]  diff, diff_reg ;
 reg [2:0]  exc_val, exc_reg ;
 reg [26:0] Final_Mantissa, Final_Mantissa_reg ;
+reg        Add_sign, Add_sign_reg;
 reg Final_Sign, Final_Sign_reg ;
 reg carry, carry_reg ;
 reg G_val, G_reg, R_val, R_reg, S_val, S_reg ;
 reg Adder_valid_val ;
-reg [23:0] Adder_datain1_val , Adder_datain2_val ;
+reg [24:0] Adder_datain1_val , Adder_datain2_val ;
 
 xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 
@@ -93,6 +94,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		Adder_valid          <=     0 ;
 		Adder_datain1        <=     0 ;
 		Adder_datain2        <=     0 ;
+		Add_sign_reg         <=     0 ;
 
    	end
    	else begin
@@ -113,6 +115,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		Adder_valid          <=     Adder_valid_val    ;
 		Adder_datain1        <=     Adder_datain1_val ;
 		Adder_datain2        <=     Adder_datain2_val ;
+		Add_sign_reg         <=     Add_sign       ;
    	end
    end
 
@@ -141,6 +144,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		Adder_datain1_val   =   0                  ;
 		Adder_datain2_val   =   0                  ;
 		Adder_valid_val = Adder_valid ;
+		Add_sign        = Add_sign_reg ;
 		//if(StateMC==AdderState && Adder_valid==1) Adder_valid     =   1    ;
 		//else                                      Adder_valid     =   0    ;
 		Exc             =   0                  ;
@@ -163,7 +167,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 								else
 									Op1_Mantissa   =   {1'b1, Datain1[22:0]} ;
 								Op2_Sign       =   Datain2[31] ;
-								G_val          =   Datain2[diff-1];
+								if(diff !=0) G_val          =   Datain2[diff-1];
 								if(diff > 1)	R_val          =   Datain2[diff-2] ;
 								if(diff > 2)    S_val          =   Datain2[diff-3] ;
 								if(Datain2[30:23]== 8'h00)
@@ -191,14 +195,15 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 	AdderState   :	begin
 						if(Adder_ack == 0 ) begin
 						    Adder_valid_val  =  1 ;
-						    Adder_datain1_val = Op1_Mantissa_reg ;
-						    if(EOP == 1)	{Adder_datain2_val,G_val,R_val,S_val} = (~{Op2_Mantissa_reg,G_reg,R_reg,S_reg}) + 1'b1 ;
-						    else            Adder_datain2_val =  Op2_Mantissa_reg ;
+						    Adder_datain1_val = {1'b0,Op1_Mantissa_reg} ;
+						    if(EOP == 1)	{Adder_datain2_val,G_val,R_val,S_val} = (~{{1'b0,Op2_Mantissa_reg},G_reg,R_reg,S_reg}) + 1'b1 ;
+						    else            Adder_datain2_val =  {1'b0,Op2_Mantissa_reg} ;
 						end
 						else if(Adder_ack == 1 ) begin
 							//---- Receive the data sent by the adder circuit ----
 							Adder_valid_val = 1'b0 ;
 							exc_val = Adder_Exc ;
+							Add_sign       = Adder_dataout[24] ;
 							Final_Mantissa = {Adder_dataout[23:0],G_val, R_val, S_val} ;
 							carry          = Adder_carryout ;
 							//---- Disable the adder call and reset the drive lines ----
@@ -209,7 +214,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 					end
   EvaluateRes    :  begin
   					   //--- Find out the cases ---
-					   case({EOP,carry_reg,Final_Mantissa_reg[26]})
+					   case({EOP,carry_reg^Add_sign_reg,Final_Mantissa_reg[26]})
 					   		3'b101   :   begin
 											//--- Different signs, noCarry, MSB 1 --> Sum is negative
 											Final_Sign = 1'b1 ;
@@ -238,12 +243,24 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 											Final_Mantissa = normalize(Final_Mantissa_reg);
 										 end
 							3'b111   :   begin //--- Ignore carry if generated for different sign ----
-											Final_Sign     = Op1_Sign_reg ;
-											Final_Mantissa = normalize(Final_Mantissa_reg) ;
+											if(carry_reg==1) begin
+												Final_Sign     = Op1_Sign_reg ;
+												Final_Mantissa = normalize(Final_Mantissa_reg) ;
+											end
+											else begin
+												Final_Sign     = Add_sign_reg ;
+												Final_Mantissa = normalize(~Final_Mantissa_reg + 1) ;
+											end
 										 end
 							3'b110   :   begin //--- Ignore carry if generated for different sign ----
-											Final_Sign     = Op1_Sign_reg ;
-											Final_Mantissa = normalize(Final_Mantissa_reg) ;
+											if(carry_reg==1) begin
+												Final_Sign     = Op1_Sign_reg ;
+												Final_Mantissa = normalize(Final_Mantissa_reg) ;
+											end
+											else begin
+												Final_Sign     = Add_sign_reg ;
+												Final_Mantissa = normalize(~Final_Mantissa_reg + 1) ;
+											end
 										 end
 					   endcase
 					   if(exc_val != 0) next_StateMC = SetOutput ;

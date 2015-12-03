@@ -4,12 +4,12 @@ typedef enum {Add_Compute=0, Add_ResetOutput} AddState ;
 
 module adder_24b ( Z, COUT, ACK, A, B, REQ, CLK, RSTN);
 
-  input [23:0] A,B;
+  input [24:0] A,B;
   input REQ, CLK, RSTN;
-  output reg [23:0] Z;
+  output reg [24:0] Z;
   output reg COUT;
   output reg ACK;
-  reg [23:0] Z_val;
+  reg [24:0] Z_val;
   reg COUT_val;
 
   AddState  StateMC, next_StateMC;

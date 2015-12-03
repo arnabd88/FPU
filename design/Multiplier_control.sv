@@ -55,15 +55,17 @@ module Mul_cntrl (
 
 Mul_cntrl_state StateMC, next_StateMC ;
 
-
+reg [47:0] Multi_dataout_val , Multi_dataout_reg ;
 reg [8:0]  Final_Exponent, Final_Exponent_reg ;
+reg [7:0] Op1_Exponent_reg, Op1_Exponent, Op2_Exponent, Op2_Exponent_reg ;
 reg [23:0] Op1_Mantissa, Op1_Mantissa_reg, Op2_Mantissa, Op2_Mantissa_reg ;
 reg [5:0]  diff, diff_reg ;
 reg [2:0]  exc_val, exc_reg ;
 reg [23:0] Final_Mantissa, Final_Mantissa_reg ;
 reg Final_Sign, Final_Sign_reg ;
 reg G_val, G_reg, T_val, T_reg;
-reg denorm;
+reg denorm, denorm_reg;
+reg carry, carry_reg ;
 reg Multi_datain1_val, Multi_datain2_val;
 
 //--- xor u_xor_1( Dataout[31], Datain1[31], Datain2[31]) ;
@@ -89,6 +91,7 @@ always @(posedge CLK) begin
 		denorm_reg           <=     0 ;
 		Multi_datain1        <=     0 ;
 		Multi_datain2        <=     0 ;
+		Multi_dataout_reg    <=     0 ;
 
 
    	end
@@ -109,6 +112,7 @@ always @(posedge CLK) begin
 		denorm_reg           <=     denorm         ;
 		Multi_datain1	     <=     Multi_datain1_val;
 		Multi_datain2	     <=     Multi_datain2_val;
+		Multi_dataout_reg    <=     Multi_dataout_val ;
 
    	end
    end
@@ -138,6 +142,7 @@ always@(*) begin
 		if(StateMC==MultiplicationState && Multi_valid==1) Multi_valid     =   1    ;
 		else                                      	   Multi_valid     =   0    ;
 		Exc             =   0                  ;
+		Multi_dataout_val   =     Multi_dataout_reg ;
 	//-------------------------
    	case(StateMC)
 	Multiplication_Idle     :   begin
@@ -146,6 +151,7 @@ always@(*) begin
 						G_val    =  0 ;
 						T_val    =  0 ;
 						Dataout_valid = 0 ;
+						next_StateMC = Multiplication_Idle ;
 						if(Data_valid==1) begin // new data available for addition
 							//---- Compare the Exponent.  Op1(higher exponent)
 							next_StateMC = MultiplicationState; // Go to AdderState to drive the adderunit
@@ -161,14 +167,13 @@ always@(*) begin
 							else if(Op2_Exponent == 0) begin Op2_Mantissa = {1'b0, Datain2[30:23]}; Op1_Mantissa = {1'b1, Datain1[30:23]}; end
 							else begin Op2_Mantissa = {1'b1, Datain2[30:23]}; Op1_Mantissa = {1'b1, Datain1[30:23]}; denorm = 0; end
 
-							Final_Exponent = add8(Op1_Exponent, Op2_Exponent, 1b'0);
+							Final_Exponent = add8(Op1_Exponent, Op2_Exponent, 1'b0);
 							if(denorm == 1) Final_Exponent = add8(Final_Exponent, 8'b01111110, 1'b1);
 							else Final_Exponent = add8(Final_Exponent, 8'b01111111, 1'b1);
 							if(Final_Exponent[8] == 1) begin exc_val = 3'b010; Final_Exponent[7:0] = 8'b11111111; next_StateMC = Multiplication_SetOutput; end
 							
 
 						end
-						else next_StateMC = Multiplication_Idle ;
 
 				end
 
@@ -196,34 +201,35 @@ always@(*) begin
 						if(Multi_ack == 1 && Multi_valid == 1)
 						begin
 							exc_val = Multi_Exc;
+							Multi_dataout_val = Multi_dataout ; 
 							if(exc_val != 0) next_StateMC = Multiplication_SetOutput;
 							else
 								next_StateMC = Update;
 								begin
-									if(Multi_dataout[47] == 1)
+									if(Multi_dataout_val[47] == 1)
 										begin
-											Final_Mantissa[22:0] = Multi_dataout[46:23];
-											G_val = Multi_dataout[22];
-											T_val = Multi_dataout[21];
+											Final_Mantissa[22:0] = Multi_dataout_val[46:23];
+											G_val = Multi_dataout_val[22];
+											T_val = Multi_dataout_val[21];
 											Final_Exponent = add8(Final_Exponent, 8'b00000001, 1'b0);
 											if(Final_Exponent[8] == 1) begin exc_val = 3'b010; Final_Exponent[7:0] = 8'b11111111; next_StateMC = Multiplication_SetOutput; end
 										end
-									else if({Multi_dataout[47], Multi_dataout[46]} == 2'b01)
+									else if({Multi_dataout_val[47], Multi_dataout_val[46]} == 2'b01)
 										begin
-											Final_Mantissa[22:0] = Multi_dataout[45:22];
-											G_val = Multi_dataout[21];
-											T_val = Multi_dataout[20];						
+											Final_Mantissa[22:0] = Multi_dataout_val[45:22];
+											G_val = Multi_dataout_val[21];
+											T_val = Multi_dataout_val[20];						
 										end
 									else
 										begin
-											while(Final_Exponent > 0 && Multi_dataout[46] != 1'b1)
+											while(Final_Exponent > 0 && Multi_dataout_val[46] != 1'b1)
 											begin
-												Multi_dataout << 1'b1;
+												Multi_dataout_val = Multi_dataout << 1;
 												Final_Exponent = add8(Final_Exponent, 8'b00000001, 1'b1);
 											end
-											Final_Mantissa[22:0] = Multi_dataout[45:22];
-											G_val = Multi_dataout[21];
-											T_val = Multi_dataout[20];
+											Final_Mantissa[22:0] = Multi_dataout_val[45:22];
+											G_val = Multi_dataout_val[21];
+											T_val = Multi_dataout_val[20];
 										end
 									
 								end
@@ -242,7 +248,7 @@ always@(*) begin
 															ExcCheck_valid = 0 ;
 															exc_val = Exc_value ;
 														end
-														next_StateMC = SetOutput ; 
+														next_StateMC = Multiplication_SetOutput; 
 												end
 	
 
@@ -271,4 +277,4 @@ function bit[8:0] add8( bit[7:0] data1, bit[7:0] data2, bit op);
   	return temp ;
 endfunction
 
-
+endmodule

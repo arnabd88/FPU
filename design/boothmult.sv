@@ -39,7 +39,7 @@ always@(posedge CLK) begin
 		 Q_reg <= 0;
 		 Q1_reg <= 0;
 		 count_reg <=0;
-		 BACK <= 0;
+		 //BACK <= 0;
 		 Adder_valid <=0;
 		 Adder_datain1 <= 0;
     		Adder_datain2 <= 0;
@@ -67,7 +67,6 @@ begin
    Q1 = Q1_reg ;
    M = M_reg ;
    A = A_reg ;
-   BACK = 0;
    Adder_valid_val=Adder_valid;
    Adder_datain1_val = 0;
    Adder_datain2_val = 0;

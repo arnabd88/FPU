@@ -6,22 +6,22 @@ module Mul_cntrl (
 	RSTn ,
   //--- Caller interface ---
 	Datain1 , //data 1 to the multiplier
-	Datain2 , //dat 2 to the multiplier
+	Datain2 , //data 2 to the multiplier
 	Data_valid , // input signal saying data is valid
 	Dataout , // data out result 
-	Dataout_valid , //signal sayign output is valid
+	Dataout_valid , //signal saying output is valid
 	Exc , //exceptions
 	Mode , //mode of operation
 	Debug , //debug signals
   //--- Multiplier callee module interface ---
     Multi_datain1 , //input 1 to the booth multiplier (the mantissa)
 	Multi_datain2 , //input 2 to the multiplier (the mantissa)
-	Multi_valid , // signal saying the signal to thebooth multiplier is valid
-	Multi_Exc , //multiplier excepotions?
+	Multi_valid , // signal saying the signal to the booth multiplier is valid
+	Multi_Exc , //multiplier exceptions?
 	Multi_dataout , //booth multiplier data output
-	Multi_ack  , //signal asserted by the booth multiplier to say valid data is availabel on the output
+	Multi_ack  , //signal asserted by the booth multiplier to say valid data is available on the output
   //---- Multiplication_ExceptionChecker callee module interface ---
-    	ExcCheck_valid , // Exceptions fo the FPU multiplier unit
+    	ExcCheck_valid , // Exceptions for the FPU multiplier unit
 	ExcCheck_Datain,
 	Exc_value,
 	Exc_Ack
@@ -197,13 +197,13 @@ always@(*) begin
 						if(Multi_ack == 0) //prechecking booth status for multiplication
 						begin
 							Multi_valid_val = 1;
-							Multi_datain1_val = Op1_Mantissa;
-							Multi_datain2_val = Op2_Mantissa;
+							Multi_datain1_val = Op1_Mantissa_reg;
+							Multi_datain2_val = Op2_Mantissa_reg;
 
 						end
-						if(Multi_ack == 1) //checking value received from booth multiplier
+						else if(Multi_ack == 1) //checking value received from booth multiplier
 						begin
-							Multi_valid_val = 0; //de-asserting the valid signalsent to booth 
+							Multi_valid_val = 0; //de-asserting the valid signal sent to booth 
 							exc_val = Multi_Exc; //exception checker
 							Multi_dataout_val = Multi_dataout ; 
 							if(exc_val != 0) next_StateMC = Multiplication_SetOutput;
@@ -224,19 +224,22 @@ always@(*) begin
 											G_val = Multi_dataout_val[21];
 											T_val = Multi_dataout_val[20];						
 										end
-								/*
+								
 									else //denormal case
 										begin
+											/*
 											while(Final_Exponent > 0 && Multi_dataout_val[46] != 1'b1)
 											begin
 												Multi_dataout_val = Multi_dataout << 1;
 												Final_Exponent = add8(Final_Exponent, 8'b00000001, 1'b1);
 											end
+											*/
+											Multi_dataout_val = normalize(Multi_dataout_val[45:0]);
 											Final_Mantissa[22:0] = Multi_dataout_val[45:22];
 											G_val = Multi_dataout_val[21];
 											T_val = Multi_dataout_val[20];
 										end
-								*/	
+									
 								end
 							
 						end
@@ -244,7 +247,7 @@ always@(*) begin
 		
 		Multiplication_ExceptionChecker    :	begin
 														ExcCheck_valid = 1'b1 ;
-														ExcCheck_Datain = {Final_Sign_reg, Final_Exponent_reg, Final_Mantissa_reg[22:0]};  //Nag had kept [26:3]. Need to verify
+														ExcCheck_Datain = {Final_Sign_reg, Final_Exponent_reg, Final_Mantissa_reg[22:0]}; 
 														if(Exc_Ack == 1) begin
 															ExcCheck_valid = 0 ;
 															exc_val = Exc_value ;
@@ -277,5 +280,25 @@ function bit[8:0] add8( bit[7:0] data1, bit[7:0] data2, bit op);
 	else temp = data1 - data2;
   	return temp ;
 endfunction
+
+ function  automatic bit[45:0] normalize( bit[45:0] data);
+ 	bit[5:0] index ;
+ 	bit first_hit ;
+ 	bit[0:45] temp = data;
+ 	for(int j=0 ; j<=45; j++) begin
+ 		if(first_hit==0 && temp[j]==1'b1) begin
+ 			first_hit = 1'b1 ;
+ 			index = j ;
+ 			if(index > Final_Exponent_reg) begin
+				index = Final_Exponent_reg ;
+ 				Final_Exponent = 0;
+ 			end
+ 			else Final_Exponent = Final_Exponent_reg - j ;
+ 		end
+ 	end
+     data = data << index ;
+ 	return data ;
+ 	
+ endfunction
 
 endmodule

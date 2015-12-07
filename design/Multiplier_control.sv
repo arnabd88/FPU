@@ -210,7 +210,7 @@ always@(*) begin
 								begin
 									if(Multi_dataout_val[47] == 1) //this is when the mantissa result starts with 10 or 11
 										begin
-											Final_Mantissa[22:0] = Multi_dataout_val[46:23];
+											Final_Mantissa[22:0] = Multi_dataout_val[46:24];
 											G_val = Multi_dataout_val[22];
 											T_val = Multi_dataout_val[21];
 											Final_Exponent = add8(Final_Exponent, 9'b000000001, 1'b0); //incrementing exponent
@@ -218,7 +218,7 @@ always@(*) begin
 										end
 									else if({Multi_dataout_val[47], Multi_dataout_val[46]} == 2'b01) //this is when the mantissa result starts with 01
 										begin
-											Final_Mantissa[22:0] = Multi_dataout_val[45:22];
+											Final_Mantissa[22:0] = Multi_dataout_val[45:23];
 											G_val = Multi_dataout_val[21];
 											T_val = Multi_dataout_val[20];						
 										end
@@ -233,7 +233,7 @@ always@(*) begin
 											end
 											*/
 											Multi_dataout_val = normalize(Multi_dataout_val[45:0]);
-											Final_Mantissa[22:0] = Multi_dataout_val[45:22];
+											Final_Mantissa[22:0] = Multi_dataout_val[45:23];
 											G_val = Multi_dataout_val[21];
 											T_val = Multi_dataout_val[20];
 										end

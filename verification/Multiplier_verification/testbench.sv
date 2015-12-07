@@ -22,9 +22,9 @@ reg CLK, RSTn ;
 wire [31:0] Dataout_wire ;
 wire Dataout_valid_wire ;
 wire [2:0] Exc_wire, Exc_value_wire;
-wire [24:0] Multi_datain1_wire , Multi_datain2_wire ;
+wire [23:0] Multi_datain1_wire , Multi_datain2_wire ;
 wire Multi_valid_wire ;
-wire [48:0] Multi_dataout_wire ;
+wire [47:0] Multi_dataout_wire ;
 wire Multi_ack_wire ;
 
 wire [24:0] Adder_datain1_wire , Adder_datain2_wire ;

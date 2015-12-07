@@ -17,7 +17,6 @@ module Mul_cntrl (
     Multi_datain1 , //input 1 to the booth multiplier (the mantissa)
 	Multi_datain2 , //input 2 to the multiplier (the mantissa)
 	Multi_valid , // signal saying the signal to the booth multiplier is valid
-	Multi_Exc , //multiplier exceptions?
 	Multi_dataout , //booth multiplier data output
 	Multi_ack  , //signal asserted by the booth multiplier to say valid data is available on the output
   //---- Multiplication_ExceptionChecker callee module interface ---
@@ -44,7 +43,6 @@ module Mul_cntrl (
 	output reg [23:0] Multi_datain2 ;
 	output reg        Multi_valid   ;
 	reg 		  Multi_valid_val;
-	input      [2:0]  Multi_Exc     ;
 	input      [47:0] Multi_dataout ;
 	input             Multi_ack     ;
   //---- Multiplication_ExceptionChecker callee module interface ---
@@ -68,10 +66,11 @@ reg Final_Sign, Final_Sign_reg ;
 reg G_val, G_reg, T_val, T_reg;
 reg denorm, denorm_reg;
 reg carry, carry_reg ;
-reg Multi_datain1_val, Multi_datain2_val;
+reg [23:0] Multi_datain1_val, Multi_datain2_val;
 
 //--- xor u_xor_1( Dataout[31], Datain1[31], Datain2[31]) ;
-
+//assign Multi_datain1 = Multi_datain1_reg;
+//assign Multi_datain2 = Multi_datain2_reg;
 
 
 always @(posedge CLK) begin
@@ -140,8 +139,8 @@ always@(*) begin
 		ExcCheck_valid  =   0                  ;
 		Dataout         =   0                  ;
 		Dataout_valid   =   0                  ;
-		Multi_datain1_val   =   0                  ;
-		Multi_datain2_val   =   0                  ;
+		Multi_datain1_val   =   Multi_datain1 ;              
+		Multi_datain2_val   =   Multi_datain2 ;
 		Multi_valid_val =   Multi_valid        ;
 		Exc             =   0                  ;
 		Multi_dataout_val   =     Multi_dataout_reg ;
@@ -165,13 +164,13 @@ always@(*) begin
 								exc_val = 3'b001; 
 								next_StateMC = Multiplication_SetOutput;
 							end
-							else if(Op1_Exponent == 0) begin Op1_Mantissa = {1'b0, Datain1[30:23]}; Op2_Mantissa = {1'b1, Datain2[30:23]}; end
-							else if(Op2_Exponent == 0) begin Op2_Mantissa = {1'b0, Datain2[30:23]}; Op1_Mantissa = {1'b1, Datain1[30:23]}; end
-							else begin Op2_Mantissa = {1'b1, Datain2[30:23]}; Op1_Mantissa = {1'b1, Datain1[30:23]}; denorm = 0; end
+							else if(Op1_Exponent == 0) begin Op1_Mantissa = {1'b0, Datain1[22:0]}; Op2_Mantissa = {1'b1, Datain2[22:0]}; end
+							else if(Op2_Exponent == 0) begin Op2_Mantissa = {1'b0, Datain2[22:0]}; Op1_Mantissa = {1'b1, Datain1[22:0]}; end
+							else begin Op2_Mantissa = {1'b1, Datain2[22:0]}; Op1_Mantissa = {1'b1, Datain1[22:0]}; denorm = 0; end
 
 							Final_Exponent = add8(Op1_Exponent, Op2_Exponent, 1'b0); //adding the two exponents
-							if(denorm == 1) Final_Exponent = add8(Final_Exponent, 8'b01111110, 1'b1);
-							else Final_Exponent = add8(Final_Exponent, 8'b01111111, 1'b1); // Subtracting bias from the exponents
+							if(denorm == 1) Final_Exponent = add8(Final_Exponent, 9'b001111110, 1'b1);
+							else Final_Exponent = add8(Final_Exponent, 9'b001111111, 1'b1); // Subtracting bias from the exponents
 							if(Final_Exponent[8] == 1) begin exc_val = 3'b010; Final_Exponent[7:0] = 8'b11111111; next_StateMC = Multiplication_SetOutput; end //overflow in the exponent. Set to infinity 
 							
 
@@ -204,7 +203,6 @@ always@(*) begin
 						else if(Multi_ack == 1) //checking value received from booth multiplier
 						begin
 							Multi_valid_val = 0; //de-asserting the valid signal sent to booth 
-							exc_val = Multi_Exc; //exception checker
 							Multi_dataout_val = Multi_dataout ; 
 							if(exc_val != 0) next_StateMC = Multiplication_SetOutput;
 							else
@@ -215,7 +213,7 @@ always@(*) begin
 											Final_Mantissa[22:0] = Multi_dataout_val[46:23];
 											G_val = Multi_dataout_val[22];
 											T_val = Multi_dataout_val[21];
-											Final_Exponent = add8(Final_Exponent, 8'b00000001, 1'b0); //incrementing exponent
+											Final_Exponent = add8(Final_Exponent, 9'b000000001, 1'b0); //incrementing exponent
 											if(Final_Exponent[8] == 1) begin exc_val = 3'b010; Final_Exponent[7:0] = 8'b11111111; next_StateMC = Multiplication_SetOutput; end //If the exponent overflows, generate exception of overflow/infinity 
 										end
 									else if({Multi_dataout_val[47], Multi_dataout_val[46]} == 2'b01) //this is when the mantissa result starts with 01
@@ -274,7 +272,7 @@ always@(*) begin
 
 
 
-function bit[8:0] add8( bit[7:0] data1, bit[7:0] data2, bit op);
+function bit[8:0] add8( bit[8:0] data1, bit[8:0] data2, bit op);
 	bit[8:0] temp;
 	if(op == 0) temp = data1 + data2;
 	else temp = data1 - data2;

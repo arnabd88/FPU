@@ -1,10 +1,9 @@
-typedef enum {Idle = 0, Mult_Compute, Mul_ResetOutput} BoothState ;
+typedef enum {Booth_Idle = 0, Mult_Compute, Mul_ResetOutput} BoothState ;
 
 module booth (res, m1 , m2, CLK,  BREQ, BACK, RSTK,   
 	Adder_datain1 ,
 	Adder_datain2 ,
 	Adder_valid ,
-	Adder_Exc ,
 	Adder_dataout ,
 	Adder_carryout ,
 	Adder_ack);
@@ -21,7 +20,6 @@ reg [4:0] count, count_reg;
         output reg [24:0] Adder_datain1 ;
 	output reg [24:0] Adder_datain2 ;
 	output reg        Adder_valid;
-	input      [1:0]  Adder_Exc       ;
 	input      [24:0] Adder_dataout   ;
 	input             Adder_carryout  ;
 	input             Adder_ack       ;
@@ -43,7 +41,7 @@ always@(posedge CLK) begin
 		 Adder_valid <=0;
 		 Adder_datain1 <= 0;
     		Adder_datain2 <= 0;
-		 BStateMC <= Idle;
+		 BStateMC <= Booth_Idle;
 	end
 	else begin
 		A_reg <= A;
@@ -74,9 +72,9 @@ begin
    
 
   case(BStateMC)
-		Idle: begin
+		Booth_Idle: begin
 				BACK=0;
-				Bnext_StateMC = Idle;
+				Bnext_StateMC = Booth_Idle;
 				if(BREQ==1)
 				begin
 		 		 A= 0;
@@ -148,7 +146,7 @@ begin
 
                 Mul_ResetOutput:   begin
 			                       BACK = 1'b0 ;
-			                       Bnext_StateMC = Idle;			
+			                       Bnext_StateMC = Booth_Idle;			
 		                        end
   endcase
 

@@ -22,10 +22,14 @@ reg CLK, RSTn ;
 wire [31:0] Dataout_wire ;
 wire Dataout_valid_wire ;
 wire [2:0] Exc_wire, Exc_value_wire;
+wire [24:0] Multi_datain1_wire , Multi_datain2_wire ;
+wire Multi_valid_wire ;
+wire [48:0] Multi_dataout_wire ;
+wire Multi_ack_wire ;
+
 wire [24:0] Adder_datain1_wire , Adder_datain2_wire ;
 wire Adder_valid_wire ;
 wire [24:0] Adder_dataout_wire ;
-wire [2:0] Adder_Exc_wire ;
 wire Adder_carryout_wire ;
 wire Adder_ack_wire ;
 
@@ -35,7 +39,7 @@ TestcaseType  testNum ;
 event pass ;
 
 
- Adder_cntrl u_adder_cntrl(
+ Mul_cntrl u_mul_cntrl(
   //--- Default interface ---
     .CLK (CLK),
 	.RSTn(RSTn) ,
@@ -48,14 +52,12 @@ event pass ;
 	.Exc(Exc_wire) ,
 	.Mode(Mode_reg) ,
 	.Debug(Debug_reg) ,
-  //--- Adder callee module interface ---
-    .Adder_datain1(Adder_datain1_wire) ,
-	.Adder_datain2(Adder_datain2_wire) ,
-	.Adder_valid(Adder_valid_wire) ,
-	.Adder_Exc(Adder_Exc_wire) ,
-	.Adder_dataout(Adder_dataout_wire) ,
-	.Adder_carryout(Adder_carryout_wire) ,
-	.Adder_ack(Adder_ack_wire)  ,
+  //--- Multiplier callee module interface ---
+    .Multi_datain1(Multi_datain1_wire) ,
+	.Multi_datain2(Multi_datain2_wire) ,
+	.Multi_valid(Multi_valid_wire) ,
+	.Multi_dataout(Multi_dataout_wire) ,
+	.Multi_ack(Multi_ack_wire)  ,
   //---- ExceptionChecker callee module interface ---
     .ExcCheck_valid(ExcCheck_valid_wire) ,
 	.ExcCheck_Datain(ExcCheck_Datain_wire),
@@ -63,8 +65,10 @@ event pass ;
 	.Exc_Ack(Exc_Ack_wire)
  ) ;
 
-
 adder_24b u_adder_24b( .Z(Adder_dataout_wire), .COUT(Adder_carryout_wire), .ACK(Adder_ack_wire), .A(Adder_datain1_wire), .B(Adder_datain2_wire), .REQ(Adder_valid_wire), .CLK(CLK), .RSTN(RSTn));
+
+booth u_booth( .res(Multi_dataout_wire), .BACK(Multi_ack_wire), .m1(Multi_datain1_wire), .m2(Multi_datain2_wire), .BREQ(Multi_valid_wire), .CLK(CLK), .RSTK(RSTn), .Adder_datain1(Adder_datain1_wire), .Adder_datain2		 	(Adder_datain2_wire), .Adder_valid(Adder_valid_wire), .Adder_dataout(Adder_dataout_wire), .Adder_carryout(Adder_carryout_wire), .Adder_ack(Adder_ack_wire));
+
 exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcCheck_Datain_reg), .Data_valid(ExcCheck_valid_reg), .CLK(CLK), .RSTN(RSTn));
 
    always #5 CLK  =  ~CLK ;
@@ -92,12 +96,12 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 		begin
 		   //addTwoRandomNumbers();
 		   //addTestCase0();// Check for exceptions in Input numbers
-		   addTestCase1();//Same sign
-		   addTestCase2();//Opposite signs, Negative number smaller magnitude
-		   addTestCase3();//Opposite signs, Negative number larger magnitude
-		   addTestCase4();//Opposite signs, Negative number very large magnitude, Active GRS bits	
-	           addTestCase5();
-		   addTestCase6();
+		   multiTestCase1();//Same sign
+		   multiTestCase2();//Opposite signs, Negative number smaller magnitude
+		   //multiTestCase3();//Opposite signs, Negative number larger magnitude
+		   //multiTestCase4();//Opposite signs, Negative number very large magnitude, Active GRS bits	
+	           //multiTestCase5();
+		   //multiTestCase6();
 		end
 		#100 $finish();
 		//---- Call the tasks in sequence -----
@@ -123,7 +127,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
    endtask
    */
 
-   task addTestCase1();begin
+   task multiTestCase1();begin
 
    //num1 = n1;
    //num2 = n2;
@@ -132,7 +136,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
    num1 = 32'b01000000001100000000000000000000;//2.75
    num2 = 32'b01000000101100000000000000000000;//5.5
-   res_tc1[31:0] = 32'b01000001000001000000000000000000;//8.25
+   res_tc1[31:0] = 32'b01000001011100100000000000000000;//15.125
 
    //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
 
@@ -145,7 +149,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
    wait(Dataout_valid_wire==1'b1)
    	   Data_valid_reg <= 1'b0 ;
 	$display("\n");
-	$display("Test Case 1: Same Sign NUmbers");
+	$display("Test Case 1: Same Sign Numbers");
 	$display("Input Data: Num1 = %b, Num2 = %b", num1, num2);
 	
 	/*
@@ -162,7 +166,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
         $display("Exception Code for Computed Data: %b", Exc_value_wire);
 	
-	$display("Ideal Sum : %b @", res_tc1, $time);
+	$display("Ideal Product : %b @", res_tc1, $time);
 	
 	if(Dataout_wire == res_tc1) begin
 		$display("Match... Yayyy");
@@ -174,7 +178,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 	$display("\n");
    endtask
 
-   task addTestCase2();begin
+   task multiTestCase2();begin
 
    //num1 = n1;
    //num2 = n2;
@@ -182,7 +186,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 
    num1 = 32'b11000000001100000000000000000000;//-2.75
    num2 = 32'b01000000101100000000000000000000;//5.5
-   res_tc2[31:0] = 32'b01000000001100000000000000000000;//2.75
+   res_tc2[31:0] = 32'b11000001011100100000000000000000;//-15.125
 
    //$display("Num1 = %b, n1_tc1 = %b", 32'b00000000100101110000101000111101, n1_tc1);
 
@@ -202,7 +206,7 @@ exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcC
 	$display("Computed Data : %b @", Dataout_wire, $time);
 
 	$display("Exception Code for Computed Data: %b", Exc_value_wire);
-	$display("Ideal Sum : %b @", res_tc2, $time);
+	$display("Ideal Product : %b @", res_tc2, $time);
 	
 	if(Dataout_wire == res_tc2)begin
 		$display("Match... Yayyy");

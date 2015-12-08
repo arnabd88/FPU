@@ -17,7 +17,7 @@ module Adder_cntrl (
     Adder_datain1 ,
 	Adder_datain2 ,
 	Adder_valid ,
-	Adder_Exc ,
+	//Adder_Exc ,
 	Adder_dataout ,
 	Adder_carryout ,
 	Adder_ack  ,
@@ -44,7 +44,7 @@ module Adder_cntrl (
     output reg [24:0] Adder_datain1 ;
 	output reg [24:0] Adder_datain2 ;
 	output reg        Adder_valid     ;
-	input      [1:0]  Adder_Exc       ;
+//	input      [1:0]  Adder_Exc       ;
 	input      [24:0] Adder_dataout   ;
 	input             Adder_carryout  ;
 	input             Adder_ack       ;
@@ -203,7 +203,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						else if(Adder_ack == 1 ) begin
 							//---- Receive the data sent by the adder circuit ----
 							Adder_valid_val = 1'b0 ;
-							exc_val = Adder_Exc ;
+					//		exc_val = Adder_Exc ;
 							Add_sign       = Adder_dataout[24] ;
 							Final_Mantissa = {Adder_dataout[23:0],G_val, R_val, S_val} ;
 							carry          = Adder_carryout ;

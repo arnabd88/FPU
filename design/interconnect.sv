@@ -4,21 +4,12 @@ module interconnect (
 	CLK ,
 	//------- M1 unit interface -----
 	M1_req ,
-	M1_Data1 ,
-	M1_Data2 ,
-	M1_Dataout ,
 	M1_ack ,
 	//------- M2 unit interface ----
 	M2_req ,
-	M2_Data1 ,
-	M2_Data2 ,
-	M2_Dataout ,
 	M2_ack ,
 	//------ Slave unit interface ---
 	S_req ,
-	S_Data1 ,
-	S_Data2 ,
-	S_Datain ,
 	S_ack,
 	Select
 
@@ -28,21 +19,12 @@ module interconnect (
 	input CLK ;
 	//------- M1 unit interface -----
 	input M1_req ;
-	input [24:0] M1_Data1 ;
-	input [24:0] M1_Data2 ;
-	output reg[24:0] M1_Dataout ;
 	output reg M1_ack ;
 	//------- M2 unit interface ----
 	input M2_req ;
-	input [24:0] M2_Data1 ;
-	input [24:0] M2_Data2 ;
-	output reg[24:0] M2_Dataout ;
 	output reg M2_ack ;
 	//------ Slave unit interface ---
 	output reg S_req ;
-	output reg[24:0] S_Data1 ;
-	output reg[24:0] S_Data2 ;
-	input [24:0] S_Datain ;
 	input S_ack ;
 	output reg Select ;
 

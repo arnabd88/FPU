@@ -68,6 +68,7 @@ begin
    Adder_valid_val=Adder_valid;
    Adder_datain1_val = 0;
    Adder_datain2_val = 0;
+   BACK = 0 ;
 
    
 

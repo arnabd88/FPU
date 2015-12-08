@@ -26,6 +26,9 @@ end
 always @(*) 
 begin  
    next_StateMC = StateMC ;
+   Z = 0 ;
+   COUT = 0 ;
+   ACK = 0 ;
   case(StateMC)
                 Add_Compute :   begin
 				                COUT = 0;

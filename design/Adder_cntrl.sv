@@ -1,4 +1,4 @@
-typedef enum { Idle=0 , AdderState, EvaluateRes, RoundOff, ExceptionChecker, SetOutput} Adder_cntrl_state ;
+typedef enum { Idle=0 , StartExcCheck, AdderState, EvaluateRes, RoundOff, ExceptionChecker, SetOutput} Adder_cntrl_state ;
 
 module Adder_cntrl (
   //--- Default interface ---
@@ -189,10 +189,22 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 								if(Datain1[30:23] == 8'h00)	Op2_Mantissa   = {1'b0, Datain1[22:0]} >> diff;
 								else                    	Op2_Mantissa   =   {1'b1, Datain1[22:0]} >> diff ;
 							end
-							next_StateMC = AdderState ; // Go to AdderState to drive the adderunit
+							next_StateMC = StartExcCheck ; // Go to AdderState to drive the adderunit
 						end
 						else next_StateMC = Idle ;
 					 end
+   StartExcCheck : begin
+   						ExcCheck_valid = 1'b1 ;
+						ExcCheck_Datain = {Final_Sign_reg, Final_Exponent_reg, Final_Mantissa_reg[25:3]};
+						if(Exc_Ack == 1) begin
+							ExcCheck_valid = 0 ;
+							exc_val = Exc_value ;
+							if(exc_val == 0)
+								next_StateMC = AdderState ;   						
+							else next_StateMC = SetOutput ;
+						end
+						else next_StateMC = StartExcCheck ;
+   					  end
 	AdderState   :	begin
 						if(Adder_ack == 0 ) begin
 						    Adder_valid_val  =  1 ;
@@ -303,8 +315,9 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						if(Exc_Ack == 1) begin
 							ExcCheck_valid = 0 ;
 							exc_val = Exc_value ;
+							next_StateMC = SetOutput ;   						
 						end
-						next_StateMC = SetOutput ;   						
+						else next_StateMC = ExceptionChecker ;
    					  end
 	SetOutput   :  begin
 						if(exc_reg != 0)	Exc  =  exc_reg ;

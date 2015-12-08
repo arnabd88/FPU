@@ -1,4 +1,7 @@
-typedef enum { topIdle=0, topWaitAdderOp2, topWaitMultOp2 } FPU_COntrol_State ;
+typedef enum { topIdle=0, topWaitAdderOp2, topWaitMultOp2 } FPU_COntrol_State_type ;
+typedef enum {setOutput=0, MultSecondOut, AdderSecondOut} outState_type ;
+typedef enum {multIdle=0, WaitForMult, MultEndState} multState_type ;
+typedef enum {adderIdle=0, WaitForAdder, AddEndState} addState_type ;
 
 module FPU_Control (
 //---- DEFAULT interface ----
@@ -86,9 +89,9 @@ module FPU_Control (
  // input     [2:0]  ExcChecker_value        ;
  // input            ExcChecker_Ack          ;
  
-reg [31:0]  AdderCntrl_Op1 ;
-reg [31:0]  AddCntrl_Op2   ;
-reg         AddCntrl_valid ;
+reg [31:0]  AdderCntrl_Op1, AdderCntrl_Op1_val ;
+reg [31:0]  AdderCntrl_Op2 , AdderCntrl_Op2_val  ;
+reg         AdderCntrl_valid ;
 wire [31:0] AdderCntrl_Dataout ;
 wire        AdderCntrl_Dataout_valid ;
 wire [2:0]  AdderCntrl_Exc ;
@@ -108,8 +111,8 @@ wire [31:0] AdderCntrl_ExcCheck_Datain ;
 wire [2:0]  AdderCntrl_Exc_value ;
 wire        AdderCntrl_Exc_Ack ;
 
-reg [31:0] MulCntrl_Op1 ;
-reg [31:0] MulCntrl_Op2 ;
+reg [31:0] MulCntrl_Op1, MulCntrl_Op1_val ;
+reg [31:0] MulCntrl_Op2, MulCntrl_Op2_val ;
 reg MulCntrl_valid ;
 wire [31:0] MulCntrl_Dataout ;
 wire MulCntrl_Dataout_valid ;
@@ -146,11 +149,249 @@ wire Booth_Add_ack ;
 wire AddSelect ;
 wire [24:0] Adder_out ;
 wire Adder_cout ;
+wire [24:0] Add_Op1_wire, Add_Op2_wire ;
+
+reg[1:0] getdataStat, getdataStat_reg ;  //0: Adder, 1: Mult
+reg[1:0] Add_operandState, Add_operandState_reg ; //0: 1st operand, 2: 2nd Operand
+reg[1:0] Mult_operandState, Mult_operandState_reg ; //0: 1st operand, 2: 2nd Operand
+reg[1:0] outputRdy ; //0: Adder output ready, 1: Mult output ready
+reg[1:0] outputRdy_reg ;
+reg[31:0] AdderResult_val, AdderResult_reg ;
+reg[31:0] MultResult_val, MultResult_reg ;
+reg[2:0] AddExc_val, MultExc_val, AddExc_reg, MultExc_reg ;
+reg DR_add, DR_mult ;
+
+
+
+reg ABUSY_val, MBUSY_val ;
+//reg [3:0] OpMode, OpMode_val ;
+
+outState_type  outStateMC, next_outStateMC ;
+multState_type multStateMC, next_multStateMC ;
+addState_type  adderStateMC, next_adderStateMC ;
+FPU_COntrol_State_type topStateMC, next_topStateMC ;
+
 
 assign Add_dataout = Adder_out ;
 assign Booth_Add_dataout = Adder_out ;
 assign Add_carryout = Adder_cout ;
 assign Booth_Add_carryout = Adder_cout ;
+assign AdderCntrl_Mode = MODE ;
+assign MulCntrl_Mode  = MODE ;
+
+
+always@(posedge CLK) begin
+	if(RSTn!=1) begin
+		topStateMC  <=  topIdle ;
+		adderStateMC <= adderIdle ;
+		multStateMC  <= multIdle ;
+		AdderCntrl_Op1 <= 0 ;
+		AdderCntrl_Op2 <= 0 ;
+		MulCntrl_Op1 <= 0 ; 
+		MulCntrl_Op2 <= 0 ; 
+		Add_operandState_reg <= 0 ;
+		Mult_operandState_reg <= 0 ;
+		ABUSY <= 0;
+		MBUSY <= 0;
+		AdderResult_reg <= 0;
+		MultResult_reg  <= 0;
+		AddExc_reg <= 0;
+		MultExc_reg <= 0;
+		outputRdy_reg <= 0;
+		DR <= 0 ;
+	end
+	else begin
+		topStateMC  <=  next_topStateMC ;
+		adderStateMC <= next_adderStateMC ;
+		multStateMC <= next_multStateMC ;
+		outStateMC  <= next_outStateMC ;
+		AdderCntrl_Op1 <= AdderCntrl_Op1_val ;
+		AdderCntrl_Op2 <= AdderCntrl_Op2_val ;
+		MulCntrl_Op1  <=  MulCntrl_Op1_val ;
+		MulCntrl_Op2  <=  MulCntrl_Op2_val ;
+		Add_operandState_reg <= Add_operandState ;
+		Mult_operandState_reg <= Mult_operandState ;
+		getdataStat_reg <= getdataStat ;
+		ABUSY  <=  ABUSY_val ;
+		MBUSY  <=  MBUSY_val ;
+	//	OpMode <= OpMode_val ;
+		AdderResult_reg <= AdderResult_val ;
+		MultResult_reg  <= MultResult_val  ;
+		AddExc_reg <= AddExc_val ;
+		MultExc_reg <= MultExc_val ;
+		outputRdy_reg[1:0] <= outputRdy[1:0] ;
+		DR <= DR_add | DR_mult ;
+	end
+end
+
+//--------- Top Controller Module ----------
+
+
+always@(*) begin
+    next_topStateMC = topStateMC ;
+	next_adderStateMC = adderStateMC ;
+	next_multStateMC  = multStateMC ;
+	next_outStateMC   = outStateMC ;
+	Add_operandState = Add_operandState_reg ;
+	Mult_operandState = Mult_operandState_reg ;
+	getdataStat = getdataStat_reg ;
+	AdderCntrl_Op1_val = AdderCntrl_Op1 ;
+	AdderCntrl_Op2_val = AdderCntrl_Op2 ;
+	MulCntrl_Op1_val   = MulCntrl_Op1 ;
+	MulCntrl_Op2_val   = MulCntrl_Op2 ;
+	ABUSY_val  =  ABUSY ;
+	MBUSY_val  =  MBUSY ;
+//	OpMode_val = OpMode ;
+	AdderResult_val = AdderResult_reg ;
+	MultResult_val  = MultResult_reg ;
+	AddExc_val = AddExc_reg ;
+	MultExc_val = MultExc_reg ;
+	outputRdy = outputRdy_reg ;
+	DACK = 1'b0 ;
+	DR_add = 1'b0 ;
+	DR_mult = 1'b0 ;
+	DOUT = 0 ;
+	DOV = 0 ;
+	EXC = 0 ;
+	MulCntrl_valid = 1'b0 ;
+	AdderCntrl_valid = 1'b0 ;
+	case(topStateMC)
+		topIdle  :  begin
+						if( getdataStat_reg[0] == 1'b0  && DIV == 1'b1 && OPT==1'b0 && CS==1'b1 && ABUSY==1'b0) begin
+							AdderCntrl_Op1_val = DIN ;
+							getdataStat[0] = 1'b1 ;
+							Add_operandState[0] = 1'b1 ;
+							next_topStateMC = topWaitAdderOp2 ;
+						end
+						else if( getdataStat_reg[1]==1'b0 && DIV==1'b1 && OPT==1'b1 && CS==1'b1 && MBUSY==1'b0) begin
+							MulCntrl_Op1_val = DIN ;
+							getdataStat[1] = 1'b1 ;
+							Mult_operandState[0] = 1'b1 ;
+							next_topStateMC = topWaitMultOp2 ;
+						end
+					end
+ topWaitAdderOp2 :  begin
+ 						if( getdataStat_reg[0]==1'b0 && CS==1'b1 && ABUSY==1'b0) next_topStateMC = topIdle ;
+						else if(DIV==1'b1) begin
+							AdderCntrl_Op2_val = DIN ;
+							getdataStat[0] = 1'b1 ;
+							Add_operandState[1] = 1'b1 ;
+							next_topStateMC = topIdle ;
+							ABUSY_val = 1'b1 ;
+							DACK = 1'b1 ;
+						end
+ 					end
+topWaitMultOp2  :  begin
+						if( getdataStat_reg[1]==1'b0 && CS==1'b1) next_topStateMC = topIdle ;
+						else if(DIV==1'b1) begin
+							MulCntrl_Op2_val = DIN ;
+							getdataStat[1] = 1'b0 ;
+							Mult_operandState[1] = 1'b1 ;
+							next_topStateMC = topIdle ;
+							MBUSY_val = 1'b1 ;
+							DACK = 1'b1 ;
+						end
+				   end
+	endcase
+	case(adderStateMC)
+		adderIdle    :   begin
+							next_adderStateMC = adderIdle ;
+							if(Add_operandState_reg[1:0]==2'b11  &&  getdataStat_reg[0]==1'b1 && ABUSY==1'b1) begin
+							ABUSY_val = 1'b1 ;
+								//----- Call the adder module -------
+								AdderCntrl_valid = 1'b1 ;
+								next_adderStateMC = WaitForAdder ;
+							end
+						 end
+	WaitForAdder     :   begin
+							next_adderStateMC = WaitForAdder ;
+							ABUSY_val = 1'b1 ;
+							if(AdderCntrl_Dataout_valid == 1'b1) begin
+								AdderResult_val  =  AdderCntrl_Dataout ;
+								AddExc_val       =  AdderCntrl_Exc ;
+								DR_add  =  1'b1 ;
+								if(CS == 1'b1) begin outputRdy[0]=1'b1 ; next_adderStateMC = AddEndState ; end
+							end
+						 end
+	AddEndState      :   begin
+							if(outputRdy_reg[0]==0) begin
+								next_adderStateMC = adderIdle ;
+								ABUSY_val = 1'b0 ;
+							end
+							else next_adderStateMC = AddEndState ;
+						 end
+	endcase
+	case(multStateMC)
+		multIdle  :   begin
+						next_multStateMC = multIdle ;
+						if(Mult_operandState_reg[1:0] == 2'b11 && getdataStat_reg[1]==1'b1 && MBUSY==1'b1) begin
+							MBUSY_val = 1'b1 ;
+							MulCntrl_valid = 1'b1 ;
+							next_multStateMC = WaitForMult ;
+						end
+					  end
+	WaitForMult   :   begin
+							next_multStateMC = WaitForMult ;
+							MBUSY_val = 1'b1 ;
+							if(MulCntrl_Dataout_valid== 1'b1) begin
+								MultResult_val   =   MulCntrl_Dataout ;
+								MultExc_val      =   MulCntrl_Exc ;
+								DR_mult = 1'b1 ;
+								if(CS==1'b1) begin  outputRdy[1]=1'b1; next_multStateMC = MultEndState ; end
+							end
+					  end
+	MultEndState  :   begin
+						if(outputRdy_reg[1]==0) begin
+							next_multStateMC = multIdle ;
+							MBUSY_val = 1'b0 ;
+						end
+						else    next_multStateMC = MultEndState ;
+					  end
+	endcase
+	case(outStateMC)
+		setOutput  :   begin
+							DOV = 1'b0 ;
+							if(outputRdy_reg[0]==1) begin
+								DOUT = AdderResult_reg[31:16] ;
+								DOV = 1'b1 ;
+								EXC  =  AddExc_reg ;
+								next_outStateMC = AdderSecondOut ;
+							end
+							else if(outputRdy_reg[1]==1) begin
+								DOV = 1'b1 ;
+								DOUT = MultResult_reg[31:16] ;
+								EXC  =  MultExc_reg ;
+								next_outStateMC = MultSecondOut ;
+							end
+					   end
+	MultSecondOut  :  begin
+						EXC  =  MultExc_reg ;
+						DOV = 1'b1 ;
+						DOUT = MultResult_reg[15:0] ;
+						outputRdy[1] = 1'b0 ;
+						if(DOA == 1'b1) begin
+							next_outStateMC = setOutput ;
+							Mult_operandState = 0;
+						end
+						else next_outStateMC = MultSecondOut ;
+				  	  end
+	AdderSecondOut :  begin
+						EXC  =  AddExc_reg ;
+						DOV = 1'b1 ;
+						DOUT  =  AdderResult_reg[15:0] ;
+						outputRdy[0] = 1'b0 ;
+						if(DOA == 1'b1) begin
+							next_outStateMC = setOutput ;
+							Add_operandState = 0 ;
+						end
+						else next_outStateMC = AdderSecondOut ;
+					  end
+	endcase
+end
+
+
+
+
 
 
 Adder_cntrl u_adder_cntrl(
@@ -159,8 +400,8 @@ Adder_cntrl u_adder_cntrl(
 	.RSTn(RSTn) ,
   //--- Caller interface ---
 	.Datain1(AdderCntrl_Op1) ,
-	.Datain2(AddCntrl_Op2) ,
-	.Data_valid(AddCntrl_valid) ,
+	.Datain2(AdderCntrl_Op2) ,
+	.Data_valid(AdderCntrl_valid) ,
 	.Dataout(AdderCntrl_Dataout) ,
 	.Dataout_valid(AdderCntrl_Dataout_valid) ,
 	.Exc(AdderCntrl_Exc) ,
@@ -172,12 +413,12 @@ Adder_cntrl u_adder_cntrl(
 	.Adder_valid(Add_valid) ,
 //	.Adder_Exc(Add_Exc) ,
 	.Adder_dataout(Add_dataout) ,
-	.Adder_carryout(Add_carryout) ,
+	.Adder_carryout(Adder_cout) ,
 	.Adder_ack(Add_ack)  ,
   //---- ExceptionChecker callee module interface ---
     .ExcCheck_valid(AdderCntrl_ExcCheck_valid) ,
 	.ExcCheck_Datain(AdderCntrl_ExcCheck_Datain),
-	.Exc_value(AdderCntrl_Exc_value),
+	.Exc_value(ExcCheck_value),
 	.Exc_Ack(AdderCntrl_Exc_Ack)
  ) ;
 
@@ -209,7 +450,7 @@ Mul_cntrl u_mul_cntrl(
   //---- Multiplication_ExceptionChecker callee module interface ---
    	.ExcCheck_valid (MulCntrl_ExcCheck_valid),
 	.ExcCheck_Datain(MulCntrl_ExcCheck_Datain),
-	.Exc_value(MulCntrl_Exc_value),
+	.Exc_value(ExcCheck_value),
 	.Exc_Ack(MulCntrl_Exc_Ack)
  ) ;
 
@@ -237,16 +478,15 @@ interconnect u_ExcChecker_interconnect(
 
 	);
 
-booth u_booth (.res(), .m1(Booth_datain1) , .m2(Booth_datain2), .CLK(CLK),  .BREQ(Booth_valid), .BACK(Booth_ack), .RSTK(RSTn),   
+booth u_booth (.res(Booth_dataout), .m1(Booth_datain1) , .m2(Booth_datain2), .CLK(CLK),  .BREQ(Booth_valid), .BACK(Booth_ack), .RSTK(RSTn),   
 	.Adder_datain1(Booth_Add_datain1) ,
 	.Adder_datain2(Booth_Add_datain2) ,
 	.Adder_valid(Booth_Add_valid) ,
 	//.Adder_Exc(Booth_Add_Exc) ,
 	.Adder_dataout(Booth_Add_dataout) ,
-	.Adder_carryout(Booth_Add_carryout) ,
+	.Adder_carryout(Adder_cout) ,
 	.Adder_ack(Booth_Add_ack));
 	
-
 
 MUX25bit2X1 u_mux1_adder( .data1(Add_Op1), .data2(Booth_Add_datain1), .selectLine(AddSelect), .enable(Add_req), .outdata(Add_Op1_wire));
 MUX25bit2X1 u_mux2_adder( .data1(Add_Op2), .data2(Booth_Add_datain2), .selectLine(AddSelect), .enable(Add_req), .outdata(Add_Op2_wire));
@@ -257,7 +497,7 @@ MUX25bit2X1 u_mux2_adder( .data1(Add_Op2), .data2(Booth_Add_datain2), .selectLin
 
 
 
-adder_24b u_adder_24b( .Z(Adder_out), .COUT(), .ACK(Add_out_valid), .A(Add_op1_wire), .B(Add_op2_wire), .REQ(Add_req), .CLK(CLK), .RSTN(CLK));
+adder_24b u_adder_24b( .Z(Adder_out), .COUT(Adder_cout), .ACK(Add_out_valid), .A(Add_Op1_wire), .B(Add_Op2_wire), .REQ(Add_req), .CLK(CLK), .RSTN(RSTn));
 
 
 interconnect u_Adder_interconnect(
@@ -268,7 +508,7 @@ interconnect u_Adder_interconnect(
 	.M1_ack (Add_ack),
 	//------- M2 unit interface ----
 	.M2_req (Booth_valid),
-	.M2_ack (Booth_ack),
+	.M2_ack (Booth_Add_ack),
 	//------ Slave unit interface ---
 	.S_req (Add_req),
 	.S_ack(Add_out_valid),

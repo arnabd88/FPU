@@ -53,6 +53,10 @@ module interconnect (
 	//-----------------------------
 	    next_stateMC = stateMC ;
 		priority_val = priority_reg ;
+		S_req = 0;
+		Select = 0 ;
+		M1_ack = 0;
+		M2_ack = 0;
 	//-----------------------------
 		case(stateMC)
 		intIdle :  begin

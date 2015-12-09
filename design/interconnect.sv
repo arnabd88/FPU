@@ -64,31 +64,31 @@ module interconnect (
 						{M1_ack, M2_ack} = 2'b00 ;
 						Select = 1'b0 ;
 						case({Request_Buffer[1:0],priority_val})
-							000  :  next_stateMC = intIdle ;
-							001  :  next_stateMC = intIdle ;
-							010  :  begin
+							3'b000  :  next_stateMC = intIdle ;
+							3'b001  :  next_stateMC = intIdle ;
+							3'b010  :  begin
 										//----- Priority and req , both with M1
 										priority_val = ~priority_reg ;
 										next_stateMC = M1_State ;
 									end
-							011  :  begin
+							3'b011  :  begin
 										//----- Priority with M2, single req from M1
 										next_stateMC = M1_State ;
 									end
-							100  :  begin
+							3'b100  :  begin
 										//----- Priority with M1, single req from M2
 										next_stateMC = M2_State ;
 									end
-							101  :  begin
+							3'b101  :  begin
 										//----- Priority and request, both with M2
 										priority_val = ~priority_reg ;
 										next_stateMC = M2_State ;
 									end
-							110  :  begin
+							3'b110  :  begin
 										priority_val = ~priority_reg ;
 										next_stateMC = M1_State ;
 									end
-							110  :  begin
+							3'b110  :  begin
 										priority_val = ~priority_reg ;
 										next_stateMC = M2_State ;
 									end

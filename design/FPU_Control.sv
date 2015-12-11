@@ -191,6 +191,7 @@ always@(posedge CLK) begin
 		MulCntrl_Op2 <= 0 ; 
 		Add_operandState_reg <= 0 ;
 		Mult_operandState_reg <= 0 ;
+		getdataStat_reg <= 0 ;
 		ABUSY <= 0;
 		MBUSY <= 0;
 		AdderResult_reg <= 0;
@@ -257,6 +258,7 @@ always@(*) begin
 	AdderCntrl_valid = 1'b0 ;
 	case(topStateMC)
 		topIdle  :  begin
+						//getdataStat = 0 ;
 						if( getdataStat_reg[0] == 1'b0  && DIV == 1'b1 && OPT==1'b0 && CS==1'b1 && ABUSY==1'b0) begin
 							AdderCntrl_Op1_val = DIN ;
 							getdataStat[0] = 1'b1 ;
@@ -285,7 +287,7 @@ topWaitMultOp2  :  begin
 						if( getdataStat_reg[1]==1'b0 && CS==1'b1) next_topStateMC = topIdle ;
 						else if(DIV==1'b1) begin
 							MulCntrl_Op2_val = DIN ;
-							getdataStat[1] = 1'b0 ;
+							getdataStat[1] = 1'b1 ;
 							Mult_operandState[1] = 1'b1 ;
 							next_topStateMC = topIdle ;
 							MBUSY_val = 1'b1 ;
@@ -317,6 +319,7 @@ topWaitMultOp2  :  begin
 							if(outputRdy_reg[0]==0) begin
 								next_adderStateMC = adderIdle ;
 								ABUSY_val = 1'b0 ;
+								getdataStat[0] = 1'b0 ;
 							end
 							else next_adderStateMC = AddEndState ;
 						 end
@@ -344,6 +347,7 @@ topWaitMultOp2  :  begin
 						if(outputRdy_reg[1]==0) begin
 							next_multStateMC = multIdle ;
 							MBUSY_val = 1'b0 ;
+							getdataStat[1] = 1'b0 ;
 						end
 						else    next_multStateMC = MultEndState ;
 					  end
@@ -459,7 +463,7 @@ Mul_cntrl u_mul_cntrl(
 MUX32bit2X1 u_mux_exc( .data1(AdderCntrl_ExcCheck_Datain), .data2(MulCntrl_ExcCheck_Datain), .selectLine(ExcSelect), .enable(ExcCheck_valid), .outdata(ExcCheck_Data) );
 
 
-exceptionChecker u_exc_check( .Exc(ExcCheck_value), .ACK(ExcCheck_Ack), .Data(ExcCheck_Data), .Data_valid(ExcCheck_valid), .CLK(CLK), .RSTN(RSTn));
+exceptionChecker u_exc_check( .AEXC(ExcCheck_value), .ACK(ExcCheck_Ack), .Data(ExcCheck_Data), .Data_valid(ExcCheck_valid), .CLK(CLK), .RSTN(RSTn));
 
 
 interconnect u_ExcChecker_interconnect(

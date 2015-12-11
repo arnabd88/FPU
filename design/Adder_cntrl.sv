@@ -54,6 +54,8 @@ module Adder_cntrl (
 	input [2:0] Exc_value;
 	input Exc_Ack;
 
+	reg ExcCheck_valid_val ;
+
 
 
 Adder_cntrl_state StateMC, next_StateMC ;
@@ -95,6 +97,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		Adder_datain1        <=     0 ;
 		Adder_datain2        <=     0 ;
 		Add_sign_reg         <=     0 ;
+		ExcCheck_valid       <=     0 ;
 
    	end
    	else begin
@@ -116,6 +119,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		Adder_datain1        <=     Adder_datain1_val ;
 		Adder_datain2        <=     Adder_datain2_val ;
 		Add_sign_reg         <=     Add_sign       ;
+		ExcCheck_valid       <=     ExcCheck_valid_val ;
    	end
    end
 
@@ -138,7 +142,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		R_val           =   R_reg              ;
 		S_val           =   S_reg              ;
 		ExcCheck_Datain =   0                  ;
-		ExcCheck_valid  =   0                  ;
+		ExcCheck_valid_val  =   0                  ;
 		Dataout         =   0                  ;
 		Dataout_valid   =   0                  ;
 		Adder_datain1_val   =   0                  ;
@@ -148,6 +152,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 		//if(StateMC==AdderState && Adder_valid==1) Adder_valid     =   1    ;
 		//else                                      Adder_valid     =   0    ;
 		Exc             =   0                  ;
+		ExcCheck_valid_val       =     0 ;
 	//-------------------------
 	Debug = StateMC ;
    	case(StateMC)
@@ -194,16 +199,16 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						else next_StateMC = Idle ;
 					 end
    StartExcCheck : begin
-   						ExcCheck_valid = 1'b1 ;
+   						ExcCheck_valid_val = 1'b1 ;
 						ExcCheck_Datain = {Final_Sign_reg, Final_Exponent_reg, Final_Mantissa_reg[25:3]};
 						if(Exc_Ack == 1) begin
-							ExcCheck_valid = 0 ;
+							ExcCheck_valid_val = 0 ;
 							exc_val = Exc_value ;
 							if(exc_val == 0)
 								next_StateMC = AdderState ;   						
 							else next_StateMC = SetOutput ;
 						end
-						else next_StateMC = StartExcCheck ;
+						//else next_StateMC = StartExcCheck ;
    					  end
 	AdderState   :	begin
 						if(Adder_ack == 0 ) begin
@@ -310,10 +315,10 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						else next_StateMC = ExceptionChecker ;
 				   end
    ExceptionChecker : begin
-   						ExcCheck_valid = 1'b1 ;
+   						ExcCheck_valid_val = 1'b1 ;
 						ExcCheck_Datain = {Final_Sign_reg, Final_Exponent_reg, Final_Mantissa_reg[25:3]};
 						if(Exc_Ack == 1) begin
-							ExcCheck_valid = 0 ;
+							ExcCheck_valid_val = 0 ;
 							exc_val = Exc_value ;
 							next_StateMC = SetOutput ;   						
 						end

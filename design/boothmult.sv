@@ -82,7 +82,7 @@ begin
 				 Q1= 0;
 				 count = 0;
 				 Bnext_StateMC = Mult_Compute;
-				 $display("REQUEST received", $time);
+				//$display("REQUEST received", $time);
 				//$display("M: Num1 = %b, Q = %b", M, Q);
 				//$display("Computed Data : %b | %b @", Dataout_wire[47:24], Dataout_wire[23:0], $time);
 				end		

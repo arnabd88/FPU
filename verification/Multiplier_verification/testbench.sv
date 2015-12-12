@@ -69,7 +69,7 @@ adder_24b u_adder_24b( .Z(Adder_dataout_wire), .COUT(Adder_carryout_wire), .ACK(
 
 booth u_booth( .res(Multi_dataout_wire), .BACK(Multi_ack_wire), .m1(Multi_datain1_wire), .m2(Multi_datain2_wire), .BREQ(Multi_valid_wire), .CLK(CLK), .RSTK(RSTn), .Adder_datain1(Adder_datain1_wire), .Adder_datain2		 	(Adder_datain2_wire), .Adder_valid(Adder_valid_wire), .Adder_dataout(Adder_dataout_wire), .Adder_carryout(Adder_carryout_wire), .Adder_ack(Adder_ack_wire));
 
-exceptionChecker u_exc_chk( .Exc(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcCheck_Datain_reg), .Data_valid(ExcCheck_valid_reg), .CLK(CLK), .RSTN(RSTn));
+exceptionChecker u_exc_chk( .EXC(Exc_value_wire), .ACK(Exc_Ack_wire), .Data(ExcCheck_Datain_reg), .Data_valid(ExcCheck_valid_reg), .CLK(CLK), .RSTN(RSTn));
 
    always #5 CLK  =  ~CLK ;
 

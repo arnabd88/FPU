@@ -70,8 +70,6 @@ begin
    Adder_datain2_val = 0;
    BACK = 0 ;
 
-   
-
   case(BStateMC)
 		Booth_Idle: begin
 				BACK=0;
@@ -84,6 +82,9 @@ begin
 				 Q1= 0;
 				 count = 0;
 				 Bnext_StateMC = Mult_Compute;
+				 $display("REQUEST received", $time);
+				//$display("M: Num1 = %b, Q = %b", M, Q);
+				//$display("Computed Data : %b | %b @", Dataout_wire[47:24], Dataout_wire[23:0], $time);
 				end		
 
 
@@ -91,6 +92,10 @@ begin
 
 
                 Mult_Compute :   begin
+					
+						
+
+					$display("\nStep number %d", count_reg, $time);
 				            BACK  = 0;
 					    Bnext_StateMC = Mult_Compute;
 		        
@@ -98,63 +103,71 @@ begin
 							 
 						2'b01 : 
 						 begin
+						     //$display("ADD OP", $time);
+						     //$display("%b | %b", A_reg, Q_reg, $time);
 						   if(Adder_ack == 0) begin
-						   Adder_valid_val  =  1 ;
+						    Adder_valid_val  =  1 ;
 						    Adder_datain1_val = A_reg ;
 						    Adder_datain2_val = M_reg ;
    
      						   end
 						   if(Adder_ack == 1 )     
-						begin 
-							$display("Adder_DataOut = %b", Adder_dataout, $time);
+						begin count = count_reg + 1'b1;
+							//$display("Adder_DataOut = %b", Adder_dataout, $time);
 							{A,Q,Q1} = {Adder_dataout[24],Adder_dataout,Q_reg};
 							Adder_valid_val = 0;
+							//$display("SRES", $time);
+						        //$display("%b | %b", A, Q, $time);
 						end
+						
+
 						end 
 
 						2'b10 :
 						begin 
+						     //$display("SUB OP", $time);
+						     //$display("%b | %b", A_reg, Q_reg, $time);
 						   if(Adder_ack == 0) begin
                                           
 						    Adder_valid_val  =  1 ;
 						    Adder_datain1_val = A_reg ;
 						    Adder_datain2_val = ~M_reg + 1'b1 ;
-         //--- $display("Adder_datain1_val = %b", Adder_datain1_val, $time);
-                                               //---     $display("Adder_datain2_val = %b", Adder_datain2_val, $time);
-     						   end
+                      				   end
 						   if(Adder_ack == 1)
-						begin   
-							
- 
+						begin   count = count_reg + 1'b1;
 							{A,Q,Q1} = {Adder_dataout[24],Adder_dataout,Q_reg};
 							Adder_valid_val = 0;
+						     //$display("DRES", $time);
+						     //$display("%b | %b", A, Q, $time);
 						end
 						end
 
-						default: {A,Q,Q1} = {A_reg[24],A_reg,Q_reg};
+						default: begin
+							//$display("DEF", $time);
+							//$display("%b | %b", A_reg, Q_reg, $time);
+							{A,Q,Q1} = {A_reg[24],A_reg,Q_reg};
+							//$display("ShRES", $time);
+							//$display("%b | %b", A, Q, $time);
+							count = count_reg + 1'b1;
+							end
 					    
 					    endcase
-						
-						count = count_reg + 1'b1;
-	           			          
-						if(count_reg>26)  
+							           			        
+						if(count_reg>24)  
 						begin 
 						Bnext_StateMC = Mul_ResetOutput ; BACK = 1; res = {A_reg[23:0],Q_reg}; 
 						end
+					
 							           			          
 	           		   end
 
 
-                Mul_ResetOutput:   begin
+                Mul_ResetOutput:   begin	
 			                       BACK = 1'b0 ;
 			                       Bnext_StateMC = Booth_Idle;			
 		                        end
   endcase
 
-end
-
-always@(Adder_datain1_val) begin
-	//---$display("Always : Adder_datain1_val = %b, Adder_valid = %b, Adder_ack = %b", Adder_datain1_val, Adder_valid, Adder_ack, $time);
 end
 
 endmodule

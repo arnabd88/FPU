@@ -1,0 +1,12 @@
+irun -sv \
+../design/MUX25bit2X1.sv \
+../design/MUX32bit2X1.sv \
+../design/adder_24b.sv \
+../design/boothmult.sv \
+../design/interconnect.sv \
+../design/Multiplier_control.sv \
+../design/Adder_cntrl.sv \
+../design/exceptionChecker.sv \
+../design/FPU_Control.sv \
+testbench.sv \
+-access +rwc -input ncsim.tcl

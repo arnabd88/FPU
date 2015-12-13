@@ -1,0 +1,27 @@
+//
+// File created by:  irun
+// Do not modify this file
+//
+-XLMODE
+./INCA_libs/irun.lnx8664.13.10.nc
+-RUNMODE
+-sv
+../design/MUX25bit2X1.sv
+../design/MUX32bit2X1.sv
+../design/adder_24b.sv
+../design/boothmult.sv
+../design/interconnect.sv
+../design/Multiplier_control.sv
+../design/Adder_cntrl.sv
+../design/exceptionChecker.sv
+../design/FPU_Control.sv
+testbench.sv
+-CDSLIB
+./INCA_libs/irun.lnx8664.13.10.nc/cdsrun.lib
+-HDLVAR
+./INCA_libs/irun.lnx8664.13.10.nc/hdlrun.var
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./INCA_libs/irun.lnx8664.13.10.nc/xllibs
+-ALLOWUNBOUND

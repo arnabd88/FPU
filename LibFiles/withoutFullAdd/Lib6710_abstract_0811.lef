@@ -1,0 +1,1529 @@
+
+VERSION 5.5 ;
+NAMESCASESENSITIVE ON ;
+BUSBITCHARS "[]" ;
+DIVIDERCHAR "/" ;
+UNITS
+  DATABASE MICRONS 100 ;
+END UNITS
+
+MANUFACTURINGGRID 0.15 ;
+
+LAYER poly
+  TYPE	MASTERSLICE ;
+END poly
+
+LAYER cc
+  TYPE	CUT ;
+  SPACING	0.9 ;
+END cc
+
+LAYER metal1
+  TYPE		ROUTING ;
+  DIRECTION	HORIZONTAL ;
+  PITCH		3  ;
+  WIDTH		0.9 ;
+  SPACING	0.9 ;
+  OFFSET	1.5 ; 
+  RESISTANCE	RPERSQ 0.09 ;
+  CAPACITANCE	CPERSQDIST 4.0e-05 ;
+  EDGECAPACITANCE 7.5e-05 ;
+END metal1
+
+LAYER via
+  TYPE	CUT ;
+  SPACING	0.9 ;
+END via
+
+LAYER metal2
+  TYPE		ROUTING ;
+  DIRECTION	VERTICAL ;
+  PITCH		2.4  ;
+  WIDTH		0.9 ;
+  SPACING	0.9 ;
+  OFFSET	1.2 ;
+  RESISTANCE	RPERSQ 0.09 ;
+  CAPACITANCE	CPERSQDIST 2.0e-05 ;
+  EDGECAPACITANCE 6.0e-05 ;
+END metal2
+
+LAYER via2
+  TYPE	CUT ;
+  SPACING	0.9 ;
+END via2
+
+LAYER metal3
+  TYPE		ROUTING ;
+  DIRECTION	HORIZONTAL ;
+  PITCH		3  ;
+  WIDTH		1.5 ;
+  SPACING	0.9 ;
+  OFFSET	1.5 ;
+  RESISTANCE	RPERSQ 0.05 ;
+  CAPACITANCE	CPERSQDIST 1.5e-05 ;
+  EDGECAPACITANCE 4.0e-05 ;
+END metal3
+
+SPACING
+  SAMENET poly  poly	0.900 ;
+  SAMENET metal1  metal1	0.900  STACK ;
+  SAMENET metal2  metal2	0.900  STACK ;
+  SAMENET metal3  metal3	0.900 ;
+  SAMENET cc  via	0.000  STACK ;
+  SAMENET via  via	0.900 ;
+  SAMENET via  via2	0.000  STACK ;
+  SAMENET via2  via2	0.900 ;
+END SPACING
+
+VIA M1_POLY DEFAULT
+  LAYER poly ;
+    RECT -0.600 -0.600 0.600 0.600 ;
+  LAYER cc ;
+    RECT -0.300 -0.300 0.300 0.300 ;
+  LAYER metal1 ;
+    RECT -0.600 -0.600 0.600 0.600 ;
+  RESISTANCE	17.0 ;
+END M1_POLY
+
+VIA M2_M1 DEFAULT
+  LAYER metal1 ;
+    RECT -0.600 -0.600 0.600 0.600 ;
+  LAYER via ;
+    RECT -0.300 -0.300 0.300 0.300 ;
+  LAYER metal2 ;
+    RECT -0.600 -0.600 0.600 0.600 ;
+  RESISTANCE	0.90 ;
+END M2_M1
+
+VIA M3_M2 DEFAULT
+  LAYER metal2 ;
+    RECT -0.600 -0.600 0.600 0.600 ;
+  LAYER via2 ;
+    RECT -0.300 -0.300 0.300 0.300 ;
+  LAYER metal3 ;
+    RECT -0.900 -0.900 0.900 0.900 ;
+  RESISTANCE	0.80 ;
+END M3_M2
+
+
+VIARULE viagen21 GENERATE
+  LAYER metal1 ;
+    DIRECTION HORIZONTAL ;
+    WIDTH 1.2 TO 120 ;
+    OVERHANG 0.3 ;
+    METALOVERHANG 0 ;
+  LAYER metal2 ;
+    DIRECTION VERTICAL ;
+    WIDTH 1.2 TO 120 ;
+    OVERHANG 0.3 ;
+    METALOVERHANG 0 ;
+  LAYER via ;
+    RECT -0.3 -0.3 0.3 0.3 ;
+    SPACING 1.5 BY 1.5 ;
+END viagen21
+
+VIARULE viagen32 GENERATE
+  LAYER metal3 ;
+    DIRECTION HORIZONTAL ;
+    WIDTH 1.8 TO 180 ;
+    OVERHANG 0.6 ;
+    METALOVERHANG 0 ;
+  LAYER metal2 ;
+    DIRECTION VERTICAL ;
+    WIDTH 1.2 TO 120 ;
+    OVERHANG 0.3 ;
+    METALOVERHANG 0 ;
+  LAYER via2 ;
+    RECT -0.3 -0.3 0.3 0.3 ;
+    SPACING 2.1 BY 2.1 ;
+END viagen32
+
+SITE  corner
+    CLASS	PAD ;
+    SYMMETRY	R90 Y ;
+    SIZE	300.000 BY 300.000 ;
+END  corner
+
+SITE  IO
+    CLASS	PAD ;
+    SYMMETRY	Y ;
+    SIZE	90.000 BY 300.000 ;
+END  IO
+
+SITE  dbl_core
+    CLASS	CORE ;
+    SYMMETRY	Y ;
+    SIZE	2.400 BY 54.000 ;
+END  dbl_core
+
+SITE  core
+    CLASS	CORE ;
+    SYMMETRY	Y ;
+    SIZE	2.400 BY 27.000 ;
+END  core
+
+
+PROPERTYDEFINITIONS
+  MACRO drcSignature INTEGER ;
+END PROPERTYDEFINITIONS
+
+MACRO AOI21
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN AOI21 0 0 ;
+  SIZE 9.6 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 5.4 -1.2 6.6 4.95 ;
+        RECT -1.2 -1.2 10.8 1.2 ;
+    END
+  END gnd!
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 3 19.05 4.2 28.2 ;
+        RECT -1.2 25.8 10.8 28.2 ;
+    END
+  END vdd!
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+    END
+  END IN1
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 10.2 3.9 10.8 ;
+      LAYER metal2 ;
+        RECT 3 9.9 4.2 11.1 ;
+      LAYER metal1 ;
+        RECT 3 9.9 4.2 11.1 ;
+    END
+  END IN2
+  PIN IN3
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 10.2 6.3 10.8 ;
+      LAYER metal2 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+      LAYER metal1 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+    END
+  END IN3
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 8.1 23.85 8.7 24.45 ;
+        RECT 8.1 22.35 8.7 22.95 ;
+        RECT 8.1 20.85 8.7 21.45 ;
+        RECT 8.1 19.35 8.7 19.95 ;
+        RECT 8.1 6.3 8.7 6.9 ;
+      LAYER metal2 ;
+        RECT 7.8 6 9 24.75 ;
+      LAYER metal1 ;
+        RECT 0.6 6 9 7.2 ;
+        RECT 7.8 2.25 9 7.2 ;
+        RECT 0.6 2.25 1.8 7.2 ;
+        RECT 7.8 19.05 9 24.75 ;
+    END
+  END OUT
+  OBS
+    LAYER metal1 ;
+      RECT 0.6 16.8 6.6 18 ;
+      RECT 0.6 16.8 1.8 24.75 ;
+      RECT 5.4 16.8 6.6 24.75 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END AOI21
+
+MACRO AOI22
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN AOI22 0 0 ;
+  SIZE 12 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 5.4 -1.2 6.6 4.95 ;
+        RECT -1.2 -1.2 13.2 1.2 ;
+    END
+  END gnd!
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 3 19.05 4.2 28.2 ;
+        RECT -1.2 25.8 13.2 28.2 ;
+    END
+  END vdd!
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+    END
+  END IN1
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 10.2 3.9 10.8 ;
+      LAYER metal2 ;
+        RECT 3 9.9 4.2 11.1 ;
+      LAYER metal1 ;
+        RECT 3 9.9 4.2 11.1 ;
+    END
+  END IN2
+  PIN IN3
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 10.2 6.3 10.8 ;
+      LAYER metal2 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+      LAYER metal1 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+    END
+  END IN3
+  PIN IN4
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 8.1 10.2 8.7 10.8 ;
+      LAYER metal2 ;
+        RECT 7.8 9.9 9 11.1 ;
+      LAYER metal1 ;
+        RECT 7.8 9.9 9 11.1 ;
+    END
+  END IN4
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 8.1 23.85 8.7 24.45 ;
+        RECT 8.1 22.35 8.7 22.95 ;
+        RECT 8.1 20.85 8.7 21.45 ;
+        RECT 8.1 19.35 8.7 19.95 ;
+        RECT 10.5 6.3 11.1 6.9 ;
+      LAYER metal2 ;
+        RECT 7.8 19.05 11.4 20.25 ;
+        RECT 10.2 6 11.4 20.25 ;
+        RECT 7.8 19.05 9 24.75 ;
+      LAYER metal1 ;
+        RECT 0.6 6 11.4 7.2 ;
+        RECT 10.2 2.25 11.4 7.2 ;
+        RECT 0.6 2.25 1.8 7.2 ;
+        RECT 7.8 19.05 9 24.75 ;
+    END
+  END OUT
+  OBS
+    LAYER metal1 ;
+      RECT 0.6 16.8 11.4 18 ;
+      RECT 0.6 16.8 1.8 24.75 ;
+      RECT 5.4 16.8 6.6 24.75 ;
+      RECT 10.2 16.8 11.4 24.75 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END AOI22
+
+MACRO BUF4X
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN BUF4X 0 0 ;
+  SIZE 9.6 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 22.5 1.8 28.2 ;
+        RECT 5.4 13.5 6.6 28.2 ;
+        RECT -1.2 25.8 10.8 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 3.3 ;
+        RECT 5.4 -1.2 6.6 7.8 ;
+        RECT -1.2 -1.2 10.8 1.2 ;
+    END
+  END gnd!
+  PIN IN
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+    END
+  END IN
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 8.1 13.5 8.7 14.1 ;
+        RECT 8.1 7.2 8.7 7.8 ;
+      LAYER metal2 ;
+        RECT 7.8 6.9 9 14.4 ;
+      LAYER metal1 ;
+        RECT 7.8 2.4 9 8.1 ;
+        RECT 7.8 13.2 9 24.9 ;
+    END
+  END OUT
+  OBS
+    LAYER metal1 ;
+      RECT 3 22.2 4.2 24.9 ;
+      RECT 3 2.4 4.2 3.6 ;
+      RECT 3 9.6 6.3 10.8 ;
+    LAYER metal2 ;
+      RECT 3 2.4 4.2 23.4 ;
+    LAYER via ;
+      RECT 3.3 22.5 3.9 23.1 ;
+      RECT 3.3 9.9 3.9 10.5 ;
+      RECT 3.3 2.7 3.9 3.3 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END BUF4X
+
+MACRO BUF8X
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN BUF8X 0 0 ;
+  SIZE 12 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 4.8 ;
+        RECT 7.8 -1.2 9 7.8 ;
+        RECT -1.2 -1.2 13.2 1.2 ;
+    END
+  END gnd!
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 19.5 1.8 28.2 ;
+        RECT 7.8 13.5 9 28.2 ;
+        RECT -1.2 25.8 13.2 28.2 ;
+    END
+  END vdd!
+  PIN IN
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.6 10.2 1.2 10.8 ;
+      LAYER metal2 ;
+        RECT 0.3 9.9 1.5 11.1 ;
+      LAYER metal1 ;
+        RECT 0.3 9.9 1.5 11.1 ;
+    END
+  END IN
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 13.5 6.3 14.1 ;
+        RECT 5.7 7.2 6.3 7.8 ;
+        RECT 10.5 13.5 11.1 14.1 ;
+        RECT 10.5 7.2 11.1 7.8 ;
+      LAYER metal2 ;
+        RECT 5.4 13.2 11.4 14.4 ;
+        RECT 10.2 6.9 11.4 14.4 ;
+        RECT 5.4 6.9 11.4 8.1 ;
+      LAYER metal1 ;
+        RECT 10.2 2.4 11.4 8.1 ;
+        RECT 10.2 13.2 11.4 24.9 ;
+        RECT 5.4 2.4 6.6 8.1 ;
+        RECT 5.4 13.2 6.6 24.9 ;
+    END
+  END OUT
+  OBS
+    LAYER metal1 ;
+      RECT 3 19.2 4.2 24.9 ;
+      RECT 3 2.4 4.2 5.1 ;
+      RECT 3 9.6 6.3 10.8 ;
+    LAYER metal2 ;
+      RECT 3 3.9 4.2 20.4 ;
+    LAYER via ;
+      RECT 3.3 19.5 3.9 20.1 ;
+      RECT 3.3 9.9 3.9 10.5 ;
+      RECT 3.3 4.2 3.9 4.8 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END BUF8X
+
+MACRO DFFRX1
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN DFFRX1 0 0 ;
+  SIZE 52.8 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 22.5 1.8 28.2 ;
+        RECT 17.4 19.2 18.6 28.2 ;
+        RECT 22.2 22.2 23.4 28.2 ;
+        RECT 24.6 22.5 25.8 28.2 ;
+        RECT 39 19.2 40.2 28.2 ;
+        RECT 43.8 22.2 45 28.2 ;
+        RECT 48.6 22.2 49.8 28.2 ;
+        RECT -1.2 25.8 54 28.2 ;
+    END
+  END vdd!
+  PIN Q
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 46.5 22.5 47.1 23.1 ;
+        RECT 46.5 17.4 47.1 18 ;
+        RECT 46.5 2.4 47.1 3 ;
+      LAYER metal2 ;
+        RECT 46.2 2.1 47.4 23.4 ;
+      LAYER metal1 ;
+        RECT 37.8 17.1 50.7 18.3 ;
+        RECT 46.2 2.1 47.4 3.3 ;
+        RECT 46.2 22.2 47.4 24.9 ;
+    END
+  END Q
+  PIN CLRB
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 22.5 19.2 23.1 19.8 ;
+      LAYER metal2 ;
+        RECT 22.2 18.9 23.4 20.1 ;
+      LAYER metal1 ;
+        RECT 22.2 18.9 23.4 20.1 ;
+    END
+  END CLRB
+  PIN D
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 24 6.3 24.6 ;
+        RECT 5.7 22.5 6.3 23.1 ;
+        RECT 5.7 2.4 6.3 3 ;
+      LAYER metal2 ;
+        RECT 5.4 1.8 6.6 24.9 ;
+      LAYER metal1 ;
+        RECT 5.4 2.1 6.6 3.3 ;
+        RECT 5.4 19.2 6.6 24.9 ;
+    END
+  END D
+  PIN CLK
+    DIRECTION INPUT ;
+    USE CLOCK ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+    END
+  END CLK
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 3 ;
+        RECT 15 -1.2 16.2 4.8 ;
+        RECT 22.2 -1.2 23.4 3.3 ;
+        RECT 24.6 -1.2 25.8 3 ;
+        RECT 41.4 -1.2 42.6 4.5 ;
+        RECT 43.8 -1.2 45 3.3 ;
+        RECT 48.6 -1.2 49.8 3.3 ;
+        RECT -1.2 -1.2 54 1.2 ;
+    END
+  END gnd!
+  PIN QB
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 51.3 22.5 51.9 23.1 ;
+        RECT 51.3 2.4 51.9 3 ;
+      LAYER metal2 ;
+        RECT 51 2.1 52.2 23.4 ;
+      LAYER metal1 ;
+        RECT 51 2.1 52.2 3.3 ;
+        RECT 51 22.2 52.2 24.9 ;
+    END
+  END QB
+  OBS
+    LAYER metal1 ;
+      RECT 3 22.2 4.2 24.9 ;
+      RECT 3 2.1 4.2 3.3 ;
+      RECT 3 4.2 7.2 5.4 ;
+      RECT 7.8 19.2 9 24.9 ;
+      RECT 7.8 2.1 9 3.3 ;
+      RECT 10.2 19.2 11.4 24.9 ;
+      RECT 10.2 2.1 11.4 4.8 ;
+      RECT 3 17.1 12.3 18.3 ;
+      RECT 17.4 2.1 18.6 4.8 ;
+      RECT 19.8 22.2 21 24.9 ;
+      RECT 16.5 17.1 21 18.3 ;
+      RECT 19.8 2.1 21 3.3 ;
+      RECT 10.2 15 26.1 16.2 ;
+      RECT 27 22.2 28.2 24.9 ;
+      RECT 27 2.1 28.2 3.3 ;
+      RECT 29.4 19.2 30.6 24.9 ;
+      RECT 14.1 12.9 30.6 14.1 ;
+      RECT 11.7 6.3 30.6 7.5 ;
+      RECT 29.4 2.1 30.6 4.8 ;
+      RECT 31.8 19.2 33 24.9 ;
+      RECT 31.8 2.1 33 4.8 ;
+      RECT 34.2 19.2 35.4 24.9 ;
+      RECT 34.2 2.1 35.4 4.8 ;
+      RECT 3 10.5 36.9 11.7 ;
+      RECT 22.2 8.4 42.3 9.6 ;
+      RECT 41.4 19.2 42.6 24.9 ;
+      RECT 33 15 45.3 16.2 ;
+    LAYER metal2 ;
+      RECT 3 1.8 4.2 24.9 ;
+      RECT 10.2 3.6 18.6 4.8 ;
+      RECT 7.8 15 11.4 16.2 ;
+      RECT 10.2 3.6 11.4 20.4 ;
+      RECT 7.8 1.8 9 24.9 ;
+      RECT 19.8 2.1 21 23.4 ;
+      RECT 27 2.1 28.2 24.9 ;
+      RECT 29.4 2.1 30.6 23.4 ;
+      RECT 31.8 15 35.4 16.2 ;
+      RECT 34.2 3.6 35.4 20.4 ;
+      RECT 34.2 19.2 42.6 20.4 ;
+      RECT 31.8 2.1 33 23.4 ;
+    LAYER via ;
+      RECT 3.3 24 3.9 24.6 ;
+      RECT 3.3 22.5 3.9 23.1 ;
+      RECT 3.3 17.4 3.9 18 ;
+      RECT 3.3 10.8 3.9 11.4 ;
+      RECT 3.3 4.5 3.9 5.1 ;
+      RECT 3.3 2.4 3.9 3 ;
+      RECT 8.1 24 8.7 24.6 ;
+      RECT 8.1 22.5 8.7 23.1 ;
+      RECT 8.1 2.4 8.7 3 ;
+      RECT 10.5 19.5 11.1 20.1 ;
+      RECT 10.5 15.3 11.1 15.9 ;
+      RECT 10.5 3.9 11.1 4.5 ;
+      RECT 17.7 3.9 18.3 4.5 ;
+      RECT 20.1 22.5 20.7 23.1 ;
+      RECT 20.1 17.4 20.7 18 ;
+      RECT 20.1 2.4 20.7 3 ;
+      RECT 27.3 22.5 27.9 23.1 ;
+      RECT 27.3 13.2 27.9 13.8 ;
+      RECT 27.3 2.4 27.9 3 ;
+      RECT 29.7 22.5 30.3 23.1 ;
+      RECT 29.7 13.2 30.3 13.8 ;
+      RECT 29.7 2.4 30.3 3 ;
+      RECT 32.1 22.5 32.7 23.1 ;
+      RECT 32.1 2.4 32.7 3 ;
+      RECT 33.3 15.3 33.9 15.9 ;
+      RECT 34.5 19.5 35.1 20.1 ;
+      RECT 34.5 3.9 35.1 4.5 ;
+      RECT 41.7 19.5 42.3 20.1 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END DFFRX1
+
+MACRO Filler
+  CLASS CORE ;
+  ORIGIN 1.2 1.2 ;
+  FOREIGN Filler -1.2 -1.2 ;
+  SIZE 2.4 BY 29.4 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT -1.2 25.8 1.2 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT -1.2 -1.2 1.2 1.2 ;
+    END
+  END gnd!
+  PROPERTY drcSignature 14016396 ;
+END Filler
+
+MACRO Filler4
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN Filler4 0 0 ;
+  SIZE 7.2 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT -1.2 25.8 8.4 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT -1.2 -1.2 8.4 1.2 ;
+    END
+  END gnd!
+  PROPERTY drcSignature 14016396 ;
+END Filler4
+
+MACRO Filler8
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN Filler8 0 0 ;
+  SIZE 16.8 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT -1.2 -1.2 18 1.2 ;
+    END
+  END gnd!
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT -1.2 25.8 18 28.2 ;
+    END
+  END vdd!
+  PROPERTY drcSignature 14016396 ;
+END Filler8
+
+MACRO INVX1
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN INVX1 0 0 ;
+  SIZE 4.8 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 22.2 1.8 28.2 ;
+        RECT -1.2 25.8 6 28.2 ;
+    END
+  END vdd!
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 10.2 3.9 10.8 ;
+      LAYER metal2 ;
+        RECT 3 9.9 4.2 11.1 ;
+      LAYER metal1 ;
+        RECT 3 2.4 4.2 24.6 ;
+    END
+  END OUT
+  PIN IN
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+    END
+  END IN
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 3.3 ;
+        RECT -1.2 -1.2 6 1.2 ;
+    END
+  END gnd!
+  PROPERTY drcSignature 14016396 ;
+END INVX1
+
+MACRO INVX4
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN INVX4 0 0 ;
+  SIZE 4.8 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 13.5 1.8 28.2 ;
+        RECT -1.2 25.8 6 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 7.8 ;
+        RECT -1.2 -1.2 6 1.2 ;
+    END
+  END gnd!
+  PIN IN
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+    END
+  END IN
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 10.2 3.9 10.8 ;
+      LAYER metal2 ;
+        RECT 3 9.9 4.2 11.1 ;
+      LAYER metal1 ;
+        RECT 3 2.4 4.2 24.6 ;
+    END
+  END OUT
+  PROPERTY drcSignature 14016396 ;
+END INVX4
+
+MACRO INVX8
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN INVX8 0 0 ;
+  SIZE 7.2 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 3 13.5 4.2 28.2 ;
+        RECT -1.2 25.8 8.4 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 3 -1.2 4.2 7.8 ;
+        RECT -1.2 -1.2 8.4 1.2 ;
+    END
+  END gnd!
+  PIN IN
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 10.2 6.3 10.8 ;
+      LAYER metal2 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+      LAYER metal1 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+    END
+  END IN
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 13.5 1.5 14.1 ;
+        RECT 0.9 7.2 1.5 7.8 ;
+        RECT 5.7 13.5 6.3 14.1 ;
+        RECT 5.7 7.2 6.3 7.8 ;
+      LAYER metal2 ;
+        RECT 0.6 13.2 6.6 14.4 ;
+        RECT 0.6 6.9 6.6 8.1 ;
+        RECT 0.6 6.9 1.8 14.4 ;
+      LAYER metal1 ;
+        RECT 5.4 2.4 6.6 8.1 ;
+        RECT 5.4 13.2 6.6 24.9 ;
+        RECT 0.6 2.4 1.8 8.1 ;
+        RECT 0.6 13.2 1.8 24.9 ;
+    END
+  END OUT
+  PROPERTY drcSignature 14016396 ;
+END INVX8
+
+MACRO MUX2X1
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN MUX2X1 0 0 ;
+  SIZE 12 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 22.2 1.8 28.2 ;
+        RECT -1.2 25.8 13.2 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 3.3 ;
+        RECT -1.2 -1.2 13.2 1.2 ;
+    END
+  END gnd!
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 8.1 23.7 8.7 24.3 ;
+        RECT 8.1 22.2 8.7 22.8 ;
+        RECT 8.1 2.7 8.7 3.3 ;
+      LAYER metal2 ;
+        RECT 7.8 2.4 9 24.6 ;
+      LAYER metal1 ;
+        RECT 7.8 2.4 9 3.6 ;
+        RECT 7.8 21.9 9 24.6 ;
+    END
+  END OUT
+  PIN S
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 11.1 11.1 ;
+    END
+  END S
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 10.5 23.7 11.1 24.3 ;
+        RECT 10.5 22.2 11.1 22.8 ;
+        RECT 10.5 2.7 11.1 3.3 ;
+      LAYER metal2 ;
+        RECT 10.2 2.4 11.4 24.6 ;
+      LAYER metal1 ;
+        RECT 10.2 2.4 11.4 3.6 ;
+        RECT 10.2 21.9 11.4 24.6 ;
+    END
+  END IN2
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 23.7 6.3 24.3 ;
+        RECT 5.7 22.2 6.3 22.8 ;
+        RECT 5.7 2.7 6.3 3.3 ;
+      LAYER metal2 ;
+        RECT 5.4 2.4 6.6 24.6 ;
+      LAYER metal1 ;
+        RECT 5.4 2.4 6.6 3.6 ;
+        RECT 5.4 21.9 6.6 24.6 ;
+    END
+  END IN1
+  OBS
+    LAYER metal1 ;
+      RECT 3 21.9 4.2 24.6 ;
+      RECT 3 2.4 4.2 3.6 ;
+      RECT 3 12.3 11.1 13.5 ;
+    LAYER metal2 ;
+      RECT 3 2.4 4.2 24.6 ;
+    LAYER via ;
+      RECT 3.3 23.7 3.9 24.3 ;
+      RECT 3.3 22.2 3.9 22.8 ;
+      RECT 3.3 12.6 3.9 13.2 ;
+      RECT 3.3 2.7 3.9 3.3 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END MUX2X1
+
+MACRO NAND2X1
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN NAND2X1 0 0 ;
+  SIZE 7.2 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 22.35 1.8 28.2 ;
+        RECT 5.4 22.35 6.6 28.2 ;
+        RECT -1.2 25.8 8.4 28.2 ;
+    END
+  END vdd!
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 13.2 1.5 13.8 ;
+      LAYER metal2 ;
+        RECT 0.6 12.9 1.8 14.1 ;
+      LAYER metal1 ;
+        RECT 0.6 12.9 1.8 14.1 ;
+    END
+  END IN1
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 13.2 6.3 13.8 ;
+      LAYER metal2 ;
+        RECT 5.4 12.9 6.6 14.1 ;
+      LAYER metal1 ;
+        RECT 5.4 12.9 6.6 14.1 ;
+    END
+  END IN2
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 5.4 -1.2 6.6 4.8 ;
+        RECT -1.2 -1.2 8.4 1.2 ;
+    END
+  END gnd!
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 22.5 3.9 23.1 ;
+        RECT 3.3 6 3.9 6.6 ;
+      LAYER metal2 ;
+        RECT 3 5.7 4.2 23.4 ;
+      LAYER metal1 ;
+        RECT 0.6 5.7 4.2 6.9 ;
+        RECT 0.6 2.1 1.8 6.9 ;
+        RECT 3 22.2 4.2 24.9 ;
+    END
+  END OUT
+  PROPERTY drcSignature 14016396 ;
+END NAND2X1
+
+MACRO NAND3X1
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN NAND3X1 0 0 ;
+  SIZE 9.6 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 22.2 1.8 28.2 ;
+        RECT 5.4 22.2 6.6 28.2 ;
+        RECT -1.2 25.8 10.8 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 6.3 ;
+        RECT -1.2 -1.2 10.8 1.2 ;
+    END
+  END gnd!
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 10.2 1.5 10.8 ;
+      LAYER metal2 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+      LAYER metal1 ;
+        RECT 0.6 9.9 1.8 11.1 ;
+    END
+  END IN1
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 16.2 3.9 16.8 ;
+      LAYER metal2 ;
+        RECT 3 15.9 4.2 17.1 ;
+      LAYER metal1 ;
+        RECT 3 15.9 4.2 17.1 ;
+    END
+  END IN2
+  PIN IN3
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 10.2 6.3 10.8 ;
+      LAYER metal2 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+      LAYER metal1 ;
+        RECT 5.4 9.9 6.6 11.1 ;
+    END
+  END IN3
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 8.1 20.4 8.7 21 ;
+        RECT 8.1 5.4 8.7 6 ;
+      LAYER metal2 ;
+        RECT 7.8 5.1 9 21.3 ;
+      LAYER metal1 ;
+        RECT 7.8 2.1 9 6.3 ;
+        RECT 7.8 20.1 9 24.9 ;
+        RECT 3 20.1 9 21.3 ;
+        RECT 3 20.1 4.2 24.9 ;
+    END
+  END OUT
+  PROPERTY drcSignature 14016396 ;
+END NAND3X1
+
+MACRO NANDX2
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN NANDX2 0 0 ;
+  SIZE 7.2 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 7.5 ;
+        RECT -1.2 -1.2 8.4 1.2 ;
+    END
+  END gnd!
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 19.5 1.8 28.2 ;
+        RECT 5.4 19.2 6.6 28.2 ;
+        RECT -1.2 25.8 8.4 28.2 ;
+    END
+  END vdd!
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 13.2 1.5 13.8 ;
+      LAYER metal2 ;
+        RECT 0.6 12.9 1.8 14.1 ;
+      LAYER metal1 ;
+        RECT 0.6 12.9 1.8 14.1 ;
+    END
+  END IN1
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 19.5 3.9 20.1 ;
+        RECT 5.7 6.9 6.3 7.5 ;
+      LAYER metal2 ;
+        RECT 3 9.6 6.6 10.5 ;
+        RECT 5.4 6.6 6.6 10.5 ;
+        RECT 3 9.6 4.2 20.4 ;
+      LAYER metal1 ;
+        RECT 5.4 2.1 6.6 7.8 ;
+        RECT 3 19.2 4.2 24.9 ;
+    END
+  END OUT
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 13.2 6.3 13.8 ;
+      LAYER metal2 ;
+        RECT 5.4 12.9 6.6 14.1 ;
+      LAYER metal1 ;
+        RECT 5.4 12.9 6.6 14.1 ;
+    END
+  END IN2
+  PROPERTY drcSignature 14016396 ;
+END NANDX2
+
+MACRO NOR2X1
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN NOR2X1 0 0 ;
+  SIZE 7.2 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 5.7 7.2 6.3 7.8 ;
+      LAYER metal2 ;
+        RECT 5.4 6.9 6.6 8.1 ;
+      LAYER metal1 ;
+        RECT 5.4 6.9 6.6 8.1 ;
+    END
+  END IN2
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 7.2 1.5 7.8 ;
+      LAYER metal2 ;
+        RECT 0.6 6.9 1.8 8.1 ;
+      LAYER metal1 ;
+        RECT 0.6 6.9 1.8 8.1 ;
+    END
+  END IN1
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 2.4 3.9 3 ;
+        RECT 5.7 19.5 6.3 20.1 ;
+      LAYER metal2 ;
+        RECT 5.4 12 6.6 20.4 ;
+        RECT 3 12 6.6 13.2 ;
+        RECT 3 2.1 4.2 13.2 ;
+      LAYER metal1 ;
+        RECT 5.4 19.2 6.6 24.9 ;
+        RECT 3 2.1 4.2 3.3 ;
+    END
+  END OUT
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 19.5 1.8 28.2 ;
+        RECT -1.2 25.8 8.4 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 3 ;
+        RECT 5.4 -1.2 6.6 3 ;
+        RECT -1.2 -1.2 8.4 1.2 ;
+    END
+  END gnd!
+  PROPERTY drcSignature 14016396 ;
+END NOR2X1
+
+MACRO OAI21
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN OAI21 0 0 ;
+  SIZE 9.6 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN IN1
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 8.1 16.2 8.7 16.8 ;
+      LAYER metal2 ;
+        RECT 7.8 15.9 9 17.1 ;
+      LAYER metal1 ;
+        RECT 7.8 15.9 9 17.1 ;
+    END
+  END IN1
+  PIN IN3
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 0.9 16.2 1.5 16.8 ;
+      LAYER metal2 ;
+        RECT 0.6 15.9 1.8 17.1 ;
+      LAYER metal1 ;
+        RECT 0.6 15.9 1.8 17.1 ;
+    END
+  END IN3
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 19.5 3.9 20.1 ;
+        RECT 3.3 13.2 3.9 13.8 ;
+        RECT 5.7 3.9 6.3 4.5 ;
+        RECT 6.9 13.2 7.5 13.8 ;
+      LAYER metal2 ;
+        RECT 6.6 7.8 7.8 14.1 ;
+        RECT 5.4 3.6 6.6 9 ;
+        RECT 3 12.9 4.2 20.4 ;
+      LAYER metal1 ;
+        RECT 3 12.9 7.8 14.1 ;
+        RECT 5.4 2.1 6.6 4.8 ;
+        RECT 3 19.2 4.2 24.9 ;
+    END
+  END OUT
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 4.8 ;
+        RECT -1.2 -1.2 10.8 1.2 ;
+    END
+  END gnd!
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 19.2 1.8 28.2 ;
+        RECT 7.8 19.2 9 28.2 ;
+        RECT -1.2 25.8 10.8 28.2 ;
+    END
+  END vdd!
+  PIN IN2
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 10.2 3.9 10.8 ;
+      LAYER metal2 ;
+        RECT 3 9.9 4.2 11.1 ;
+      LAYER metal1 ;
+        RECT 3 9.9 4.2 11.1 ;
+    END
+  END IN2
+  OBS
+    LAYER metal1 ;
+      RECT 3 2.1 4.2 6.9 ;
+      RECT 7.8 2.1 9 6.9 ;
+      RECT 3 5.7 9 6.9 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END OAI21
+
+MACRO TIEHI
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN TIEHI 0 0 ;
+  SIZE 4.8 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 19.2 3.9 19.8 ;
+      LAYER metal2 ;
+        RECT 3 18.9 4.2 20.1 ;
+      LAYER metal1 ;
+        RECT 3 18.3 4.2 24 ;
+    END
+  END OUT
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 18.6 1.8 28.2 ;
+        RECT -1.2 25.8 6 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 4.8 ;
+        RECT -1.2 -1.2 6 1.2 ;
+    END
+  END gnd!
+  OBS
+    LAYER metal1 ;
+      RECT 3 2.4 4.2 6.9 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END TIEHI
+
+MACRO TIELO
+  CLASS CORE ;
+  ORIGIN 0 0 ;
+  FOREIGN TIELO 0 0 ;
+  SIZE 4.8 BY 27 ;
+  SYMMETRY X Y ;
+  SITE core ;
+  PIN OUT
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER via ;
+        RECT 3.3 4.2 3.9 4.8 ;
+      LAYER metal1 ;
+        RECT 3 2.4 4.2 5.1 ;
+      LAYER metal2 ;
+        RECT 3 3.9 4.2 5.1 ;
+    END
+  END OUT
+  PIN vdd!
+    DIRECTION INOUT ;
+    USE POWER ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 18.6 1.8 28.2 ;
+        RECT -1.2 25.8 6 28.2 ;
+    END
+  END vdd!
+  PIN gnd!
+    DIRECTION INOUT ;
+    USE GROUND ;
+    SHAPE ABUTMENT ;
+    PORT
+      LAYER metal1 ;
+        RECT 0.6 -1.2 1.8 4.8 ;
+        RECT -1.2 -1.2 6 1.2 ;
+    END
+  END gnd!
+  OBS
+    LAYER metal1 ;
+      RECT 3 16.5 4.2 24 ;
+  END
+  PROPERTY drcSignature 14016396 ;
+END TIELO
+
+END LIBRARY

@@ -32,11 +32,13 @@ end
 always @(*) 
 begin  
    next_StateMC = StateMC ;
-   Z_val = 0 ;
-   COUT_val = 0 ;
+   Z_val = Z ;
+   COUT_val = COUT ;
    ACK_val = 0 ;
   case(StateMC)
                 Add_Compute :   begin
+					COUT_val = 0;
+					Z_val =0;
 	           		            if(REQ==1) begin
 	           			             {COUT_val, Z_val} = A + B ;
 	           			             next_StateMC = Add_ResetOutput ;
@@ -47,8 +49,12 @@ begin
              Add_ResetOutput:   begin
 			                       ACK_val = 1'b0 ;
 								   if(REQ==1) next_StateMC = Add_ResetOutput ;
-			                       else next_StateMC = Add_Compute ;			
+			                       else next_StateMC = Add_EndState ;			
 		                        end
+		Add_EndState :  begin	
+					
+					next_StateMC = Add_Compute;
+				end
   endcase
 
 end

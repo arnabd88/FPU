@@ -511,7 +511,7 @@ interconnect u_Adder_interconnect(
 	.M1_req (Add_valid),
 	.M1_ack (Add_ack),
 	//------- M2 unit interface ----
-	.M2_req (Booth_valid),
+	.M2_req (Booth_Add_valid),
 	.M2_ack (Booth_Add_ack),
 	//------ Slave unit interface ---
 	.S_req (Add_req),

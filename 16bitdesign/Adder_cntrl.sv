@@ -204,7 +204,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						if(Exc_Ack == 1) begin
 							ExcCheck_valid_val = 0 ;
 							exc_val = Exc_value ;
-							if(exc_val == 0)
+							if(exc_val == 0 || exc_val == 3'b111)
 								next_StateMC = AdderState ;   						
 							else next_StateMC = SetOutput ;
 						end
@@ -225,7 +225,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 							Final_Mantissa = {Adder_dataout[7:0],G_val, R_val, S_val} ;
 							carry          = Adder_carryout ;
 							//---- Disable the adder call and reset the drive lines ----
-							if ( exc_val != 0 ) next_StateMC = SetOutput ;
+							if ( exc_val != 0 && exc_val !=3'b111) next_StateMC = SetOutput ;
 							else                next_StateMC = EvaluateRes ;
 						end
 						else                    next_StateMC = AdderState ;
@@ -291,7 +291,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 											end
 										 end
 					   endcase
-					   if(exc_val != 0) next_StateMC = SetOutput ;
+					   if(exc_val != 0 && exc_val!=3'b111) next_StateMC = SetOutput ;
 					   else             next_StateMC = RoundOff  ;
                     end
 	RoundOff    :  begin
@@ -325,7 +325,7 @@ xor u_xor_1( EOP, Op1_Sign_reg, Op2_Sign_reg) ;
 						else next_StateMC = ExceptionChecker ;
    					  end
 	SetOutput   :  begin
-						if(exc_reg != 0)	Exc  =  exc_reg ;
+						if(exc_reg != 0 && exc_val != 3'b111)	Exc  =  exc_reg ;
 						Dataout = {Final_Sign_reg, Final_Exponent_reg, Final_Mantissa_reg[9:3]} ;
 						Dataout_valid = 1'b1 ;
 						next_StateMC = Idle ;

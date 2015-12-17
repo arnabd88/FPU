@@ -43,7 +43,7 @@ module Mul_cntrl (
 	output reg [7:0] Multi_datain2 ;
 	output reg        Multi_valid   ;
 	reg 		  Multi_valid_val;
-	input      [13:0] Multi_dataout ;
+	input      [15:0] Multi_dataout ;
 	input             Multi_ack     ;
   //---- Multiplication_ExceptionChecker callee module interface ---
           output reg ExcCheck_valid ;
@@ -55,7 +55,7 @@ module Mul_cntrl (
 
 Mul_cntrl_state StateMC, next_StateMC ;
 
-reg [13:0] Multi_dataout_val , Multi_dataout_reg ;
+reg [15:0] Multi_dataout_val , Multi_dataout_reg ;
 reg [8:0]  Final_Exponent, Final_Exponent_reg ;
 reg [7:0] Op1_Exponent_reg, Op1_Exponent, Op2_Exponent, Op2_Exponent_reg ;
 reg [7:0] Op1_Mantissa, Op1_Mantissa_reg, Op2_Mantissa, Op2_Mantissa_reg ;
@@ -66,6 +66,13 @@ reg G_val, G_reg, T_val, T_reg;
 reg denorm, denorm_reg;
 reg carry, carry_reg ;
 reg [7:0] Multi_datain1_val, Multi_datain2_val;
+reg ExcCheck_valid_val ;
+
+reg[3:0] Debug_reg, Debug_val ;
+reg Debug_valid_reg, Debug_valid_val ;
+
+assign Debug[3:0] = (Mode==3'b100) ? StateMC : (Mode==3'b101 || Mode==3'b110 || Mode==3'b111) ? Debug_reg : 0;
+assign Debug[4]   = (Mode==3'b100) ? 1'b1 : (Mode==3'b101 || Mode==3'b110 || Mode==3'b111) ? Debug_valid_reg : 0;
 
 //--- xor u_xor_1( Dataout[15], Datain1[15], Datain2[15]) ;
 //assign Multi_datain1 = Multi_datain1_reg;
@@ -92,6 +99,9 @@ always @(posedge CLK) begin
 		Multi_datain2        <=     0 ;
 		Multi_dataout_reg    <=     0 ;
 		Multi_valid 	     <=     0 ;
+		ExcCheck_valid       <=     0 ;
+		Debug_reg            <=     0 ;
+		Debug_valid_reg      <=     0 ;
 
 
    	end
@@ -114,6 +124,9 @@ always @(posedge CLK) begin
 		Multi_datain2	     <=     Multi_datain2_val;
 		Multi_dataout_reg    <=     Multi_dataout_val ;
 		Multi_valid 	     <=     Multi_valid_val;
+		ExcCheck_valid       <=     ExcCheck_valid_val;
+		Debug_reg            <=     Debug_val ;
+		Debug_valid_reg      <=     Debug_valid_val ;
 
    	end
    end
@@ -135,7 +148,8 @@ always@(*) begin
 		T_val           =   T_reg              ;
 		denorm          =   denorm_reg         ;
 		ExcCheck_Datain =   0                  ;
-		ExcCheck_valid  =   0                  ;
+		//ExcCheck_valid  =   0                  ;
+		ExcCheck_valid_val       =     ExcCheck_valid ;
 		Dataout         =   0                  ;
 		Dataout_valid   =   0                  ;
 		Multi_datain1_val   =   Multi_datain1 ;              
@@ -143,6 +157,8 @@ always@(*) begin
 		Multi_valid_val =   Multi_valid        ;
 		Exc             =   0                  ;
 		Multi_dataout_val   =     Multi_dataout_reg ;
+		Debug_valid_val = Debug_valid_reg ;
+		Debug_val  =  Debug_reg ;
 	//-------------------------
    	case(StateMC)
 	Multiplication_Idle     :   begin
@@ -151,6 +167,7 @@ always@(*) begin
 						G_val    =  0 ;
 						T_val    =  0 ;
 						Dataout_valid = 0 ;
+						Debug_valid_val = 1'b0 ;
 						next_StateMC = Multiplication_Idle ;
 						if(Data_valid==1) begin // new data available for multiplication
 							//---- Compare the Exponent.  Op1(higher exponent)
@@ -163,10 +180,11 @@ always@(*) begin
 				end
 
 		Multiplication_StartExcCheck1	:	begin
-								ExcCheck_valid = 1'b1 ;
+								Debug_valid_val = 1'b0 ;
+								ExcCheck_valid_val = 1'b1 ;
 								ExcCheck_Datain = Datain1; 
 								if(Exc_Ack == 1) begin
-									ExcCheck_valid = 0 ;
+									ExcCheck_valid_val = 0 ;
 									exc_val = Exc_value ;
 									if(Exc_value == 3'b100)
 									begin
@@ -183,10 +201,11 @@ always@(*) begin
 							end
 
 		Multiplication_StartExcCheck2	:	begin
-								ExcCheck_valid = 1'b1 ;
+								Debug_valid_val = 1'b0 ;
+								ExcCheck_valid_val = 1'b1 ;
 								ExcCheck_Datain = Datain2; 
 								if(Exc_Ack == 1) begin
-									ExcCheck_valid = 0 ;
+									ExcCheck_valid_val = 0 ;
 									if(Exc_value == 3'b100)
 									begin
 										next_StateMC = Multiplication_SetOutput;
@@ -210,7 +229,7 @@ always@(*) begin
 									end
 									else
 									begin
-										next_StateMC = Multiplication_State;
+										next_StateMC = StoreExponent;
 										exc_val = 3'b000;
 									end
 								end
@@ -220,17 +239,12 @@ always@(*) begin
 							end
 
 		StoreExponent	:	begin
+						Debug_valid_val = 1'b0 ;
 						next_StateMC = Multiplication_State;
 						Op1_Exponent = Datain1[14:7]; //Storing the inputs
 						Op2_Exponent = Datain2[14:7]; //Storing the inputs
 						denorm = 1;
-						if((Op1_Exponent == 0 && Op2_Exponent == 0) || (Op1_Exponent == 0 && Op2_Exponent < 127) || (Op1_Exponent < 127 && Op2_Exponent == 0)) begin //checking for underflow in the input
-							exc_val = 3'b001; 
-							Final_Mantissa = 0;
-							Final_Exponent = 0;
-							next_StateMC = Multiplication_SetOutput;
-						end
-						else if(Op1_Exponent == 0) begin Op1_Mantissa = {1'b0, Datain1[6:0]}; Op2_Mantissa = {1'b1, Datain2[6:0]}; end
+						if(Op1_Exponent == 0) begin Op1_Mantissa = {1'b0, Datain1[6:0]}; Op2_Mantissa = {1'b1, Datain2[6:0]}; end
 						else if(Op2_Exponent == 0) begin Op2_Mantissa = {1'b0, Datain2[6:0]}; Op1_Mantissa = {1'b1, Datain1[6:0]}; end
 						else begin Op2_Mantissa = {1'b1, Datain2[6:0]}; Op1_Mantissa = {1'b1, Datain1[6:0]}; denorm = 0; end
 
@@ -243,12 +257,24 @@ always@(*) begin
 							Final_Exponent[7:0] = 8'b11111111; 
 							next_StateMC = Multiplication_SetOutput; 
 						end //overflow in the exponent. Set to infinity 
+						if(Mode==3'b110)
+						begin  
+							Debug_valid_val = 1'b1 ;
+			  				Debug_val = {Final_Exponent[8],denorm};
+						end						
+						if((Op1_Exponent == 0 && Op2_Exponent == 0) || (Op1_Exponent == 0 && Op2_Exponent < 127) || (Op1_Exponent < 127 && Op2_Exponent == 0)) begin //checking for underflow in the input
+							exc_val = 3'b001; 
+							Final_Exponent = 0;
+							Final_Mantissa = 0;
+							next_StateMC = Multiplication_SetOutput;
+						end
 					end
 
 
 
 
 		Multiplication_Update	:	begin
+					Debug_valid_val = 1'b0 ;
 					
 					Final_Mantissa[7:0] = Final_Mantissa_reg[6:0] + (G_reg & (Final_Mantissa_reg[0] | T_reg));
 					if(G_reg | T_reg) exc_val = 3'b101;
@@ -267,6 +293,7 @@ always@(*) begin
 				end
 
 		Multiplication_State  :  begin
+						Debug_valid_val = 1'b0 ;
 						next_StateMC = Multiplication_State;
 						if(Multi_ack == 0) //prechecking booth status for multiplication
 						begin
@@ -281,13 +308,14 @@ always@(*) begin
 							Multi_dataout_val = Multi_dataout ; 
 							if(exc_val != 0) next_StateMC = Multiplication_SetOutput;
 							else
-								next_StateMC = Multiplication_Update;
 								begin
-									if(Multi_dataout_val[13] == 1) //this is when the mantissa result starts with 10 or 11
+									next_StateMC = Multiplication_Update;
+								
+									if(Multi_dataout_val[15] == 1) //this is when the mantissa result starts with 10 or 11
 										begin
-											Final_Mantissa[6:0] = Multi_dataout_val[12:6];
-											G_val = Multi_dataout_val[5];
-											T_val = Multi_dataout_val[4];
+											Final_Mantissa[6:0] = Multi_dataout_val[14:8];
+											G_val = Multi_dataout_val[7];
+											T_val = Multi_dataout_val[6];
 											Final_Exponent = add8(Final_Exponent, 9'b000000001, 1'b0); //incrementing exponent
 											if(Final_Exponent[8] == 1) 
 											begin 
@@ -297,11 +325,11 @@ always@(*) begin
 												next_StateMC = Multiplication_SetOutput; 
 											end //If the exponent overflows, generate exception of overflow/infinity 
 										end
-									else if({Multi_dataout_val[13], Multi_dataout_val[12]} == 2'b01) //this is when the mantissa result starts with 01
+									else if({Multi_dataout_val[15], Multi_dataout_val[14]} == 2'b01) //this is when the mantissa result starts with 01
 										begin
-											Final_Mantissa[6:0] = Multi_dataout_val[11:5];
-											G_val = Multi_dataout_val[4];
-											T_val = Multi_dataout_val[3];						
+											Final_Mantissa[6:0] = Multi_dataout_val[13:7];
+											G_val = Multi_dataout_val[6];
+											T_val = Multi_dataout_val[5];						
 										end
 								
 									else //denormal case
@@ -313,22 +341,27 @@ always@(*) begin
 												Final_Exponent = add8(Final_Exponent, 8'b00000001, 1'b1);
 											end
 											*/
-											Multi_dataout_val = normalize(Multi_dataout_val[11:0]);
-											Final_Mantissa[6:0] = Multi_dataout_val[11:5];
-											G_val = Multi_dataout_val[4];
-											T_val = Multi_dataout_val[3];
+											Multi_dataout_val = normalize(Multi_dataout_val[13:0]);
+											Final_Mantissa[6:0] = Multi_dataout_val[13:7];
+											G_val = Multi_dataout_val[6];
+											T_val = Multi_dataout_val[5];
 										end
 									
 								end
-							
+								if(Mode==3'b101)
+								begin
+									Debug_valid_val = 1'b1 ;	
+									Debug_val = {Multi_dataout_val[15:14], G_val|T_val, Final_Exponent[8]} ;
+								end
 						end
 					end
 		
 		Multiplication_ExceptionChecker    :	begin
-								ExcCheck_valid = 1'b1 ;
+								Debug_valid_val = 1'b0 ;
+								ExcCheck_valid_val = 1'b1 ;
 								ExcCheck_Datain = {Final_Sign_reg, Final_Exponent_reg[7:0], Final_Mantissa_reg[6:0]}; 
 								if(Exc_Ack == 1) begin
-									ExcCheck_valid = 0 ;
+									ExcCheck_valid_val = 0 ;
 									exc_val = Exc_value ;
 									next_StateMC = Multiplication_SetOutput;
 								end
@@ -339,8 +372,10 @@ always@(*) begin
 
 
 			Multiplication_SetOutput   :  begin
+						Debug_valid_val = 1'b0 ;
 						if(exc_reg != 0)	Exc  =  exc_reg ;
-						Dataout = {Final_Sign_reg, Final_Exponent_reg[7:0], Final_Mantissa_reg[6:0]} ;
+						
+							Dataout = {Final_Sign_reg, Final_Exponent_reg[7:0], Final_Mantissa_reg[6:0]} ;
 						Dataout_valid = 1'b1 ;
 						next_StateMC = Multiplication_Idle;
 				       end
@@ -362,14 +397,19 @@ function bit[8:0] add8( bit[8:0] data1, bit[8:0] data2, bit op);
   	return temp ;
 endfunction
 
- function  automatic bit[11:0] normalize( bit[11:0] data);
+ function  automatic bit[13:0] normalize( bit[13:0] data);
  	bit[3:0] index ;
  	bit first_hit ;
- 	bit[0:11] temp = data;
- 	for(int j=0 ; j<=11; j++) begin
+ 	bit[0:13] temp = data;
+ 	for(int j=0 ; j<=13; j++) begin
  		if(first_hit==0 && temp[j]==1'b1) begin
  			first_hit = 1'b1 ;
  			index = j ;
+			if(Mode==3'b111)
+			begin  
+				Debug_valid_val = 1'b1 ;
+			  	Debug_val = index;
+			end
  			if(index > Final_Exponent_reg) begin
 				index = Final_Exponent_reg ;
  				Final_Exponent = 0;

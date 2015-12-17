@@ -151,6 +151,7 @@ begin
 							//$display("ShRES", $time);
 							//$display("%b | %b", A, Q, $time);
 							count = count_reg + 1'b1;
+							Adder_valid_val = 0;	
 							end
 					    
 					    endcase
@@ -166,7 +167,9 @@ begin
 
                 Mul_ResetOutput:   begin	
 			                       BACK = 1'b0 ;
-			                       Bnext_StateMC = Booth_Idle;			
+			                       Bnext_StateMC = Booth_Idle;	
+						Adder_valid_val = 0;
+							
 		                        end
   endcase
 

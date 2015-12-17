@@ -1,0 +1,16 @@
+#
+# Edit Lock-Stake file. CAUTION: Please do not change.
+#
+# Information about current Edit Lock Owner.
+#
+LockStakeVersion               1.1
+LoginName                      chandran
+HostName                       lab1-3.eng.utah.edu
+ProcessIdentifier              26615
+ProcessCreationTime_UTC        1450374378
+ProcessCreationTime_Readable   Thu Dec 17 10:46:18 2015 MST
+AppIdentifier                  /uusoc/facility/cad_tools/Cadence/IC6-F15/tools/dfII/bin/64bit/virtuoso
+OSType                         lnx86
+ReasonForPlacingEditLock       
+FilePathUsedToEditLock         /home/arnabd/Semester1/DVLSI/Cadence-f15/ProjectFinal/wholechip/constraint/prop.cfg
+TimeEditLocked                 Thu Dec 17 10:52:54 2015 MST

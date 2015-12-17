@@ -1,0 +1,100 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : FPU_Control
+Version: G-2012.06-SP3
+Date   : Tue Dec 15 16:46:40 2015
+****************************************
+
+Operating Conditions: typical   Library: Lib6710_05
+Wire Load Model Mode: top
+
+  Startpoint: u_booth_count_reg_reg_2_
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: u_mul_cntrl/Final_Mantissa_reg_reg_3_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock CLK (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  u_booth_count_reg_reg_2_/CLK (DFFRX1)                   0.00       0.00 r
+  u_booth_count_reg_reg_2_/Q (DFFRX1)                     1.26       1.26 f
+  U1974/OUT (OAI21)                                       0.66       1.92 r
+  U1950/OUT (INVX4)                                       0.30       2.22 f
+  U1972/OUT (NANDX2)                                      0.38       2.60 r
+  U1982/OUT (NOR2X1)                                      0.46       3.06 f
+  U1674/OUT (BUF8X)                                       0.50       3.56 f
+  u_mul_cntrl/Multi_dataout[11] (Mul_cntrl)               0.00       3.56 f
+  u_mul_cntrl/U651/OUT (INVX4)                            0.17       3.73 r
+  u_mul_cntrl/U217/OUT (NANDX2)                           0.12       3.85 f
+  u_mul_cntrl/U225/OUT (INVX1)                            0.17       4.02 r
+  u_mul_cntrl/U213/OUT (NAND2X1)                          0.34       4.36 f
+  u_mul_cntrl/U1005/OUT (OAI21)                           0.31       4.67 r
+  u_mul_cntrl/U1006/OUT (NOR2X1)                          0.50       5.16 f
+  u_mul_cntrl/U1007/OUT (OAI21)                           0.38       5.54 r
+  u_mul_cntrl/U377/OUT (INVX4)                            0.22       5.75 f
+  u_mul_cntrl/U367/OUT (NANDX2)                           0.22       5.97 r
+  u_mul_cntrl/U265/OUT (INVX4)                            0.17       6.14 f
+  u_mul_cntrl/U226/OUT (NANDX2)                           0.18       6.32 r
+  u_mul_cntrl/U799/OUT (OAI21)                            0.39       6.71 f
+  u_mul_cntrl/U210/OUT (NANDX2)                           0.38       7.09 r
+  u_mul_cntrl/U585/OUT (NANDX2)                           0.25       7.34 f
+  u_mul_cntrl/U205/OUT (INVX4)                            0.27       7.62 r
+  u_mul_cntrl/U771/OUT (AOI22)                            0.44       8.05 f
+  u_mul_cntrl/U554/OUT (NANDX2)                           0.41       8.46 r
+  u_mul_cntrl/U379/OUT (NANDX2)                           0.20       8.66 f
+  u_mul_cntrl/U381/OUT (NANDX2)                           0.20       8.86 r
+  u_mul_cntrl/U779/OUT (OAI21)                            0.25       9.12 f
+  u_mul_cntrl/U370/OUT (NANDX2)                           0.27       9.39 r
+  u_mul_cntrl/Final_Mantissa_reg_reg_3_/D (DFFRX1)        0.00       9.39 r
+  data arrival time                                                  9.39
+
+  clock CLK (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  u_mul_cntrl/Final_Mantissa_reg_reg_3_/CLK (DFFRX1)      0.00      10.00 r
+  library setup time                                     -0.61       9.39
+  data required time                                                 9.39
+  --------------------------------------------------------------------------
+  data required time                                                 9.39
+  data arrival time                                                 -9.39
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+1
+ 
+****************************************
+Report : area
+Design : FPU_Control
+Version: G-2012.06-SP3
+Date   : Tue Dec 15 16:46:40 2015
+****************************************
+
+Library(s) Used:
+
+    Lib6710_05 (File: /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16synth/Lib6710_05.db)
+
+Number of ports:                           70
+Number of nets:                          1209
+Number of cells:                         1012
+Number of combinational cells:            812
+Number of sequential cells:               198
+Number of macros:                           0
+Number of buf/inv:                        280
+Number of references:                      18
+
+Combinational area:       880178.414368
+Buf/Inv area:             165304.807617
+Noncombinational area:    363527.991943
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:          1243706.406311
+Total area:                 undefined
+1

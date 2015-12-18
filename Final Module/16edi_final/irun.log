@@ -1,0 +1,1050 @@
+irun(64): 13.10-s003: (c) Copyright 1995-2013 Cadence Design Systems, Inc.
+TOOL:	irun(64)	13.10-s003: Started on Dec 14, 2015 at 21:53:19 MST
+irun
+	-sv
+	../stdCells/stdCells_05.v
+	FPU_Control_struct.v
+	testbench.sv
+	-access +rwc
+	-input ncsim.tcl
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+irun: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+irun: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+irun: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+irun: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+irun: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+ncvlog: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+	Total errors/warnings found outside modules and primitives:
+		errors: 0, warnings: 1
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+irun: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+irun: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+SOFTINCLUDE $SYSTEM_CDS_LIB_DIR/cds.lib
+|
+ncelab: *W,DLCVAR (/uusoc/facility/cad_common/NCSU/CDK6-F13/cdssetup/cds.lib,1): cds.lib Invalid environment variable ''.
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	.DIN(DIN_reg)   ,
+	   |
+ncelab: *E,CUVPOM (./testbench.sv,18|4): Port name 'DIN' is invalid or has multiple connections.
+  Adder_cntrl u_adder_cntrl ( .CLK(CLK), .Datain1({AdderCntrl_Op1[15:10], 
+                          |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5486|26): 1 output port was not connected:
+ncelab: (./FPU_Control_struct.v,5): ExcCheck_Datain_15_
+
+  DFFRX1 Add_sign_reg_reg ( .D(n1077), .CLK(CLK), .CLRB(n68), .QB(n252) );
+                        |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,339|24): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 ExcCheck_valid_reg ( .D(N258), .CLK(CLK), .CLRB(n68), .Q(
+                          |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,351|26): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_valid_reg ( .D(n1065), .CLK(CLK), .CLRB(n68), .Q(Adder_valid)
+                       |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,353|23): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_6_ ( .D(n1057), .CLK(CLK), .CLRB(n68), .QB(n189)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,375|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_6_ ( .D(N246), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,377|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_5_ ( .D(n1058), .CLK(CLK), .CLRB(n68), .QB(n190)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,379|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_5_ ( .D(N245), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,381|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_4_ ( .D(n1059), .CLK(CLK), .CLRB(n68), .QB(n191)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,383|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_4_ ( .D(N244), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,385|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_3_ ( .D(n1060), .CLK(CLK), .CLRB(n68), .QB(n192)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,387|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_3_ ( .D(N243), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,389|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_2_ ( .D(n1061), .CLK(CLK), .CLRB(n68), .QB(n193)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,391|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_2_ ( .D(N242), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,393|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_1_ ( .D(n1062), .CLK(CLK), .CLRB(n68), .QB(n194)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,395|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_1_ ( .D(N241), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,397|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_0_ ( .D(n1063), .CLK(CLK), .CLRB(n68), .QB(n195)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,399|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_0_ ( .D(N240), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,401|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_8_ ( .D(n118), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,405|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_7_ ( .D(n117), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,407|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_6_ ( .D(n116), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,409|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_5_ ( .D(n115), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,411|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_4_ ( .D(n114), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,413|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_3_ ( .D(n113), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,415|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_2_ ( .D(n112), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,417|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_1_ ( .D(n111), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,419|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Adder_datain2_reg_0_ ( .D(n110), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,421|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Final_Mantissa_reg_reg_2_ ( .D(n594), .CLK(CLK), .CLRB(n68), .QB(
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,426|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Final_Mantissa_reg_reg_4_ ( .D(n1042), .CLK(CLK), .CLRB(n68), .Q(
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,442|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Final_Exponent_reg_reg_7_ ( .D(n1076), .CLK(CLK), .CLRB(n68), .QB(
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,446|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Final_Exponent_reg_reg_4_ ( .D(n1072), .CLK(CLK), .CLRB(n68), .QB(
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,455|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Final_Exponent_reg_reg_5_ ( .D(n1073), .CLK(CLK), .CLRB(n68), .QB(
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,457|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Final_Exponent_reg_reg_6_ ( .D(n1074), .CLK(CLK), .CLRB(n68), .QB(
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,459|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Op1_Mantissa_reg_reg_7_ ( .D(n1056), .CLK(CLK), .CLRB(n68), .QB(n188)
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,462|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Adder_datain1_reg_7_ ( .D(N247), .CLK(CLK), .CLRB(n68), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,464|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Final_Sign_reg_reg ( .D(n1034), .CLK(CLK), .CLRB(n68), .Q(
+                          |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,466|26): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  Mul_cntrl u_mul_cntrl ( .CLK(CLK), .Datain1({n2234, n1859, n1860, 
+                      |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5514|22): 1 output port was not connected:
+ncelab: (./FPU_Control_struct.v,3065): Dataout_valid
+
+  DFFRX1 T_reg_reg ( .D(n96), .CLK(CLK), .CLRB(n58), .QB(n832) );
+                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3326|17): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 exc_reg_reg_0_ ( .D(n395), .CLK(CLK), .CLRB(n58), .Q(n200) );
+                      |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3335|22): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Final_Exponent_reg_reg_8_ ( .D(n88), .CLK(CLK), .CLRB(n58), .QB(n242)
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3340|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Final_Exponent_reg_reg_3_ ( .D(n678), .CLK(CLK), .CLRB(n58), .QB(n410) );
+                                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3348|33): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 Op1_Mantissa_reg_reg_0_ ( .D(n117), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3372|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_1_ ( .D(n118), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3374|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_2_ ( .D(n119), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3376|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_3_ ( .D(n120), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3378|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_4_ ( .D(n121), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3380|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_5_ ( .D(n122), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3382|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_6_ ( .D(n123), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3384|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op1_Mantissa_reg_reg_7_ ( .D(n124), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3386|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_0_ ( .D(n125), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3388|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_1_ ( .D(n126), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3390|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_2_ ( .D(n127), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3392|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_3_ ( .D(n128), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3394|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_4_ ( .D(n129), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3396|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_5_ ( .D(n130), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3398|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_6_ ( .D(n131), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3400|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Op2_Mantissa_reg_reg_7_ ( .D(n132), .CLK(CLK), .CLRB(n58), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3402|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_7_ ( .D(n105), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3404|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_6_ ( .D(n104), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3406|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_5_ ( .D(n103), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3408|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_4_ ( .D(n102), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3410|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_3_ ( .D(n101), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3412|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_2_ ( .D(n100), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3414|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_1_ ( .D(n99), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3416|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain1_reg_0_ ( .D(n98), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3418|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_7_ ( .D(n113), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3420|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_6_ ( .D(n112), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3422|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_5_ ( .D(n111), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3424|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_4_ ( .D(n110), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3426|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_3_ ( .D(n109), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3428|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_2_ ( .D(n108), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3430|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_1_ ( .D(n107), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3432|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 Multi_datain2_reg_0_ ( .D(n106), .CLK(CLK), .CLRB(n58), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,3434|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_count_reg_reg_0_ ( .D(n1534), .CLK(CLK), .CLRB(n408), .QB(
+                                |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5559|32): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 u_Adder_interconnect_M1_ack_reg ( .D(n593), .CLK(CLK), .CLRB(n408), 
+                                       |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5575|39): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_ExcChecker_interconnect_S_req_reg ( .D(
+                                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5583|43): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_exc_check_ACK_reg ( .D(u_exc_check_N45), .CLK(CLK), .CLRB(n408), 
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5586|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 u_ExcChecker_interconnect_M2_ack_reg ( .D(n1636), .CLK(CLK), .CLRB(
+                                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5588|44): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_exc_check_AEXC_reg_2_ ( .D(n587), .CLK(CLK), .CLRB(n408), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5596|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_ExcChecker_interconnect_M1_ack_reg ( .D(n591), .CLK(CLK), .CLRB(
+                                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5602|44): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_StateMC_reg_1_ ( .D(n1569), .CLK(CLK), .CLRB(n408), .Q(
+                                  |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5608|34): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_ACK_reg ( .D(n2023), .CLK(CLK), .CLRB(n408), .QB(n1819)
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5612|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 u_adder_24b_Z_reg_8_ ( .D(n597), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5614|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_7_ ( .D(n598), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5616|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_6_ ( .D(n599), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5618|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_5_ ( .D(u_booth_N54), .CLK(CLK), .CLRB(n408), .Q(Booth_Add_datain1[5]) );
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5622|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_5_ ( .D(n600), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5623|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_4_ ( .D(u_booth_N53), .CLK(CLK), .CLRB(n408), .Q(Booth_Add_datain1[4]) );
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5627|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_4_ ( .D(n601), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5628|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_3_ ( .D(u_booth_N52), .CLK(CLK), .CLRB(n408), .Q(Booth_Add_datain1[3]) );
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5632|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_3_ ( .D(n602), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5633|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_2_ ( .D(u_booth_N51), .CLK(CLK), .CLRB(n408), .Q(Booth_Add_datain1[2]) );
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5637|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_2_ ( .D(n603), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5638|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_1_ ( .D(u_booth_N50), .CLK(CLK), .CLRB(n408), .Q(Booth_Add_datain1[1]) );
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5642|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_1_ ( .D(n604), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5643|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_0_ ( .D(u_booth_N49), .CLK(CLK), .CLRB(n408), .Q(Booth_Add_datain1[0]) );
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5647|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_Z_reg_0_ ( .D(n595), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5648|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_adder_24b_COUT_reg ( .D(n596), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5652|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 outputRdy_reg_reg_0_ ( .D(N174), .CLK(CLK), .CLRB(n408), .QB(n586) );
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5654|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 getdataStat_reg_reg_0_ ( .D(N132), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5655|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_0_ ( .D(n550), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5657|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_1_ ( .D(n549), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5659|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_2_ ( .D(n548), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5661|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_3_ ( .D(n547), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5663|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_4_ ( .D(n546), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5665|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_5_ ( .D(n545), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5667|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_6_ ( .D(n544), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5669|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_7_ ( .D(n543), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5671|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_8_ ( .D(n542), .CLK(CLK), .CLRB(n408), .QB(n1863)
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5673|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 AdderCntrl_Op2_reg_9_ ( .D(n541), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5675|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_10_ ( .D(n540), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5677|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_11_ ( .D(n539), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5679|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_12_ ( .D(n538), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5681|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_13_ ( .D(n537), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5683|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_14_ ( .D(n536), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5685|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op2_reg_15_ ( .D(n535), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5687|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_0_ ( .D(n534), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5689|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_1_ ( .D(n533), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5691|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_2_ ( .D(n532), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5693|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_3_ ( .D(n531), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5695|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_4_ ( .D(n530), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5697|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_5_ ( .D(n529), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5699|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_6_ ( .D(n528), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5701|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_8_ ( .D(n526), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5705|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_9_ ( .D(n525), .CLK(CLK), .CLRB(n408), .Q(
+                             |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5707|29): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_10_ ( .D(n524), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5709|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_11_ ( .D(n523), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5711|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_12_ ( .D(n522), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5713|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_13_ ( .D(n521), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5715|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_14_ ( .D(n520), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5717|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderCntrl_Op1_reg_15_ ( .D(n519), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5719|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 ABUSY_reg ( .D(N134), .CLK(CLK), .CLRB(n408), .Q(ABUSY) );
+                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5721|17): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 adderStateMC_reg_0_ ( .D(n1326), .CLK(CLK), .CLRB(n408), .Q(n464) );
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5722|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AddExc_reg_reg_2_ ( .D(n414), .CLK(CLK), .CLRB(n408), .Q(
+                         |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5725|25): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AddExc_reg_reg_1_ ( .D(n413), .CLK(CLK), .CLRB(n408), .Q(
+                         |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5727|25): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AddExc_reg_reg_0_ ( .D(n412), .CLK(CLK), .CLRB(n408), .Q(
+                         |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5729|25): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_0_ ( .D(n415), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5731|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_1_ ( .D(n416), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5733|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_2_ ( .D(n417), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5735|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_3_ ( .D(n418), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5737|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_4_ ( .D(n419), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5739|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_5_ ( .D(n420), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5741|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_6_ ( .D(n421), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5743|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_7_ ( .D(n422), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5745|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_8_ ( .D(n423), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5747|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_9_ ( .D(n424), .CLK(CLK), .CLRB(n408), .Q(
+                              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5749|30): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_10_ ( .D(n425), .CLK(CLK), .CLRB(n408), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5751|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_11_ ( .D(n426), .CLK(CLK), .CLRB(n408), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5753|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_12_ ( .D(n427), .CLK(CLK), .CLRB(n408), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5755|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_13_ ( .D(n428), .CLK(CLK), .CLRB(n408), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5757|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_14_ ( .D(n429), .CLK(CLK), .CLRB(n408), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5759|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 AdderResult_reg_reg_15_ ( .D(n430), .CLK(CLK), .CLRB(n408), .Q(
+                               |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5761|31): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_8_ ( .D(n703), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5765|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_0_ ( .D(n695), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5769|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_1_ ( .D(n696), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5773|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_M_reg_reg_2_ ( .D(n610), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5775|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_2_ ( .D(n697), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5777|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_M_reg_reg_3_ ( .D(n611), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5779|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_3_ ( .D(n698), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5781|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_M_reg_reg_4_ ( .D(n612), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5783|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_4_ ( .D(n699), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5785|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_M_reg_reg_5_ ( .D(n613), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5787|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_5_ ( .D(n700), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5789|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_M_reg_reg_6_ ( .D(n614), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5791|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_6_ ( .D(n701), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5793|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain2_reg_7_ ( .D(n702), .CLK(CLK), .CLRB(n408), .QB(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5797|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): Q
+
+  DFFRX1 DR_reg ( .D(n2231), .CLK(CLK), .CLRB(n408), .Q(DR) );
+              |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5799|14): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_0_ ( .D(n582), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5802|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_1_ ( .D(n581), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5804|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_2_ ( .D(n580), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5806|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_3_ ( .D(n579), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5808|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_4_ ( .D(n578), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5810|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_5_ ( .D(n577), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5812|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_6_ ( .D(n576), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5814|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_7_ ( .D(n575), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5816|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_8_ ( .D(n574), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5818|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_9_ ( .D(n573), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5820|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_10_ ( .D(n572), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5822|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_11_ ( .D(n571), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5824|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_12_ ( .D(n570), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5826|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_13_ ( .D(n569), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5828|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op2_reg_14_ ( .D(n568), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5830|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_0_ ( .D(n566), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5832|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_1_ ( .D(n565), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5834|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_2_ ( .D(n564), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5836|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_3_ ( .D(n563), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5838|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_4_ ( .D(n562), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5840|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_5_ ( .D(n561), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5842|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_6_ ( .D(n560), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5844|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_7_ ( .D(n559), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5846|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_8_ ( .D(n558), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5848|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_9_ ( .D(n557), .CLK(CLK), .CLRB(n408), .Q(
+                           |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5850|27): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_10_ ( .D(n556), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5852|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_11_ ( .D(n555), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5854|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_12_ ( .D(n554), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5856|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_13_ ( .D(n553), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5858|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MulCntrl_Op1_reg_14_ ( .D(n552), .CLK(CLK), .CLRB(n408), .Q(
+                            |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5860|28): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 MBUSY_reg ( .D(N135), .CLK(CLK), .CLRB(n408), .Q(MBUSY) );
+                 |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5862|17): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_6_ ( .D(u_booth_N55), .CLK(CLK), .CLRB(n408), .Q(Booth_Add_datain1[6]) );
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5863|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_7_ ( .D(n707), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5864|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+  DFFRX1 u_booth_Adder_datain1_reg_8_ ( .D(n708), .CLK(CLK), .CLRB(n408), .Q(
+                                    |
+ncelab: *W,CUVWSP (./FPU_Control_struct.v,5866|36): 1 output port was not connected:
+ncelab: (../stdCells/stdCells_05.v,53): QB
+
+irun: *E,ELBERR: Error during elaboration (status 1), exiting.
+TOOL:	irun(64)	13.10-s003: Exiting on Dec 14, 2015 at 21:53:20 MST  (total: 00:00:01)

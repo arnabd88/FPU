@@ -1,0 +1,92 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : FPU_Control
+Version: G-2012.06-SP3
+Date   : Wed Dec 16 22:33:36 2015
+****************************************
+
+Operating Conditions: typical   Library: Lib6710_05
+Wire Load Model Mode: top
+
+  Startpoint: u_Adder_interconnect_Select_reg
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: u_adder_24b_Z_reg_8_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock CLK (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  u_Adder_interconnect_Select_reg/CLK (DFFRX1)            0.00       0.00 r
+  u_Adder_interconnect_Select_reg/Q (DFFRX1)              1.06       1.06 f
+  U1992/OUT (NOR2X1)                                      0.40       1.46 r
+  U1588/OUT (BUF4X)                                       0.60       2.05 r
+  U1866/OUT (INVX4)                                       0.17       2.23 f
+  U1865/OUT (NANDX2)                                      0.27       2.50 r
+  U1902/OUT (OAI21)                                       0.37       2.87 f
+  U1741/OUT (INVX1)                                       0.34       3.22 r
+  U1799/OUT (NOR2X1)                                      0.44       3.66 f
+  U1800/OUT (BUF4X)                                       0.50       4.16 f
+  add_x_176_U9/COUT (FULLADD)                             1.04       5.20 f
+  add_x_176_U8/COUT (FULLADD)                             1.29       6.49 f
+  add_x_176_U7/COUT (FULLADD)                             1.30       7.79 f
+  add_x_176_U6/COUT (FULLADD)                             1.30       9.08 f
+  add_x_176_U5/COUT (FULLADD)                             1.30      10.38 f
+  add_x_176_U4/COUT (FULLADD)                             1.30      11.67 f
+  add_x_176_U3/COUT (FULLADD)                             0.82      12.49 f
+  U1801/OUT (BUF4X)                                       0.46      12.95 f
+  add_x_176_U2/SUM (FULLADD)                              0.81      13.77 r
+  U2207/OUT (AOI22)                                       0.26      14.02 f
+  U2208/OUT (INVX1)                                       0.35      14.37 r
+  u_adder_24b_Z_reg_8_/D (DFFRX1)                         0.00      14.37 r
+  data arrival time                                                 14.37
+
+  clock CLK (rise edge)                                  15.00      15.00
+  clock network delay (ideal)                             0.00      15.00
+  u_adder_24b_Z_reg_8_/CLK (DFFRX1)                       0.00      15.00 r
+  library setup time                                     -0.62      14.38
+  data required time                                                14.38
+  --------------------------------------------------------------------------
+  data required time                                                14.38
+  data arrival time                                                -14.37
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+1
+ 
+****************************************
+Report : area
+Design : FPU_Control
+Version: G-2012.06-SP3
+Date   : Wed Dec 16 22:33:36 2015
+****************************************
+
+Library(s) Used:
+
+    Lib6710_05 (File: /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16synth/Lib6710_05.db)
+
+Number of ports:                           70
+Number of nets:                          1157
+Number of cells:                          943
+Number of combinational cells:            743
+Number of sequential cells:               198
+Number of macros:                           0
+Number of buf/inv:                        254
+Number of references:                      16
+
+Combinational area:       657655.213806
+Buf/Inv area:             114177.605347
+Noncombinational area:    369035.991821
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:          1026691.205627
+Total area:                 undefined
+1

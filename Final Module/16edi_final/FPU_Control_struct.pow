@@ -1,0 +1,53 @@
+Loading db file '/home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16synth/Lib6710_05.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : FPU_Control
+Version: G-2012.06-SP3
+Date   : Thu Dec 17 18:34:44 2015
+****************************************
+
+
+Library(s) Used:
+
+    Lib6710_05 (File: /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16synth/Lib6710_05.db)
+
+
+Operating Conditions: typical   Library: Lib6710_05
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+  Cell Internal Power  =  30.5925 mW   (97%)
+  Net Switching Power  = 947.0820 uW    (3%)
+                         ---------
+Total Dynamic Power    =  31.5396 mW  (100%)
+
+Cell Leakage Power     = 194.5735 mW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
+register          28.0549            0.1094        1.9457e+08          222.7376  (  98.51%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational      2.5377            0.8377          191.3059            3.3756  (   1.49%)
+--------------------------------------------------------------------------------------------------
+Total             30.5925 mW         0.9471 mW     1.9457e+08 nW       226.1132 mW
+1

@@ -1,0 +1,267 @@
+[12/17 18:53:51     0s] Checking out Encounter license ...
+[12/17 18:53:51     0s] 	edsxl		CHECKED OUT:	"Encounter_Digital_Impl_Sys_XL"
+[12/17 18:53:51     0s] Encounter_Digital_Impl_Sys_XL 14.2 license checkout succeeded.
+[12/17 18:53:51     0s] You can run 2 CPU jobs with the base license that is currently checked out.
+[12/17 18:53:51     0s] If required, use the setMultiCpuUsage command to enable multi-CPU processing.
+[12/17 18:53:56     4s] *******************************************************************
+*   Copyright (c)  Cadence Design Systems, Inc.  1996 - 2014.     *
+*                     All rights reserved.                        *
+*                                                                 *
+*                                                                 *
+*                                                                 *
+* This program contains confidential and trade secret information *
+* of Cadence Design Systems, Inc. and is protected by copyright   *
+* law and international treaties.  Any reproduction, use,         *
+* distribution or disclosure of this program or any portion of it,*
+* or any attempt to obtain a human-readable version of this       *
+* program, without the express, prior written consent of          *
+* Cadence Design Systems, Inc., is strictly prohibited.           *
+*                                                                 *
+*                 Cadence Design Systems, Inc.                    *
+*                    2655 Seely Avenue                            *
+*                   San Jose, CA 95134,  USA                      *
+*                                                                 *
+*                                                                 *
+*******************************************************************
+
+[12/17 18:53:56     4s] @(#)CDS: Encounter v14.26-s039_1 (64bit) 07/15/2015 11:34 (Linux 2.6.18-194.el5)
+[12/17 18:53:56     4s] @(#)CDS: NanoRoute v14.26-s022 NR150713-1956/14_26-UB (database version 2.30, 267.6.1) {superthreading v1.25}
+[12/17 18:53:56     4s] @(#)CDS: CeltIC v14.26-s013_1 (64bit) 07/14/2015 03:32:40 (Linux 2.6.18-194.el5)
+[12/17 18:53:56     4s] @(#)CDS: AAE 14.26-s007 (64bit) 07/15/2015 (Linux 2.6.18-194.el5)
+[12/17 18:53:56     4s] @(#)CDS: CTE 14.26-s010_1 (64bit) Jul 15 2015 01:38:12 (Linux 2.6.18-194.el5)
+[12/17 18:53:56     4s] @(#)CDS: CPE v14.26-s026
+[12/17 18:53:56     4s] @(#)CDS: IQRC/TQRC 14.2.2-s217 (64bit) Wed Apr 15 23:10:24 PDT 2015 (Linux 2.6.18-194.el5)
+[12/17 18:53:56     4s] @(#)CDS: OA 22.50-p011 Tue Nov 11 03:24:55 2014
+[12/17 18:53:56     4s] @(#)CDS: SGN 10.10-p124 (19-Aug-2014) (64 bit executable)
+[12/17 18:53:56     4s] @(#)CDS: RCDB 11.5
+[12/17 18:53:56     4s] --- Starting "Encounter v14.26-s039_1" on Thu Dec 17 18:53:56 2015 (mem=95.3M) ---
+[12/17 18:53:56     4s] --- Running on lab1-5.eng.utah.edu (x86_64 w/Linux 3.10.0-123.el7.x86_64) ---
+[12/17 18:53:56     4s] This version was compiled on Wed Jul 15 11:34:51 PDT 2015.
+[12/17 18:53:56     4s] Set DBUPerIGU to 1000.
+[12/17 18:53:56     4s] Set net toggle Scale Factor to 1.00
+[12/17 18:53:56     4s] Set Shrink Factor to 1.00000
+[12/17 18:53:56     5s] 
+[12/17 18:53:56     5s] **INFO:  MMMC transition support version v31-84 
+[12/17 18:53:56     5s] 
+[12/17 18:53:56     5s] <CMD> set_global _enable_mmmc_by_default_flow      $CTE::mmmc_default
+[12/17 18:53:56     5s] <CMD> suppressMessage ENCEXT-2799
+[12/17 18:53:56     5s] <CMD> win
+[12/17 18:54:09     7s] <CMD> encMessage warning 0
+[12/17 18:54:09     7s] Suppress "**WARN ..." messages.
+[12/17 18:54:09     7s] <CMD> encMessage debug 0
+[12/17 18:54:09     7s] <CMD> encMessage info 0
+[12/17 18:54:09     7s] Loading global variable file /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16edi_final/FPU_Control.enc.dat/FPU_Control.globals ...
+[12/17 18:54:09     7s] **WARN: (ENCLF-105):	The layer 'poly' specified in SAMENET spacing
+[12/17 18:54:09     7s] rule is neither a routing layer nor a cut layer. The rule is ignored.
+[12/17 18:54:09     7s] **WARN: (ENCLF-108):	There is no overlap layer defined in any LEF file
+[12/17 18:54:09     7s] so you are unable to create rectilinear partition in a hierarchical flow.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'AOI21' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'AOI21' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'AOI22' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'AOI22' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'BUF4X' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'BUF4X' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'BUF8X' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'BUF8X' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'DFFRX1' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'DFFRX1' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'DFFRX1_v1' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'DFFRX1_v1' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'FULLADD' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'FULLADD' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'Filler' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-46):	Class CORE macro 'Filler' has no SITE statement defined.
+[12/17 18:54:09     7s] Class CORE macros require a SITE statement. The SITE ENC_CORE_0 was
+[12/17 18:54:09     7s] created and will be used for this macro, using height 29.4000 that
+[12/17 18:54:09     7s] matches the macro SIZE height, and width 2.4000 that matches the
+[12/17 18:54:09     7s] m2 routing pitch. Define the site explicitly in the LEF file, to
+[12/17 18:54:09     7s] this message in the future.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'Filler4' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'Filler4' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'Filler8' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'Filler8' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'INVX1' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'INVX1' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'INVX4' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'INVX4' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'INVX8' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'INVX8' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'MUX2X1' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'MUX2X1' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'NAND2X1' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'NAND2X1' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'NAND3X1' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'NAND3X1' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'NANDX2' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'NANDX2' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'NOR2X1' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'NOR2X1' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'OAI21' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'OAI21' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **ERROR: (ENCLF-40):	Macro 'TIEHI' references a site 'CoreSite' that has not been defined. The sites must be defined before they can be referenced from a macro. Review the LEF files specified in the init_lef_file variable to see if the site does not exist or is specified after the one that defines the macro.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'TIEHI' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] **WARN: (EMS-63):	Message <ENCLF-40> has exceeded the default message display limit of 20.
+[12/17 18:54:09     7s] To avoid this warning, increase the display limit per unique message by
+[12/17 18:54:09     7s] using the set_message -limit <number> command.
+[12/17 18:54:09     7s] The message limit can be removed by using the set_message -no_limit command.
+[12/17 18:54:09     7s] Note that setting a very large number using the set_message -limit command
+[12/17 18:54:09     7s] or removing the message limit using the set_message -no_limit command can
+[12/17 18:54:09     7s] significantly increase the log file size.
+[12/17 18:54:09     7s] To suppress a message, use the set_message -suppress command.
+[12/17 18:54:09     7s] **WARN: (ENCLF-45):	Macro 'TIELO' has no SITE statement and it is a class
+[12/17 18:54:09     7s] CORE macro that requires a SITE statement. The SITE core is
+[12/17 18:54:09     7s] chosen because it is a core site with height 27.0000 that matches the macro
+[12/17 18:54:09     7s] SIZE height.
+[12/17 18:54:09     7s] Loading view definition file from /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16edi_final/FPU_Control.enc.dat/viewDefinition.tcl
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN1' of cell 'AOI21' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN2' of cell 'AOI21' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN3' of cell 'AOI21' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'max_fanout' on 'output/inout' pin 'OUT' of cell 'AOI21' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN1' of cell 'AOI22' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN2' of cell 'AOI22' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN3' of cell 'AOI22' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN4' of cell 'AOI22' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'max_fanout' on 'output/inout' pin 'OUT' of cell 'AOI22' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN' of cell 'BUF4X' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'max_fanout' on 'output/inout' pin 'OUT' of cell 'BUF4X' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'IN' of cell 'BUF8X' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'max_fanout' on 'output/inout' pin 'OUT' of cell 'BUF8X' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'CLK' of cell 'DFFRX1' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'CLRB' of cell 'DFFRX1' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'D' of cell 'DFFRX1' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'max_fanout' on 'output/inout' pin 'Q' of cell 'DFFRX1' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'max_fanout' on 'output/inout' pin 'QB' of cell 'DFFRX1' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'A' of cell 'FULLADD' is not defined in the library.
+[12/17 18:54:09     7s] **WARN: (TECHLIB-436):	Attribute 'fanout_load' on 'input/inout' pin 'B' of cell 'FULLADD' is not defined in the library.
+[12/17 18:54:09     7s] *** End library_loading (cpu=0.00min, mem=0.0M, fe_cpu=0.13min, fe_real=0.32min, fe_mem=364.9M) ***
+[12/17 18:54:09     7s] **WARN: (ENCFP-3961):	The techSite 'dbl_core' has no related cells in LEF library. Cannot make calculations for this site type unless cell models of this type exist in the LEF library. If the SITE is not used by the library you can ignore this warning or remove the SITE definition from the LEF to avoid this message.
+[12/17 18:54:09     7s] **WARN: (ENCFP-3961):	The techSite 'IO' has no related cells in LEF library. Cannot make calculations for this site type unless cell models of this type exist in the LEF library. If the SITE is not used by the library you can ignore this warning or remove the SITE definition from the LEF to avoid this message.
+[12/17 18:54:09     7s] **WARN: (ENCFP-3961):	The techSite 'corner' has no related cells in LEF library. Cannot make calculations for this site type unless cell models of this type exist in the LEF library. If the SITE is not used by the library you can ignore this warning or remove the SITE definition from the LEF to avoid this message.
+[12/17 18:54:09     7s] **WARN: (ENCCK-7003):	Command "addCTSCellList" is obsolete. Use "specifyClockTree -update {AutoCTSRootPin clkname Buffer bufferlist ...}" as an alternative. The obsolete command still works in this release, but to avoid this warning and to ensure compatibility with future releases, remove "addCTSCellList" from your script.
+[12/17 18:54:09     7s] Set CTS cells: INVX1 INVX4 INVX8 BUF4X BUF8X
+[12/17 18:54:09     8s] Loading preference file /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16edi_final/FPU_Control.enc.dat/enc.pref.tcl ...
+[12/17 18:54:09     8s] Loading mode file /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16edi_final/FPU_Control.enc.dat/FPU_Control.mode ...
+[12/17 18:54:09     8s] **WARN: (ENCEXT-2776):	The via resistance between layers M0 and M1 is not defined in the capacitance table file. The via resistance of 17 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+[12/17 18:54:09     8s] **WARN: (ENCEXT-2776):	The via resistance between layers M1 and M2 is not defined in the capacitance table file. The via resistance of 0.9 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+[12/17 18:54:09     8s] **WARN: (ENCEXT-2776):	The via resistance between layers M2 and M3 is not defined in the capacitance table file. The via resistance of 0.8 Ohms defined in the LEF technology file will be used as via resistance between these layers.
+[12/17 18:54:09     8s] **WARN: (ENCEXT-2766):	Sheet resistance for layer M1 is not defined in the cap table. LEF value 0.09 will be used.
+[12/17 18:54:09     8s] **WARN: (ENCEXT-2766):	Sheet resistance for layer M2 is not defined in the cap table. LEF value 0.09 will be used.
+[12/17 18:54:09     8s] **WARN: (ENCEXT-2766):	Sheet resistance for layer M3 is not defined in the cap table. LEF value 0.05 will be used.
+[12/17 18:54:10     8s] Loading place ...
+[12/17 18:54:10     8s] Loading route ...
+[12/17 18:54:11     9s] <CMD> setDrawView place
+[12/17 18:54:20    10s] <CMD> global dbgLefDefOutVersion
+[12/17 18:54:20    10s] <CMD> set dbgLefDefOutVersion 5.6
+[12/17 18:54:20    10s] <CMD> defOut -floorplan -netlist -routing FPU_Control.def
+[12/17 18:54:20    10s] Writing DEF file 'FPU_Control.def', current time is Thu Dec 17 18:54:20 2015 ...
+[12/17 18:54:20    10s] unitPerMicron=100, dbgMicronPerDBU=0.010000, unitPerDBU=1.000000
+[12/17 18:54:20    10s] **WARN: (ENCDF-1008):	The routing has wire-patches in the signal routing that cannot be represented correctly in DEF 5.7. They will be converted to SPECIALNET routing RECT shapes instead. This output is suitable for RC extraction tools, but this DEF should not be read back into Encounter as the routing data will not be correct. You should use DEF 5.8 to represent this routing data correctly by using "set dbgLefDefOutVersion 5.8".
+[12/17 18:54:20    10s] Type 'man ENCDF-1008' for more detail.
+[12/17 18:54:20    10s] DEF file 'FPU_Control.def' is written, current time is Thu Dec 17 18:54:20 2015 ...
+[12/17 18:54:20    10s] <CMD> set dbgLefDefOutVersion 5.8
+[12/17 18:54:26    12s] <CMD> saveNetlist FPU_Control.v
+[12/17 18:54:26    12s] Writing Netlist "FPU_Control.v" ...
+[12/17 18:54:40    14s] <CMD> saveDesign FPU_Control.enc
+[12/17 18:54:40    14s] Redoing specifyClockTree ...
+[12/17 18:54:40    14s] Checking spec file integrity...
+[12/17 18:54:40    14s] Writing Netlist "FPU_Control.enc.dat.tmp/FPU_Control.v.gz" ...
+[12/17 18:54:40    14s] Saving AAE Data ...
+[12/17 18:54:40    14s] Saving clock tree spec file 'FPU_Control.enc.dat.tmp/FPU_Control.ctstch' ...
+[12/17 18:54:40    14s] Saving configuration ...
+[12/17 18:54:40    14s] Saving preference file FPU_Control.enc.dat.tmp/enc.pref.tcl ...
+[12/17 18:54:40    14s] Saving floorplan ...
+[12/17 18:54:40    14s] Saving Drc markers ...
+[12/17 18:54:40    14s] ... No Drc file written since there is no markers found.
+[12/17 18:54:40    14s] Saving placement ...
+[12/17 18:54:40    14s] *** Completed savePlace (cpu=0:00:00.0 real=0:00:00.0 mem=506.2M) ***
+[12/17 18:54:40    14s] Saving route ...
+[12/17 18:54:40    15s] *** Completed saveRoute (cpu=0:00:00.1 real=0:00:00.0 mem=507.2M) ***
+[12/17 18:54:40    15s] Writing DEF file 'FPU_Control.enc.dat.tmp/FPU_Control.def.gz', current time is Thu Dec 17 18:54:40 2015 ...
+[12/17 18:54:40    15s] unitPerMicron=100, dbgMicronPerDBU=0.010000, unitPerDBU=1.000000
+[12/17 18:54:40    15s] DEF file 'FPU_Control.enc.dat.tmp/FPU_Control.def.gz' is written, current time is Thu Dec 17 18:54:40 2015 ...
+[12/17 18:54:40    15s] Copying LEF file...
+[12/17 18:54:40    15s] Copying Non-ILM Constraints file(s) ...
+[12/17 18:54:40    15s] Modifying Mode File...
+[12/17 18:54:41    15s] Modifying View File...
+[12/17 18:54:41    15s] Copying /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16edi_final/FPU_Control.enc.dat/libs/lib/typ/Lib6710_05.lib...
+[12/17 18:54:41    15s] Copying /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16edi_final/FPU_Control.enc.dat/mmmc/modes/typical/typical.sdc...
+[12/17 18:54:41    15s] Modifying Globals File...
+[12/17 18:54:41    16s] Modifying Power Constraints File...
+[12/17 18:54:41    16s] Generated self-contained design: /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16edi_final
+[12/17 18:54:41    16s] *** Message Summary: 0 warning(s), 0 error(s)
+[12/17 18:54:41    16s] 
+[12/17 18:54:44    17s] 
+[12/17 18:54:44    17s] *** Memory Usage v#1 (Current mem = 507.293M, initial mem = 95.305M) ***
+[12/17 18:54:44    17s] 
+[12/17 18:54:44    17s] *** Summary of all messages that are not suppressed in this session:
+[12/17 18:54:44    17s] Severity  ID               Count  Summary                                  
+[12/17 18:54:44    17s] WARNING   ENCDF-1008           1  The routing has wire-patches in the sign...
+[12/17 18:54:44    17s] ERROR     ENCLF-40            21  Macro '%s' references a site '%s' that h...
+[12/17 18:54:44    17s] WARNING   ENCLF-45            20  Macro '%s' has no SITE statement and it ...
+[12/17 18:54:44    17s] WARNING   ENCLF-46             1  Class CORE macro '%s' has no SITE statem...
+[12/17 18:54:44    17s] WARNING   ENCLF-105            1  The layer '%s' specified in SAMENET spac...
+[12/17 18:54:44    17s] WARNING   ENCLF-108            1  There is no overlap layer defined in any...
+[12/17 18:54:44    17s] WARNING   ENCFP-3961           3  The techSite '%s' has no related cells i...
+[12/17 18:54:44    17s] WARNING   ENCEXT-2766          3  Sheet resistance for layer %s is not def...
+[12/17 18:54:44    17s] WARNING   ENCEXT-2776          3  The via resistance between layers %s and...
+[12/17 18:54:44    17s] WARNING   ENCCK-7003           1  Command "%s" is obsolete. Use "%s" as an...
+[12/17 18:54:44    17s] *** Message Summary: 34 warning(s), 21 error(s)
+[12/17 18:54:44    17s] 
+[12/17 18:54:44    17s] --- Ending "Encounter" (totcpu=0:00:16.2, real=0:00:54.0, mem=507.3M) ---

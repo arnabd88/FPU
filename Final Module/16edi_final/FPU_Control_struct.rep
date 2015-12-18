@@ -1,0 +1,130 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : FPU_Control
+Version: G-2012.06-SP3
+Date   : Thu Dec 17 18:34:44 2015
+****************************************
+
+Operating Conditions: typical   Library: Lib6710_05
+Wire Load Model Mode: top
+
+  Startpoint: u_adder_cntrl/Final_Mantissa_reg_reg_1_
+              (rising edge-triggered flip-flop clocked by CLK)
+  Endpoint: u_adder_cntrl/Final_Exponent_reg_reg_7_
+            (rising edge-triggered flip-flop clocked by CLK)
+  Path Group: CLK
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock CLK (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  u_adder_cntrl/Final_Mantissa_reg_reg_1_/CLK (DFFRX1)
+                                                          0.00       0.00 r
+  u_adder_cntrl/Final_Mantissa_reg_reg_1_/Q (DFFRX1)      1.33       1.33 f
+  u_adder_cntrl/U174/OUT (NANDX2)                         0.75       2.09 r
+  u_adder_cntrl/U175/OUT (INVX4)                          0.26       2.35 f
+  u_adder_cntrl/U414/OUT (NANDX2)                         0.29       2.63 r
+  u_adder_cntrl/U413/OUT (INVX4)                          0.25       2.88 f
+  u_adder_cntrl/U652/OUT (NANDX2)                         0.32       3.20 r
+  u_adder_cntrl/U411/OUT (INVX4)                          0.25       3.45 f
+  u_adder_cntrl/U410/OUT (NANDX2)                         0.26       3.70 r
+  u_adder_cntrl/U560/OUT (INVX4)                          0.25       3.96 f
+  u_adder_cntrl/U557/OUT (NANDX2)                         0.27       4.23 r
+  u_adder_cntrl/U556/OUT (INVX4)                          0.18       4.41 f
+  u_adder_cntrl/U408/OUT (NANDX2)                         0.28       4.70 r
+  u_adder_cntrl/U406/OUT (INVX4)                          0.25       4.95 f
+  u_adder_cntrl/U405/OUT (NANDX2)                         0.28       5.23 r
+  u_adder_cntrl/U364/OUT (INVX4)                          0.24       5.47 f
+  u_adder_cntrl/U363/OUT (NANDX2)                         0.27       5.74 r
+  u_adder_cntrl/U177/OUT (NANDX2)                         0.26       6.00 f
+  u_adder_cntrl/U552/OUT (NANDX2)                         0.39       6.39 r
+  u_adder_cntrl/U551/OUT (INVX4)                          0.21       6.61 f
+  u_adder_cntrl/U404/OUT (NANDX2)                         0.26       6.86 r
+  u_adder_cntrl/U550/OUT (INVX4)                          0.31       7.17 f
+  u_adder_cntrl/U549/OUT (NANDX2)                         0.28       7.44 r
+  u_adder_cntrl/U657/OUT (NOR2X1)                         0.48       7.92 f
+  u_adder_cntrl/U548/OUT (NANDX2)                         0.41       8.33 r
+  u_adder_cntrl/U658/OUT (INVX4)                          0.30       8.63 f
+  u_adder_cntrl/U523/OUT (NANDX2)                         0.33       8.97 r
+  u_adder_cntrl/U807/OUT (OAI21)                          0.32       9.29 f
+  u_adder_cntrl/U521/OUT (NANDX2)                         0.35       9.64 r
+  u_adder_cntrl/U821/OUT (NAND3X1)                        0.25       9.89 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U32/OUT (NAND2X1)     0.31      10.20 r
+  u_adder_cntrl/DP_OP_1074_157_5430_U30/OUT (NANDX2)      0.29      10.49 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U15/COUT (FULLADD)
+                                                          0.60      11.09 f
+  u_adder_cntrl/U178/OUT (INVX1)                          0.39      11.48 r
+  u_adder_cntrl/U179/OUT (INVX4)                          0.28      11.76 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U14/COUT (FULLADD)
+                                                          0.55      12.32 f
+  u_adder_cntrl/U192/OUT (BUF4X)                          0.47      12.79 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U13/COUT (FULLADD)
+                                                          0.56      13.34 f
+  u_adder_cntrl/U190/OUT (BUF4X)                          0.46      13.81 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U12/COUT (FULLADD)
+                                                          1.04      14.84 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U11/COUT (FULLADD)
+                                                          0.82      15.66 f
+  u_adder_cntrl/U187/OUT (BUF4X)                          0.47      16.13 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U10/COUT (FULLADD)
+                                                          0.57      16.70 f
+  u_adder_cntrl/U180/OUT (INVX1)                          0.39      17.09 r
+  u_adder_cntrl/U181/OUT (INVX4)                          0.28      17.37 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U9/COUT (FULLADD)     0.63      18.00 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U4/OUT (NAND2X1)      0.40      18.40 r
+  u_adder_cntrl/DP_OP_1074_157_5430_U3/OUT (NAND2X1)      0.23      18.63 f
+  u_adder_cntrl/DP_OP_1074_157_5430_U1/OUT (NAND2X1)      0.25      18.89 r
+  u_adder_cntrl/U185/OUT (NANDX2)                         0.17      19.06 f
+  u_adder_cntrl/U793/OUT (NAND3X1)                        0.26      19.32 r
+  u_adder_cntrl/Final_Exponent_reg_reg_7_/D (DFFRX1)      0.00      19.32 r
+  data arrival time                                                 19.32
+
+  clock CLK (rise edge)                                  20.00      20.00
+  clock network delay (ideal)                             0.00      20.00
+  u_adder_cntrl/Final_Exponent_reg_reg_7_/CLK (DFFRX1)
+                                                          0.00      20.00 r
+  library setup time                                     -0.67      19.33
+  data required time                                                19.33
+  --------------------------------------------------------------------------
+  data required time                                                19.33
+  data arrival time                                                -19.32
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.01
+
+
+1
+ 
+****************************************
+Report : area
+Design : FPU_Control
+Version: G-2012.06-SP3
+Date   : Thu Dec 17 18:34:44 2015
+****************************************
+
+Library(s) Used:
+
+    Lib6710_05 (File: /home/arnabd/Semester1/DVLSI/Cadence-f15/Project/FPU/16synth/Lib6710_05.db)
+
+Number of ports:                           70
+Number of nets:                          1135
+Number of cells:                          925
+Number of combinational cells:            725
+Number of sequential cells:               198
+Number of macros:                           0
+Number of buf/inv:                        237
+Number of references:                      17
+
+Combinational area:       629985.614105
+Buf/Inv area:             104263.204895
+Noncombinational area:    369035.991821
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:          999021.605927
+Total area:                 undefined
+1

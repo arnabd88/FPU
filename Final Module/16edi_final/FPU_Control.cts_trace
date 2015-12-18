@@ -1,0 +1,389 @@
+
+
+
+
+
+Tracing Clock CLK
+
+****** Clock Tree (CLK) Structure
+Nr. Subtrees                   : 1
+Nr. Sinks                      : 335
+Nr.          Rising  Sync Pins : 0
+Nr. Inverter Rising  Sync Pins : 335
+Nr.          Falling Sync Pins : 0
+Nr. Inverter Falling Sync Pins : 0
+Nr. Unsync Pins                : 0
+
+** Leaf Pins
+CELL (PORT)                            Nr.
+-----------------------------------------------
+DFFRX1 (CLK)                            335
+-----------------------------------------------
+
+
+
+
+** Unsync Pins
+CELL (PORT)                            Nr.
+-----------------------------------------------
+-----------------------------------------------
+
+
+
+
+** Gate Component Input Pins
+CELL (PORT)                            Nr.
+-----------------------------------------------
+-----------------------------------------------
+
+
+
+** Subtree Detail
+*DEPTH 0 Input_Pin: (EMPTY) Output_Pin: (CLK) Cell: (EMPTY) Net: (CLK) NO-INV
+          Nr. of Exclude Pins           : 0
+          Nr. of Unsync Pins            : 0
+          Nr. of Total Sync Pins        : 335
+          Nr. of     Rising  Sync Pins  : 0
+          Nr. of Inv Rising  Sync Pins  : 335
+          Nr. of     Falling Sync Pins  : 0
+          Nr. of Inv Falling Sync Pins  : 0
+          Nr. of Gated Clocks           : 0
+***********************************************************
+
+****** Pre CTS Detail Structure for clock CLK
+*DEPTH 0: CLK
+ (Sync)u_adder_cntrl/Add_sign_reg_reg/CLK
+ (Sync)u_adder_cntrl/StateMC_reg_1_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_10_/CLK
+ (Sync)u_adder_cntrl/exc_reg_reg_0_/CLK
+ (Sync)u_adder_cntrl/StateMC_reg_0_/CLK
+ (Sync)u_adder_cntrl/StateMC_reg_2_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_6_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_5_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_4_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_3_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_2_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_1_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_0_/CLK
+ (Sync)u_adder_cntrl/Op2_Mantissa_reg_reg_7_/CLK
+ (Sync)u_adder_cntrl/exc_reg_reg_1_/CLK
+ (Sync)u_adder_cntrl/Adder_valid_reg/CLK
+ (Sync)u_adder_cntrl/Op1_Sign_reg_reg/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_6_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_6_/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_5_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_5_/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_4_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_4_/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_3_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_3_/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_2_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_2_/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_1_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_1_/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_0_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_0_/CLK
+ (Sync)u_adder_cntrl/Op2_Sign_reg_reg/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_8_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_7_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_6_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_5_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_4_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_3_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_2_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_1_/CLK
+ (Sync)u_adder_cntrl/Adder_datain2_reg_0_/CLK
+ (Sync)u_adder_cntrl/R_reg_reg/CLK
+ (Sync)u_adder_cntrl/S_reg_reg/CLK
+ (Sync)u_adder_cntrl/G_reg_reg/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_2_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_1_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_0_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_8_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_9_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_7_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_6_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_5_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_4_/CLK
+ (Sync)u_adder_cntrl/Final_Mantissa_reg_reg_3_/CLK
+ (Sync)u_adder_cntrl/carry_reg_reg/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_0_/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_1_/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_2_/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_3_/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_4_/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_5_/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_6_/CLK
+ (Sync)u_adder_cntrl/Final_Exponent_reg_reg_7_/CLK
+ (Sync)u_adder_cntrl/exc_reg_reg_2_/CLK
+ (Sync)u_adder_cntrl/Op1_Mantissa_reg_reg_7_/CLK
+ (Sync)u_adder_cntrl/Adder_datain1_reg_7_/CLK
+ (Sync)u_adder_cntrl/Debug_valid_reg_reg/CLK
+ (Sync)u_adder_cntrl/Final_Sign_reg_reg/CLK
+ (Sync)u_adder_cntrl/ExcCheck_valid_reg/CLK
+ (Sync)u_adder_cntrl/Debug_reg_reg_3_/CLK
+ (Sync)u_adder_cntrl/Debug_reg_reg_2_/CLK
+ (Sync)u_adder_cntrl/Debug_reg_reg_1_/CLK
+ (Sync)u_adder_cntrl/Debug_reg_reg_0_/CLK
+ (Sync)u_mul_cntrl/T_reg_reg/CLK
+ (Sync)u_mul_cntrl/exc_reg_reg_2_/CLK
+ (Sync)u_mul_cntrl/StateMC_reg_0_/CLK
+ (Sync)u_mul_cntrl/StateMC_reg_1_/CLK
+ (Sync)u_mul_cntrl/StateMC_reg_2_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_0_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_1_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_2_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_3_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_4_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_5_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_6_/CLK
+ (Sync)u_mul_cntrl/Op1_Mantissa_reg_reg_7_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_0_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_1_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_2_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_3_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_4_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_5_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_6_/CLK
+ (Sync)u_mul_cntrl/Op2_Mantissa_reg_reg_7_/CLK
+ (Sync)u_mul_cntrl/exc_reg_reg_0_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_8_/CLK
+ (Sync)u_mul_cntrl/exc_reg_reg_1_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_7_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_6_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_5_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_4_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_3_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_2_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_1_/CLK
+ (Sync)u_mul_cntrl/Final_Exponent_reg_reg_0_/CLK
+ (Sync)u_mul_cntrl/Debug_valid_reg_reg/CLK
+ (Sync)u_mul_cntrl/Final_Mantissa_reg_reg_0_/CLK
+ (Sync)u_mul_cntrl/Final_Mantissa_reg_reg_1_/CLK
+ (Sync)u_mul_cntrl/Final_Mantissa_reg_reg_2_/CLK
+ (Sync)u_mul_cntrl/Final_Mantissa_reg_reg_3_/CLK
+ (Sync)u_mul_cntrl/Final_Mantissa_reg_reg_4_/CLK
+ (Sync)u_mul_cntrl/Final_Mantissa_reg_reg_5_/CLK
+ (Sync)u_mul_cntrl/Final_Mantissa_reg_reg_6_/CLK
+ (Sync)u_mul_cntrl/Final_Sign_reg_reg/CLK
+ (Sync)u_mul_cntrl/G_reg_reg/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_7_/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_6_/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_5_/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_4_/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_3_/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_2_/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_1_/CLK
+ (Sync)u_mul_cntrl/Multi_datain1_reg_0_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_7_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_6_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_5_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_4_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_3_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_2_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_1_/CLK
+ (Sync)u_mul_cntrl/Multi_datain2_reg_0_/CLK
+ (Sync)u_mul_cntrl/Multi_valid_reg/CLK
+ (Sync)u_mul_cntrl/ExcCheck_valid_reg/CLK
+ (Sync)u_mul_cntrl/Debug_reg_reg_3_/CLK
+ (Sync)u_mul_cntrl/Debug_reg_reg_2_/CLK
+ (Sync)u_mul_cntrl/Debug_reg_reg_1_/CLK
+ (Sync)u_mul_cntrl/Debug_reg_reg_0_/CLK
+ (Sync)u_Adder_interconnect_M2_ack_reg/CLK
+ (Sync)u_booth_count_reg_reg_0_/CLK
+ (Sync)u_booth_count_reg_reg_1_/CLK
+ (Sync)u_booth_count_reg_reg_2_/CLK
+ (Sync)u_booth_count_reg_reg_3_/CLK
+ (Sync)u_booth_BStateMC_reg_0_/CLK
+ (Sync)u_booth_BStateMC_reg_1_/CLK
+ (Sync)u_booth_Q_reg_reg_7_/CLK
+ (Sync)u_booth_Q_reg_reg_6_/CLK
+ (Sync)u_booth_Q_reg_reg_5_/CLK
+ (Sync)u_booth_Q_reg_reg_4_/CLK
+ (Sync)u_booth_Q_reg_reg_3_/CLK
+ (Sync)u_booth_Q_reg_reg_2_/CLK
+ (Sync)u_booth_Q_reg_reg_1_/CLK
+ (Sync)u_booth_Q_reg_reg_0_/CLK
+ (Sync)u_booth_Adder_valid_reg/CLK
+ (Sync)u_Adder_interconnect_priority_reg_reg/CLK
+ (Sync)u_Adder_interconnect_stateMC_reg_0_/CLK
+ (Sync)u_Adder_interconnect_M1_ack_reg/CLK
+ (Sync)u_ExcChecker_interconnect_stateMC_reg_1_/CLK
+ (Sync)u_ExcChecker_interconnect_priority_reg_reg/CLK
+ (Sync)u_ExcChecker_interconnect_stateMC_reg_0_/CLK
+ (Sync)u_ExcChecker_interconnect_S_req_reg/CLK
+ (Sync)u_exc_check_ACK_reg/CLK
+ (Sync)u_ExcChecker_interconnect_M2_ack_reg/CLK
+ (Sync)u_exc_check_StateMC_reg_0_/CLK
+ (Sync)u_exc_check_StateMC_reg_1_/CLK
+ (Sync)u_ExcChecker_interconnect_Select_reg/CLK
+ (Sync)u_exc_check_AEXC_reg_2_/CLK
+ (Sync)u_exc_check_AEXC_reg_1_/CLK
+ (Sync)u_exc_check_AEXC_reg_0_/CLK
+ (Sync)u_ExcChecker_interconnect_M1_ack_reg/CLK
+ (Sync)u_Adder_interconnect_stateMC_reg_1_/CLK
+ (Sync)u_Adder_interconnect_S_req_reg/CLK
+ (Sync)u_adder_24b_StateMC_reg_1_/CLK
+ (Sync)u_adder_24b_StateMC_reg_0_/CLK
+ (Sync)u_adder_24b_ACK_reg/CLK
+ (Sync)u_adder_24b_Z_reg_8_/CLK
+ (Sync)u_adder_24b_Z_reg_7_/CLK
+ (Sync)u_adder_24b_Z_reg_6_/CLK
+ (Sync)u_adder_24b_Z_reg_5_/CLK
+ (Sync)u_adder_24b_Z_reg_4_/CLK
+ (Sync)u_adder_24b_Z_reg_3_/CLK
+ (Sync)u_adder_24b_Z_reg_2_/CLK
+ (Sync)u_adder_24b_Z_reg_1_/CLK
+ (Sync)u_adder_24b_Z_reg_0_/CLK
+ (Sync)u_adder_24b_COUT_reg/CLK
+ (Sync)adderStateMC_reg_0_/CLK
+ (Sync)outputRdy_reg_reg_0_/CLK
+ (Sync)adderStateMC_reg_1_/CLK
+ (Sync)getdataStat_reg_reg_0_/CLK
+ (Sync)AdderCntrl_Op2_reg_0_/CLK
+ (Sync)AdderCntrl_Op2_reg_1_/CLK
+ (Sync)AdderCntrl_Op2_reg_2_/CLK
+ (Sync)AdderCntrl_Op2_reg_3_/CLK
+ (Sync)AdderCntrl_Op2_reg_4_/CLK
+ (Sync)AdderCntrl_Op2_reg_5_/CLK
+ (Sync)AdderCntrl_Op2_reg_6_/CLK
+ (Sync)AdderCntrl_Op2_reg_7_/CLK
+ (Sync)AdderCntrl_Op2_reg_8_/CLK
+ (Sync)AdderCntrl_Op2_reg_9_/CLK
+ (Sync)AdderCntrl_Op2_reg_10_/CLK
+ (Sync)AdderCntrl_Op2_reg_11_/CLK
+ (Sync)AdderCntrl_Op2_reg_12_/CLK
+ (Sync)AdderCntrl_Op2_reg_13_/CLK
+ (Sync)AdderCntrl_Op2_reg_14_/CLK
+ (Sync)AdderCntrl_Op2_reg_15_/CLK
+ (Sync)AdderCntrl_Op1_reg_0_/CLK
+ (Sync)AdderCntrl_Op1_reg_1_/CLK
+ (Sync)AdderCntrl_Op1_reg_2_/CLK
+ (Sync)AdderCntrl_Op1_reg_3_/CLK
+ (Sync)AdderCntrl_Op1_reg_4_/CLK
+ (Sync)AdderCntrl_Op1_reg_5_/CLK
+ (Sync)AdderCntrl_Op1_reg_6_/CLK
+ (Sync)AdderCntrl_Op1_reg_7_/CLK
+ (Sync)AdderCntrl_Op1_reg_8_/CLK
+ (Sync)AdderCntrl_Op1_reg_9_/CLK
+ (Sync)AdderCntrl_Op1_reg_10_/CLK
+ (Sync)AdderCntrl_Op1_reg_11_/CLK
+ (Sync)AdderCntrl_Op1_reg_12_/CLK
+ (Sync)AdderCntrl_Op1_reg_13_/CLK
+ (Sync)AdderCntrl_Op1_reg_14_/CLK
+ (Sync)AdderCntrl_Op1_reg_15_/CLK
+ (Sync)ABUSY_reg/CLK
+ (Sync)AddExc_reg_reg_2_/CLK
+ (Sync)AddExc_reg_reg_1_/CLK
+ (Sync)AddExc_reg_reg_0_/CLK
+ (Sync)AdderResult_reg_reg_0_/CLK
+ (Sync)AdderResult_reg_reg_1_/CLK
+ (Sync)AdderResult_reg_reg_2_/CLK
+ (Sync)AdderResult_reg_reg_3_/CLK
+ (Sync)AdderResult_reg_reg_4_/CLK
+ (Sync)AdderResult_reg_reg_5_/CLK
+ (Sync)AdderResult_reg_reg_6_/CLK
+ (Sync)AdderResult_reg_reg_7_/CLK
+ (Sync)AdderResult_reg_reg_8_/CLK
+ (Sync)AdderResult_reg_reg_9_/CLK
+ (Sync)AdderResult_reg_reg_10_/CLK
+ (Sync)AdderResult_reg_reg_11_/CLK
+ (Sync)AdderResult_reg_reg_12_/CLK
+ (Sync)AdderResult_reg_reg_13_/CLK
+ (Sync)AdderResult_reg_reg_14_/CLK
+ (Sync)AdderResult_reg_reg_15_/CLK
+ (Sync)u_booth_Q1_reg_reg/CLK
+ (Sync)u_booth_A_reg_reg_8_/CLK
+ (Sync)u_booth_A_reg_reg_7_/CLK
+ (Sync)u_booth_A_reg_reg_6_/CLK
+ (Sync)u_booth_A_reg_reg_5_/CLK
+ (Sync)u_booth_A_reg_reg_4_/CLK
+ (Sync)u_booth_A_reg_reg_3_/CLK
+ (Sync)u_booth_A_reg_reg_2_/CLK
+ (Sync)u_booth_A_reg_reg_1_/CLK
+ (Sync)u_booth_A_reg_reg_0_/CLK
+ (Sync)u_booth_Adder_datain1_reg_0_/CLK
+ (Sync)u_booth_Q_reg_reg_8_/CLK
+ (Sync)u_booth_Adder_datain1_reg_1_/CLK
+ (Sync)u_booth_Adder_datain1_reg_2_/CLK
+ (Sync)u_booth_Adder_datain1_reg_3_/CLK
+ (Sync)u_booth_Adder_datain1_reg_4_/CLK
+ (Sync)u_booth_Adder_datain1_reg_5_/CLK
+ (Sync)u_booth_Adder_datain1_reg_6_/CLK
+ (Sync)u_booth_Adder_datain1_reg_7_/CLK
+ (Sync)u_booth_Adder_datain1_reg_8_/CLK
+ (Sync)u_booth_Adder_datain2_reg_8_/CLK
+ (Sync)u_booth_M_reg_reg_0_/CLK
+ (Sync)u_booth_Adder_datain2_reg_0_/CLK
+ (Sync)u_booth_M_reg_reg_1_/CLK
+ (Sync)u_booth_Adder_datain2_reg_1_/CLK
+ (Sync)u_booth_M_reg_reg_2_/CLK
+ (Sync)u_booth_Adder_datain2_reg_2_/CLK
+ (Sync)u_booth_M_reg_reg_3_/CLK
+ (Sync)u_booth_Adder_datain2_reg_3_/CLK
+ (Sync)u_booth_M_reg_reg_4_/CLK
+ (Sync)u_booth_Adder_datain2_reg_4_/CLK
+ (Sync)u_booth_M_reg_reg_5_/CLK
+ (Sync)u_booth_Adder_datain2_reg_5_/CLK
+ (Sync)u_booth_M_reg_reg_6_/CLK
+ (Sync)u_booth_Adder_datain2_reg_6_/CLK
+ (Sync)u_booth_M_reg_reg_7_/CLK
+ (Sync)u_booth_Adder_datain2_reg_7_/CLK
+ (Sync)multStateMC_reg_0_/CLK
+ (Sync)outputRdy_reg_reg_1_/CLK
+ (Sync)multStateMC_reg_1_/CLK
+ (Sync)getdataStat_reg_reg_1_/CLK
+ (Sync)MulCntrl_Op2_reg_0_/CLK
+ (Sync)MulCntrl_Op2_reg_1_/CLK
+ (Sync)MulCntrl_Op2_reg_2_/CLK
+ (Sync)MulCntrl_Op2_reg_3_/CLK
+ (Sync)MulCntrl_Op2_reg_4_/CLK
+ (Sync)MulCntrl_Op2_reg_5_/CLK
+ (Sync)MulCntrl_Op2_reg_6_/CLK
+ (Sync)MulCntrl_Op2_reg_7_/CLK
+ (Sync)MulCntrl_Op2_reg_8_/CLK
+ (Sync)MulCntrl_Op2_reg_9_/CLK
+ (Sync)MulCntrl_Op2_reg_10_/CLK
+ (Sync)MulCntrl_Op2_reg_11_/CLK
+ (Sync)MulCntrl_Op2_reg_12_/CLK
+ (Sync)MulCntrl_Op2_reg_13_/CLK
+ (Sync)MulCntrl_Op2_reg_14_/CLK
+ (Sync)MulCntrl_Op2_reg_15_/CLK
+ (Sync)MulCntrl_Op1_reg_0_/CLK
+ (Sync)MulCntrl_Op1_reg_1_/CLK
+ (Sync)MulCntrl_Op1_reg_2_/CLK
+ (Sync)MulCntrl_Op1_reg_3_/CLK
+ (Sync)MulCntrl_Op1_reg_4_/CLK
+ (Sync)MulCntrl_Op1_reg_5_/CLK
+ (Sync)MulCntrl_Op1_reg_6_/CLK
+ (Sync)MulCntrl_Op1_reg_7_/CLK
+ (Sync)MulCntrl_Op1_reg_8_/CLK
+ (Sync)MulCntrl_Op1_reg_9_/CLK
+ (Sync)MulCntrl_Op1_reg_10_/CLK
+ (Sync)MulCntrl_Op1_reg_11_/CLK
+ (Sync)MulCntrl_Op1_reg_12_/CLK
+ (Sync)MulCntrl_Op1_reg_13_/CLK
+ (Sync)MulCntrl_Op1_reg_14_/CLK
+ (Sync)MulCntrl_Op1_reg_15_/CLK
+ (Sync)MBUSY_reg/CLK
+ (Sync)DR_reg/CLK
+ (Sync)MultExc_reg_reg_2_/CLK
+ (Sync)MultExc_reg_reg_1_/CLK
+ (Sync)MultExc_reg_reg_0_/CLK
+ (Sync)MultResult_reg_reg_0_/CLK
+ (Sync)MultResult_reg_reg_1_/CLK
+ (Sync)MultResult_reg_reg_2_/CLK
+ (Sync)MultResult_reg_reg_3_/CLK
+ (Sync)MultResult_reg_reg_4_/CLK
+ (Sync)MultResult_reg_reg_5_/CLK
+ (Sync)MultResult_reg_reg_6_/CLK
+ (Sync)MultResult_reg_reg_7_/CLK
+ (Sync)MultResult_reg_reg_8_/CLK
+ (Sync)MultResult_reg_reg_9_/CLK
+ (Sync)MultResult_reg_reg_10_/CLK
+ (Sync)MultResult_reg_reg_11_/CLK
+ (Sync)MultResult_reg_reg_12_/CLK
+ (Sync)MultResult_reg_reg_13_/CLK
+ (Sync)MultResult_reg_reg_14_/CLK
+ (Sync)MultResult_reg_reg_15_/CLK
+ (Sync)u_Adder_interconnect_Select_reg/CLK

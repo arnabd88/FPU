@@ -1,1 +1,0 @@
-restoreDesign [file dirname [file normalize [info script]]]/FPU_Control.enc.dat FPU_Control
